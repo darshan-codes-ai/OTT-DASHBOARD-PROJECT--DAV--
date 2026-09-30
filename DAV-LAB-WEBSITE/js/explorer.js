@@ -10,7 +10,7 @@ const DAVExplorer = (function () {
   const state = {
     search: '',
     platform: 'all',
-    age: 'all',
+    age: '',
     minYear: null,
     maxYear: null,
     minScore: 0,
@@ -114,14 +114,14 @@ const DAVExplorer = (function () {
       resetBtn.addEventListener('click', () => {
         state.search = '';
         state.platform = 'all';
-        state.age = 'all';
+        state.age = '';
         state.minYear = null;
         state.maxYear = null;
         state.minScore = 0;
         state.page = 1;
 
         if (searchInput) searchInput.value = '';
-        if (ageSelect) ageSelect.value = 'all';
+        if (ageSelect) ageSelect.value = '';
         if (minYearInput) minYearInput.value = '';
         if (maxYearInput) maxYearInput.value = '';
         if (scoreSlider) scoreSlider.value = 0;
@@ -182,7 +182,7 @@ const DAVExplorer = (function () {
       if (state.platform === 'disney' && !r.disney) return false;
 
       // Age
-      if (state.age !== 'all') {
+      if (state.age !== '' && state.age !== 'any') {
         if (state.age === 'unrated') {
           if (r.age !== null) return false;
         } else if (r.age !== state.age) {
