@@ -13,6 +13,18 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
   <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+
+  <!-- MathJax Configuration & Engine for Statistical Formulas -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
   <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -98,13 +110,33 @@
       <div class="callout-box callout-info" style="margin-top: var(--space-lg);">
         <div class="callout-title">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-          Academic Provenance: Preserving the 0–100 Rotten Tomatoes Scale
+          Academic Provenance: Preserving the Native 0–100 Rotten Tomatoes Scale
         </div>
         <p>
-          Unlike Lab 1 and Lab 2 which normalized scores to a 0–10 scale, the original Lab 3 notebook casts Rotten Tomatoes to a floating-point score on the original <strong>0–100 scale</strong>:
-          $$\text{Mean} = 53.55, \quad \text{Std} = 13.20, \quad \text{Median} = 52.00, \quad \text{IQR} = [44.0, 62.0], \quad \text{Range} = [10.0, 98.0]$$
-          All charts and statistical tables in this article adhere strictly to this native 0–100 scale.
+          Unlike Lab 1 and Lab 2 which normalized scores to a 0–10 scale, the original Lab 3 notebook analyzes Rotten Tomatoes ratings on the original <strong>0–100 scale</strong>. All statistical estimators across the 9,508 scored movies adhere strictly to this native scale:
         </p>
+        <div style="margin-top: var(--space-md); display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-md); background: #ffffff; padding: var(--space-md); border-radius: var(--radius-md); border: 1px solid var(--color-border-subtle); text-align: center;">
+          <div>
+            <div class="text-subtle" style="font-size: 0.75rem; text-transform: uppercase; font-weight: 600;">Sample Mean</div>
+            <div style="font-size: 1.1rem; margin-top: 4px;">$$\mu = 53.55$$</div>
+          </div>
+          <div>
+            <div class="text-subtle" style="font-size: 0.75rem; text-transform: uppercase; font-weight: 600;">Standard Deviation</div>
+            <div style="font-size: 1.1rem; margin-top: 4px;">$$\sigma = 13.20$$</div>
+          </div>
+          <div>
+            <div class="text-subtle" style="font-size: 0.75rem; text-transform: uppercase; font-weight: 600;">Sample Median</div>
+            <div style="font-size: 1.1rem; margin-top: 4px;">$$\text{Median} = 52.00$$</div>
+          </div>
+          <div>
+            <div class="text-subtle" style="font-size: 0.75rem; text-transform: uppercase; font-weight: 600;">Interquartile Range</div>
+            <div style="font-size: 1.1rem; margin-top: 4px;">$$\text{IQR} = 18.00$$</div>
+          </div>
+          <div>
+            <div class="text-subtle" style="font-size: 0.75rem; text-transform: uppercase; font-weight: 600;">Score Range</div>
+            <div style="font-size: 1.1rem; margin-top: 4px;">$$[10.0, 98.0]$$</div>
+          </div>
+        </div>
       </div>
 
       <!-- Step 1 & 4: Boxplot and Violin Plot by Age -->
@@ -247,32 +279,32 @@ plt.show()</code></pre>
               <tr>
                 <td><strong>Netflix ↔ Prime Video</strong></td>
                 <td class="num font-mono" style="color: var(--color-netflix); font-weight: 700;">-0.6478</td>
-                <td>Strong negative correlation indicating distinct catalog differentiation and minimal library co-licensing.</td>
+                <td>Strong negative linear association indicating that catalog co-licensing between these two platforms is rare in this dataset.</td>
               </tr>
               <tr>
                 <td><strong>Netflix ↔ Release Year</strong></td>
                 <td class="num font-mono" style="color: var(--color-accent); font-weight: 700;">+0.3066</td>
-                <td>Moderate positive correlation showing Netflix's strategic bias toward modern releases (post-2015).</td>
+                <td>Moderate positive linear correlation showing a higher proportion of recent release years among Netflix titles in this dataset.</td>
               </tr>
               <tr>
                 <td><strong>Prime Video ↔ Release Year</strong></td>
                 <td class="num font-mono" style="color: var(--color-warning); font-weight: 700;">-0.2437</td>
-                <td>Moderate negative correlation reflecting Prime Video's extensive archive of classic and older cinema.</td>
+                <td>Negative linear correlation indicating a higher frequency of older release years among Prime Video titles in this dataset.</td>
               </tr>
               <tr>
                 <td><strong>Prime Video ↔ Score</strong></td>
                 <td class="num font-mono" style="color: var(--color-warning); font-weight: 700;">-0.2082</td>
-                <td>Moderate negative correlation demonstrating that massive catalog breadth dilutes average critic ratings.</td>
+                <td>Negative linear association between Prime Video availability and Rotten Tomatoes score in this sample. This is an observational association and should not be interpreted as a causal effect.</td>
               </tr>
               <tr>
                 <td><strong>Hulu ↔ Score</strong></td>
                 <td class="num font-mono" style="color: var(--color-hulu); font-weight: 700;">+0.1827</td>
-                <td>Positive correlation reflecting a smaller, more selective curation standard.</td>
+                <td>Positive linear association between Hulu availability and Rotten Tomatoes score in this sample.</td>
               </tr>
               <tr>
                 <td><strong>Release Year ↔ Score</strong></td>
                 <td class="num font-mono">+0.0356</td>
-                <td>Virtually zero linear relationship between a movie's release year and its critical acclaim.</td>
+                <td>Near-zero linear association between release year and Rotten Tomatoes rating in this dataset.</td>
               </tr>
             </tbody>
           </table>

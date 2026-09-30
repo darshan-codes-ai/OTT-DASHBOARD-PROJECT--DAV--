@@ -75,19 +75,19 @@
         <article class="insight-card">
           <div class="insight-num">01</div>
           <div>
-            <span class="badge badge-accent" style="margin-bottom: var(--space-xs);">Exclusivity Paradigm</span>
-            <h2 class="insight-title">The OTT Landscape Is Overwhelmingly Segregated by Exclusivity</h2>
+            <span class="badge badge-accent" style="margin-bottom: var(--space-xs);">Exclusivity Distribution</span>
+            <h2 class="insight-title">The Dataset Is Characterized by High Catalog Exclusivity</h2>
             <p>
-              Cross-platform overlap analysis reveals that streaming providers do not compete primarily on price or interface features, but on <strong>catalog exclusivity</strong>. Out of 9,515 unique movie titles:
+              Cross-platform overlap analysis demonstrates that multi-platform co-licensing is exceedingly rare in this dataset. Out of 9,515 unique movie titles:
             </p>
             <ul style="margin-left: var(--space-lg); margin-bottom: var(--space-md); color: var(--color-text-muted);">
-              <li><strong>9,262 titles (97.34%)</strong> are hosted exclusively on a single service.</li>
-              <li>Only <strong>245 titles (2.57%)</strong> are shared between two competing platforms.</li>
+              <li><strong>9,262 titles (97.34%)</strong> are flagged exclusively on a single service.</li>
+              <li>Only <strong>245 titles (2.57%)</strong> are shared between two platforms.</li>
               <li>Just <strong>7 titles (0.07%)</strong> are shared across three services.</li>
               <li>Exactly <strong>1 title</strong> (<em>Zapped</em>, 2014) is simultaneously available on all four streaming platforms.</li>
             </ul>
             <p class="text-muted">
-              <strong>Academic Implication:</strong> Consumers cannot substitute one streaming service for another without sacrificing access to the vast majority of licensed cinematic content.
+              <strong>Descriptive Finding:</strong> With 97.34% of movie titles exclusive to a single platform in this dataset, catalog overlap across services is minimal (only 2.66% appear on two or more services).
             </p>
           </div>
         </article>
@@ -97,17 +97,17 @@
           <div class="insight-num">02</div>
           <div>
             <span class="badge badge-accent" style="margin-bottom: var(--space-xs);">Volume vs. Quality</span>
-            <h2 class="insight-title">Catalog Breadth Does Not Equal Quality Dominance</h2>
+            <h2 class="insight-title">Catalog Breadth Does Not Equal High-Rated Concentration</h2>
             <p>
-              While Amazon Prime Video boasts the single largest volume of titles (<strong>4,113 movies</strong>, or 43.23% of the total dataset), Netflix dominates the premium tier.
+              While Prime Video has the largest number of platform-flagged records in this dataset (<strong>4,113 movies</strong>, or 43.23% of the catalog), Netflix has the largest count of titles in the highest rating tier:
             </p>
             <ul style="margin-left: var(--space-lg); margin-bottom: var(--space-md); color: var(--color-text-muted);">
               <li>Out of 335 total movies rated $\ge 8.0/10$, <strong>Netflix hosts 168 titles (50.15%)</strong>.</li>
-              <li>Prime Video hosts only <strong>53 high-rated titles</strong>, yielding an elite tier conversion rate of just <strong>1.29%</strong> of its total catalog.</li>
-              <li>Disney+, despite having the smallest total catalog (922 titles), achieves the highest density of top-rated titles: <strong>75 movies rated 8.0+</strong> (an <strong>8.13%</strong> high-quality ratio).</li>
+              <li>Prime Video hosts <strong>53 high-rated titles</strong>, representing <strong>1.29%</strong> of its platform catalog.</li>
+              <li>Disney+, with 922 total titles in this dataset, contains <strong>75 movies rated 8.0+</strong> (an <strong>8.13%</strong> proportion).</li>
             </ul>
             <p class="text-muted">
-              <strong>Academic Implication:</strong> A significant portion of Prime Video's vast catalog consists of low-budget or niche indie catalog filler, whereas Netflix and Disney+ exercise stricter curation thresholds.
+              <strong>Descriptive Finding:</strong> In this dataset, Prime Video exhibits the largest catalog breadth alongside a lower proportion of high-rated titles (1.29%), whereas Netflix has 168 titles and Disney+ has 75 titles in the RT ≥ 8.0 category. These differences reflect descriptive catalog distributions and should not be interpreted as causal conclusions.
             </p>
           </div>
         </article>
@@ -116,17 +116,17 @@
         <article class="insight-card">
           <div class="insight-num">03</div>
           <div>
-            <span class="badge badge-accent" style="margin-bottom: var(--space-xs);">Temporal Strategy</span>
-            <h2 class="insight-title">Platform Age Trajectories Show Opposing Strategic Curation</h2>
+            <span class="badge badge-accent" style="margin-bottom: var(--space-xs);">Temporal Distribution</span>
+            <h2 class="insight-title">Release Year Correlations Differ Across Platform Catalogs</h2>
             <p>
-              Pearson correlation modeling in Lab 3 demonstrates that release years are strongly bifurcated by platform:
+              Pearson correlation modeling in Lab 3 demonstrates that release years exhibit distinct directional associations across platforms:
             </p>
             <ul style="margin-left: var(--space-lg); margin-bottom: var(--space-md); color: var(--color-text-muted);">
-              <li><strong>Netflix ↔ Year ($r = +0.3066$)</strong>: A positive correlation indicating that Netflix’s catalog is heavily skewed toward modern titles produced between 2015 and 2021.</li>
-              <li><strong>Prime Video ↔ Year ($r = -0.2437$)</strong>: A negative correlation highlighting Prime Video’s extensive archival back-catalog, including historic cinema dating back to 1914.</li>
+              <li><strong>Netflix ↔ Year ($r = +0.3066$)</strong>: A positive correlation showing a higher proportion of recent release years among Netflix titles in this dataset.</li>
+              <li><strong>Prime Video ↔ Year ($r = -0.2437$)</strong>: A negative correlation reflecting a higher frequency of older twentieth-century releases among Prime Video titles.</li>
             </ul>
             <p class="text-muted">
-              <strong>Academic Implication:</strong> Netflix positions itself as a destination for contemporary cinema and original productions, while Prime Video acts as an archival repository for twentieth-century film history.
+              <strong>Descriptive Finding:</strong> Netflix availability correlates positively with recent release years ($r = +0.3066$), whereas Prime Video contains a larger representation of earlier films ($r = -0.2437$). These represent descriptive catalog characteristics rather than causal or strategic claims.
             </p>
           </div>
         </article>
@@ -187,7 +187,7 @@
           </div>
           <ul style="margin-left: var(--space-lg); color: var(--color-text-muted); line-height: 1.6;">
             <li><strong>Cross-Sectional Snapshot:</strong> The dataset captures a historical snapshot (titles up to 2021) and does not reflect ongoing streaming contract expirations or new original releases.</li>
-            <li><strong>Descriptive, Not Causal:</strong> High correlations (e.g. between Netflix and Release Year) indicate catalog curation associations, not causal relationships.</li>
+            <li><strong>Descriptive, Not Causal:</strong> Correlation values (such as between Netflix and Release Year) indicate descriptive catalog associations in this specific sample, not causal mechanisms or corporate curation policies.</li>
             <li><strong>Absence of Audience Viewing Data:</strong> The dataset does not contain viewing figures, streaming hours, subscriber counts, or user engagement metrics. A title's critical acclaim is not equivalent to audience popularity.</li>
             <li><strong>Excluded Proposal Variables:</strong> Preliminary course proposals mentioned attributes such as <em>Genre</em>, <em>IMDb Ratings</em>, <em>Directors</em>, and <em>Runtime</em>; however, these fields are absent from the verified dataset and are deliberately excluded from this research to preserve academic fidelity.</li>
           </ul>

@@ -48,7 +48,18 @@ function initTabs() {
         panes.forEach(p => p.classList.remove('active'));
 
         btn.classList.add('active');
-        if (panes[idx]) panes[idx].classList.add('active');
+        if (panes[idx]) {
+          panes[idx].classList.add('active');
+          // Trigger resize for Plotly charts or responsive elements inside the newly visible pane
+          setTimeout(() => {
+            window.dispatchEvent(new Event('resize'));
+            panes[idx].querySelectorAll('.plotly-chart').forEach(chartEl => {
+              if (window.Plotly && chartEl.data) {
+                Plotly.Plots.resize(chartEl);
+              }
+            });
+          }, 50);
+        }
       });
     });
   });

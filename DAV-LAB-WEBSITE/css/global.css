@@ -195,6 +195,8 @@ code {
   padding: 0.15em 0.4em;
   border-radius: var(--radius-xs);
   color: #c026d3;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
 pre {
@@ -203,6 +205,8 @@ pre {
   padding: var(--space-md);
   border-radius: var(--radius-md);
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
   border: 1px solid #2d3748;
 }
 
@@ -211,6 +215,8 @@ pre code {
   border: none;
   padding: 0;
   color: inherit;
+  word-break: normal;
+  overflow-wrap: normal;
 }
 
 /* Layout Utilities */
@@ -221,6 +227,13 @@ pre code {
   margin-right: auto;
   padding-left: var(--space-lg);
   padding-right: var(--space-lg);
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding-left: var(--space-md);
+    padding-right: var(--space-md);
+  }
 }
 
 .content-narrow {
