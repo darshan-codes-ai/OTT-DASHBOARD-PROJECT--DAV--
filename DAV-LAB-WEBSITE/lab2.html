@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab 2: Excel Formula-Based Dashboard | DAV Laboratory Portfolio</title>
+  <meta name="description" content="Spreadsheet engineering audit of DAV Lab Assignment 2: Excel formula modeling, COUNTA, MINIFS, COUNTIFS, and 9 analytical dashboard modules.">
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
+  
+  <link rel="stylesheet" href="./css/global.css">
+  <link rel="stylesheet" href="./css/components.css">
+  <link rel="stylesheet" href="./css/pages.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.35.2/plotly.min.js"></script>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="container nav-container">
+      <a href="./index.html" class="nav-brand" aria-label="DAV Laboratory Home">
+        <div class="brand-mark">D</div>
+        <div class="brand-info">
+          <span class="brand-title">DAV Laboratory</span>
+          <span class="brand-subtitle">OTT Content Analytics</span>
+        </div>
+      </a>
+      <nav class="nav-menu" aria-label="Main Navigation">
+        <a href="./index.html" class="nav-link">Home</a>
+        <a href="./labs.html" class="nav-link active">Labs</a>
+        <a href="./explorer.html" class="nav-link">Data Explorer</a>
+        <a href="./insights.html" class="nav-link">Insights</a>
+        <a href="./resources.html" class="nav-link">Resources</a>
+      </nav>
+      <div class="nav-actions">
+        <a href="./explorer.html" class="btn btn-primary btn-sm">Explore Data</a>
+        <button class="mobile-toggle" aria-label="Toggle navigation drawer" aria-expanded="false">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="mobile-drawer" id="mobile-drawer">
+      <ul class="mobile-nav-list">
+        <li><a href="./index.html" class="mobile-nav-link">Home</a></li>
+        <li><a href="./labs.html" class="mobile-nav-link">Labs Overview</a></li>
+        <li><a href="./lab1.html" class="mobile-nav-link" style="padding-left: 24px;">└ Lab 1: Python EDA</a></li>
+        <li><a href="./lab2.html" class="mobile-nav-link active" style="padding-left: 24px;">└ Lab 2: Excel Dashboard</a></li>
+        <li><a href="./lab3.html" class="mobile-nav-link" style="padding-left: 24px;">└ Lab 3: Seaborn Analysis</a></li>
+        <li><a href="./explorer.html" class="mobile-nav-link">Data Explorer</a></li>
+        <li><a href="./insights.html" class="mobile-nav-link">Key Insights</a></li>
+        <li><a href="./resources.html" class="mobile-nav-link">Resources &amp; Provenance</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main id="main-content" class="site-main">
+    
+    <!-- Lab Article Header -->
+    <div class="lab-article-header">
+      <div class="container">
+        <div class="hero-kicker">
+          <a href="./labs.html">Laboratories</a>
+          <span style="opacity: 0.4;">/</span>
+          <span>Assignment 02</span>
+        </div>
+        <h1 class="hero-title">Excel Formula-Based Analytics Dashboard</h1>
+        <p class="hero-subtitle">
+          Spreadsheet architecture, formula verification (<code>COUNTIF</code>, <code>MINIFS</code>, <code>AVERAGEIFS</code>), and an in-depth audit of the 9 analytical dashboard modules.
+        </p>
+
+        <div class="hero-meta-bar">
+          <div class="hero-meta-item">
+            <span class="text-subtle">Workbook:</span>
+            <code>DAV_Lab_Assignment_2_Movie_Streaming_Platform.xlsx</code>
+          </div>
+          <div class="hero-meta-item">
+            <span class="text-subtle">Sheets:</span>
+            <strong>DATA (9,516 rows) &amp; DASHBOARD</strong>
+          </div>
+          <div class="hero-meta-item">
+            <span class="text-subtle">Audited Sections:</span>
+            <span class="badge badge-accent">9 Modules Verified</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Article Content -->
+    <div class="container" style="margin-top: var(--space-2xl);">
+      <div class="content-narrow">
+        <p class="lead">
+          Laboratory 2 translates the streaming analysis into enterprise spreadsheet architecture. Rather than relying on static pivot tables, the workbook constructs a live, formula-driven dashboard sheet connected dynamically to the master record store.
+        </p>
+      </div>
+
+      <!-- Section A: Workbook Architecture -->
+      <section class="lab-task-block">
+        <div class="task-header">
+          <div style="display: flex; align-items: center; gap: var(--space-sm);">
+            <span class="badge badge-accent">Architecture</span>
+            <h2 class="task-title" style="margin: 0; font-family: var(--font-sans);">Spreadsheet Structure &amp; Transformation Columns</h2>
+          </div>
+          <span class="badge badge-default">2 Worksheets</span>
+        </div>
+
+        <p class="task-desc">
+          Inspection of the raw workbook reveals two sheets. The <code>DATA</code> worksheet houses the 9,515 raw records plus two engineered formula columns:
+        </p>
+
+        <div class="formula-inspector">
+          <table class="formula-table">
+            <thead>
+              <tr>
+                <th>Column</th>
+                <th>Header Name</th>
+                <th>Underlying Excel Formula</th>
+                <th>Analytical Purpose</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Column L</strong></td>
+                <td><code>RT Score</code></td>
+                <td><span class="formula-code">=IFERROR(VALUE(LEFT(F2, FIND("/", F2)-1))/10, "")</span></td>
+                <td>Extracts numerator before <code>/</code> and normalizes to 0–10 scale</td>
+              </tr>
+              <tr>
+                <td><strong>Column M</strong></td>
+                <td><code>Platform Count</code></td>
+                <td><span class="formula-code">=SUM(G2:J2)</span></td>
+                <td>Sums streaming binary flags to compute multi-platform availability</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Section B: Audit of the 9 Dashboard Sections -->
+      <section class="lab-task-block">
+        <div class="task-header">
+          <div style="display: flex; align-items: center; gap: var(--space-sm);">
+            <span class="badge badge-accent">Audit</span>
+            <h2 class="task-title" style="margin: 0; font-family: var(--font-sans);">Formulas &amp; Computed Values in DASHBOARD Sheet</h2>
+          </div>
+          <span class="badge badge-accent">Audited from Cells A1:R90</span>
+        </div>
+
+        <p class="task-desc">
+          Every KPI card and distribution table in the <code>DASHBOARD</code> worksheet is dynamically derived using native Excel formula functions:
+        </p>
+
+        <div class="formula-inspector">
+          <table class="formula-table">
+            <thead>
+              <tr>
+                <th>Module / Heading</th>
+                <th>Cell Ref</th>
+                <th>Excel Formula</th>
+                <th class="num">Calculated Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1. Total Records</td>
+                <td><code>D8</code></td>
+                <td><span class="formula-code">=COUNTA(DATA!C2:C9516)</span></td>
+                <td class="num font-mono"><strong>9,515</strong></td>
+              </tr>
+              <tr>
+                <td>1. Earliest Movie Year</td>
+                <td><code>D10</code></td>
+                <td><span class="formula-code">=MINIFS(DATA!D2:D9516, DATA!D2:D9516, ">0")</span></td>
+                <td class="num font-mono"><strong>1914</strong></td>
+              </tr>
+              <tr>
+                <td>1. Latest Movie Year</td>
+                <td><code>D11</code></td>
+                <td><span class="formula-code">=MAX(DATA!D2:D9516)</span></td>
+                <td class="num font-mono"><strong>2021</strong></td>
+              </tr>
+              <tr>
+                <td>1. Average Movie Year</td>
+                <td><code>D12</code></td>
+                <td><span class="formula-code">=AVERAGEIFS(DATA!D2:D9516, DATA!D2:D9516, ">0")</span></td>
+                <td class="num font-mono"><strong>2007.42</strong></td>
+              </tr>
+              <tr>
+                <td>1. Missing Age Count</td>
+                <td><code>D13</code></td>
+                <td><span class="formula-code">=COUNTBLANK(DATA!E2:E9516)</span></td>
+                <td class="num font-mono"><strong>4,177</strong></td>
+              </tr>
+              <tr>
+                <td>2. Average RT Rating</td>
+                <td><code>D19</code></td>
+                <td><span class="formula-code">=AVERAGE(DATA!L2:L9516)</span></td>
+                <td class="num font-mono"><strong>5.35 / 10</strong></td>
+              </tr>
+              <tr>
+                <td>2. Movies Rated 8+</td>
+                <td><code>D22</code></td>
+                <td><span class="formula-code">=COUNTIF(DATA!L2:L9516, ">=8")</span></td>
+                <td class="num font-mono"><strong>335</strong></td>
+              </tr>
+              <tr>
+                <td>3. Prime Video Movies</td>
+                <td><code>D29</code></td>
+                <td><span class="formula-code">=COUNTIF(DATA!I2:I9516, 1)</span></td>
+                <td class="num font-mono"><strong>4,113</strong></td>
+              </tr>
+              <tr>
+                <td>3. Netflix Movies</td>
+                <td><code>D27</code></td>
+                <td><span class="formula-code">=COUNTIF(DATA!G2:G9516, 1)</span></td>
+                <td class="num font-mono"><strong>3,695</strong></td>
+              </tr>
+              <tr>
+                <td>3. Hulu Movies</td>
+                <td><code>D28</code></td>
+                <td><span class="formula-code">=COUNTIF(DATA!H2:H9516, 1)</span></td>
+                <td class="num font-mono"><strong>1,047</strong></td>
+              </tr>
+              <tr>
+                <td>3. Disney+ Movies</td>
+                <td><code>D30</code></td>
+                <td><span class="formula-code">=COUNTIF(DATA!J2:J9516, 1)</span></td>
+                <td class="num font-mono"><strong>922</strong></td>
+              </tr>
+              <tr>
+                <td>8. Netflix Highly Rated</td>
+                <td><code>D75</code></td>
+                <td><span class="formula-code">=COUNTIFS(DATA!G2:G9516, 1, DATA!L2:L9516, ">=8")</span></td>
+                <td class="num font-mono"><strong>168</strong></td>
+              </tr>
+              <tr>
+                <td>9. Single Platform Titles</td>
+                <td><code>C87</code></td>
+                <td><span class="formula-code">=COUNTIF(DATA!M2:M9516, 1)</span></td>
+                <td class="num font-mono"><strong>9,262</strong> (97.34%)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Section C: Visual Reproductions of Lab 2 Dashboard Charts -->
+      <section class="lab-task-block">
+        <div class="task-header">
+          <div style="display: flex; align-items: center; gap: var(--space-sm);">
+            <span class="badge badge-accent">Visualizations</span>
+            <h2 class="task-title" style="margin: 0; font-family: var(--font-sans);">Key Excel Dashboard Visual Reproductions</h2>
+          </div>
+          <span class="badge badge-default">Plotly Reproductions</span>
+        </div>
+
+        <p class="task-desc">
+          The workbook features 9 embedded charts. Below are clean interactive reproductions of the two most critical analytical models: the 5-tier Rating Bins distribution and the Platform Exclusivity / Overlap breakdown.
+        </p>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-xl); margin-top: var(--space-lg);">
+          <!-- Chart 1: Rating Bins -->
+          <div class="chart-card">
+            <div class="chart-header">
+              <div>
+                <h3 class="chart-title">Rating Distribution Bins</h3>
+                <p class="chart-subtitle">Reproduction of Excel Dashboard Chart 4 (Section 5)</p>
+              </div>
+              <span class="badge badge-scale">0–10 Scale</span>
+            </div>
+            <div class="chart-body" id="lab2-chart-bins"></div>
+            <div class="chart-footer">
+              <span>Formula: <code>=COUNTIFS(DATA!L:L, ">=4", DATA!L:L, "<6")</code></span>
+              <span class="font-mono">Peak: 4–6 Bin (5,429 Titles)</span>
+            </div>
+          </div>
+
+          <!-- Chart 2: Exclusivity Donut -->
+          <div class="chart-card">
+            <div class="chart-header">
+              <div>
+                <h3 class="chart-title">Platform Exclusivity &amp; Overlap</h3>
+                <p class="chart-subtitle">Reproduction of Excel Dashboard Chart 7 (Section 9)</p>
+              </div>
+              <span class="badge badge-default">Exclusivity Metric</span>
+            </div>
+            <div class="chart-body" id="lab2-chart-overlap"></div>
+            <div class="chart-footer">
+              <span>Formula: <code>=COUNTIF(DATA!M2:M9516, 1)</code></span>
+              <span class="font-mono">Exclusives: 97.34%</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout-box callout-info" style="margin-top: var(--space-xl);">
+          <div class="callout-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+            Excel Exclusivity Audit Takeaway
+          </div>
+          <p>
+            Section 9 of the Excel dashboard proves that competition between OTT services is overwhelmingly driven by <strong>content exclusivity</strong>. Out of 9,515 titles, <strong>9,262 titles (97.34%) are available on exactly one platform</strong>. Only 245 titles are shared between 2 services, 7 between 3 services, and a single title is licensed by all 4.
+          </p>
+        </div>
+      </section>
+
+      <!-- Navigation Footnotes -->
+      <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--color-border); padding-top: var(--space-xl); margin-top: var(--space-3xl);">
+        <a href="./lab1.html" class="btn btn-secondary">← Back to Lab 1</a>
+        <a href="./lab3.html" class="btn btn-primary">Proceed to Lab 3: Seaborn Stats →</a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>DAV Laboratory Portfolio</h4>
+          <p style="color: #94a3b8; font-size: 0.85rem; max-width: 320px; line-height: 1.6;">
+            A rigorous academic investigation into streaming media catalogs, developed as part of the Data Analytics &amp; Visualization curriculum.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h5>Laboratory Work</h5>
+          <ul class="footer-list">
+            <li><a href="./labs.html">Curriculum Overview</a></li>
+            <li><a href="./lab1.html">Lab 1: Python EDA</a></li>
+            <li><a href="./lab2.html">Lab 2: Excel Analysis</a></li>
+            <li><a href="./lab3.html">Lab 3: Seaborn Stats</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Interactive Tools</h5>
+          <ul class="footer-list">
+            <li><a href="./explorer.html">Data Explorer</a></li>
+            <li><a href="./insights.html">Analytical Insights</a></li>
+            <li><a href="./resources.html">Provenance &amp; Files</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Academic Sources</h5>
+          <ul class="footer-list">
+            <li><span style="color: #cbd5e1;">Dataset: 9,515 Records</span></li>
+            <li><span style="color: #cbd5e1;">Format: Static HTML5 / Plotly</span></li>
+            <li><a href="./resources.html">Download Source CSV</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>Data Analytics &amp; Visualization Laboratory Project © 2026. Academic Portfolio.</div>
+        <div style="font-family: var(--font-mono); font-size: 0.75rem;">Source Verified • GitHub Pages Deployment</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./js/data.js"></script>
+  <script src="./js/charts.js"></script>
+  <script src="./js/app.js"></script>
+  <script src="./js/components.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const summary = await DAVData.loadSummary();
+      if (summary) {
+        DAVCharts.renderRatingBins('lab2-chart-bins', summary.ratingBins);
+        DAVCharts.renderOverlapDonut('lab2-chart-overlap', summary.platformOverlap);
+      }
+    });
+  </script>
+</body>
+</html>

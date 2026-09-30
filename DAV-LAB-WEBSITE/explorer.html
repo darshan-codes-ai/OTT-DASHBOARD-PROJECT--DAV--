@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Data Explorer | DAV Laboratory Portfolio</title>
+  <meta name="description" content="Search, filter, inspect, and export all 9,515 movies across Netflix, Hulu, Prime Video, and Disney+ with real-time descriptive metrics.">
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
+  
+  <link rel="stylesheet" href="./css/global.css">
+  <link rel="stylesheet" href="./css/components.css">
+  <link rel="stylesheet" href="./css/pages.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.35.2/plotly.min.js"></script>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="container nav-container">
+      <a href="./index.html" class="nav-brand" aria-label="DAV Laboratory Home">
+        <div class="brand-mark">D</div>
+        <div class="brand-info">
+          <span class="brand-title">DAV Laboratory</span>
+          <span class="brand-subtitle">OTT Content Analytics</span>
+        </div>
+      </a>
+      <nav class="nav-menu" aria-label="Main Navigation">
+        <a href="./index.html" class="nav-link">Home</a>
+        <a href="./labs.html" class="nav-link">Labs</a>
+        <a href="./explorer.html" class="nav-link active">Data Explorer</a>
+        <a href="./insights.html" class="nav-link">Insights</a>
+        <a href="./resources.html" class="nav-link">Resources</a>
+      </nav>
+      <div class="nav-actions">
+        <button id="export-csv-btn" class="btn btn-primary btn-sm">Export CSV</button>
+        <button class="mobile-toggle" aria-label="Toggle navigation drawer" aria-expanded="false">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="mobile-drawer" id="mobile-drawer">
+      <ul class="mobile-nav-list">
+        <li><a href="./index.html" class="mobile-nav-link">Home</a></li>
+        <li><a href="./labs.html" class="mobile-nav-link">Labs Overview</a></li>
+        <li><a href="./lab1.html" class="mobile-nav-link" style="padding-left: 24px;">└ Lab 1: Python EDA</a></li>
+        <li><a href="./lab2.html" class="mobile-nav-link" style="padding-left: 24px;">└ Lab 2: Excel Dashboard</a></li>
+        <li><a href="./lab3.html" class="mobile-nav-link" style="padding-left: 24px;">└ Lab 3: Seaborn Analysis</a></li>
+        <li><a href="./explorer.html" class="mobile-nav-link active">Data Explorer</a></li>
+        <li><a href="./insights.html" class="mobile-nav-link">Key Insights</a></li>
+        <li><a href="./resources.html" class="mobile-nav-link">Resources &amp; Provenance</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main id="main-content" class="site-main">
+    
+    <div class="hero-section" style="padding: var(--space-2xl) 0;">
+      <div class="container">
+        <div class="hero-kicker">
+          <a href="./index.html">Home</a>
+          <span style="opacity: 0.4;">/</span>
+          <span>Interactive Query</span>
+        </div>
+        <h1 class="hero-title">Catalog Data Explorer</h1>
+        <p class="hero-subtitle">
+          Interactive multi-criteria query interface powered directly by the 9,515 records in <code>MoviesOnStreamingPlatforms.csv</code>. Filter by service, audience classification, temporal bounds, and critic score thresholds.
+        </p>
+      </div>
+    </div>
+
+    <div class="container" style="margin-top: var(--space-xl);">
+      
+      <!-- Filter Toolbar Card -->
+      <div class="explorer-filter-card">
+        <div class="filter-grid">
+          <!-- 1. Search Query -->
+          <div class="form-group">
+            <label for="search-input" class="form-label">Search Movie Title</label>
+            <input type="text" id="search-input" class="form-control" placeholder="e.g. Inception, Irishman, Toy Story...">
+          </div>
+
+          <!-- 2. Age Rating -->
+          <div class="form-group">
+            <label for="age-select" class="form-label">Age Classification</label>
+            <select id="age-select" class="form-control">
+              <option value="all">All Classifications</option>
+              <option value="all">all (General Audience)</option>
+              <option value="7+">7+ (Ages 7 and older)</option>
+              <option value="13+">13+ (Teens 13+)</option>
+              <option value="16+">16+ (Ages 16+)</option>
+              <option value="18+">18+ (Adults 18+)</option>
+              <option value="unrated">Unrated / Missing (4,177)</option>
+            </select>
+          </div>
+
+          <!-- 3. Min Year -->
+          <div class="form-group">
+            <label for="min-year-input" class="form-label">Min Year</label>
+            <input type="number" id="min-year-input" class="form-control" placeholder="1914" min="1914" max="2021">
+          </div>
+
+          <!-- 4. Max Year -->
+          <div class="form-group">
+            <label for="max-year-input" class="form-label">Max Year</label>
+            <input type="number" id="max-year-input" class="form-control" placeholder="2021" min="1914" max="2021">
+          </div>
+
+          <!-- 5. Min Score -->
+          <div class="form-group">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <label for="score-slider" class="form-label">Min Rotten Tomatoes</label>
+              <span id="score-val-display" class="font-mono text-subtle" style="font-size: 0.72rem;">All Scores</span>
+            </div>
+            <input type="range" id="score-slider" class="form-control" min="0" max="9.5" step="0.5" value="0" style="padding: 4px;">
+          </div>
+        </div>
+
+        <!-- Platform Chips & Reset -->
+        <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; margin-top: var(--space-md); border-top: 1px solid var(--color-border-subtle); padding-top: var(--space-sm);">
+          <div style="display: flex; align-items: center; gap: var(--space-sm); flex-wrap: wrap;">
+            <span class="form-label" style="margin-bottom: 0;">Platform:</span>
+            <div class="platform-chips-row" style="margin-top: 0;">
+              <button class="chip-btn active" data-platform="all">All Services</button>
+              <button class="chip-btn" data-platform="netflix">Netflix (3,695)</button>
+              <button class="chip-btn" data-platform="prime">Prime Video (4,113)</button>
+              <button class="chip-btn" data-platform="hulu">Hulu (1,047)</button>
+              <button class="chip-btn" data-platform="disney">Disney+ (922)</button>
+            </div>
+          </div>
+          <button id="reset-filters-btn" class="btn btn-secondary btn-sm" style="margin-top: 4px;">Reset Filters</button>
+        </div>
+      </div>
+
+      <!-- Dynamic Live KPI Strip -->
+      <div class="stat-grid" style="margin-top: 0; margin-bottom: var(--space-lg); grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));">
+        <div class="stat-card" style="padding: var(--space-md);">
+          <span class="stat-label">Matching Movies</span>
+          <div class="stat-value" id="stat-filtered-count" style="font-size: 1.8rem;">9,515</div>
+          <p class="stat-desc" id="result-count-summary">100% of catalog</p>
+        </div>
+
+        <div class="stat-card" style="padding: var(--space-md);">
+          <span class="stat-label">Filtered Mean Score</span>
+          <div class="stat-value" id="stat-filtered-mean" style="font-size: 1.8rem;">5.35 / 10</div>
+          <p class="stat-desc">Sample average</p>
+        </div>
+
+        <div class="stat-card" style="padding: var(--space-md);">
+          <span class="stat-label">Filtered Median</span>
+          <div class="stat-value" id="stat-filtered-median" style="font-size: 1.8rem;">5.20 / 10</div>
+          <p class="stat-desc">50th percentile</p>
+        </div>
+
+        <div class="stat-card" style="padding: var(--space-md);">
+          <span class="stat-label">High-Rated (RT ≥ 8.0)</span>
+          <div class="stat-value" id="stat-filtered-high" style="font-size: 1.8rem;">335</div>
+          <p class="stat-desc">Premium tier</p>
+        </div>
+      </div>
+
+      <!-- Table Header Bar -->
+      <div class="explorer-meta-strip">
+        <div style="font-size: 0.88rem; color: var(--color-text-muted);">
+          Click column headers to sort ascending / descending. Missing values shown as <code>—</code>.
+        </div>
+        <div style="display: flex; align-items: center; gap: var(--space-xs);">
+          <label for="page-size-select" style="font-size: 0.82rem; color: var(--color-text-muted);">Show rows:</label>
+          <select id="page-size-select" class="form-control" style="width: auto; padding: 4px 8px; font-size: 0.82rem;">
+            <option value="25" selected>25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Data Table -->
+      <div class="editorial-table-wrap">
+        <table class="editorial-table" id="explorer-table">
+          <thead>
+            <tr>
+              <th data-sort="title">Title ↕</th>
+              <th data-sort="year" class="num">Release Year ↕</th>
+              <th data-sort="age">Age Rating ↕</th>
+              <th data-sort="rt10" class="num">Rotten Tomatoes ↕</th>
+              <th>Platform Availability</th>
+            </tr>
+          </thead>
+          <tbody id="explorer-table-body">
+            <!-- Populated dynamically by explorer.js -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pagination Controls -->
+      <div class="pagination-bar" id="pagination-container">
+        <!-- Rendered by explorer.js -->
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>DAV Laboratory Portfolio</h4>
+          <p style="color: #94a3b8; font-size: 0.85rem; max-width: 320px; line-height: 1.6;">
+            A rigorous academic investigation into streaming media catalogs, developed as part of the Data Analytics &amp; Visualization curriculum.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h5>Laboratory Work</h5>
+          <ul class="footer-list">
+            <li><a href="./labs.html">Curriculum Overview</a></li>
+            <li><a href="./lab1.html">Lab 1: Python EDA</a></li>
+            <li><a href="./lab2.html">Lab 2: Excel Analysis</a></li>
+            <li><a href="./lab3.html">Lab 3: Seaborn Stats</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Interactive Tools</h5>
+          <ul class="footer-list">
+            <li><a href="./explorer.html">Data Explorer</a></li>
+            <li><a href="./insights.html">Analytical Insights</a></li>
+            <li><a href="./resources.html">Provenance &amp; Files</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Academic Sources</h5>
+          <ul class="footer-list">
+            <li><span style="color: #cbd5e1;">Dataset: 9,515 Records</span></li>
+            <li><span style="color: #cbd5e1;">Format: Static HTML5 / Plotly</span></li>
+            <li><a href="./resources.html">Download Source CSV</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>Data Analytics &amp; Visualization Laboratory Project © 2026. Academic Portfolio.</div>
+        <div style="font-family: var(--font-mono); font-size: 0.75rem;">Source Verified • GitHub Pages Deployment</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./js/data.js"></script>
+  <script src="./js/explorer.js"></script>
+  <script src="./js/app.js"></script>
+  <script src="./js/components.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      DAVExplorer.init();
+    });
+  </script>
+</body>
+</html>

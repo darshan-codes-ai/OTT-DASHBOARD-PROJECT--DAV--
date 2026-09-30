@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab 3: Seaborn Statistical Visualizations | DAV Laboratory Portfolio</title>
+  <meta name="description" content="Detailed analysis of DAV Lab Assignment 3: Seaborn statistical modeling, boxplots, KDE density curves, and 6x6 Pearson correlation matrix.">
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
+  
+  <link rel="stylesheet" href="./css/global.css">
+  <link rel="stylesheet" href="./css/components.css">
+  <link rel="stylesheet" href="./css/pages.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.35.2/plotly.min.js"></script>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="container nav-container">
+      <a href="./index.html" class="nav-brand" aria-label="DAV Laboratory Home">
+        <div class="brand-mark">D</div>
+        <div class="brand-info">
+          <span class="brand-title">DAV Laboratory</span>
+          <span class="brand-subtitle">OTT Content Analytics</span>
+        </div>
+      </a>
+      <nav class="nav-menu" aria-label="Main Navigation">
+        <a href="./index.html" class="nav-link">Home</a>
+        <a href="./labs.html" class="nav-link active">Labs</a>
+        <a href="./explorer.html" class="nav-link">Data Explorer</a>
+        <a href="./insights.html" class="nav-link">Insights</a>
+        <a href="./resources.html" class="nav-link">Resources</a>
+      </nav>
+      <div class="nav-actions">
+        <a href="./explorer.html" class="btn btn-primary btn-sm">Explore Data</a>
+        <button class="mobile-toggle" aria-label="Toggle navigation drawer" aria-expanded="false">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="mobile-drawer" id="mobile-drawer">
+      <ul class="mobile-nav-list">
+        <li><a href="./index.html" class="mobile-nav-link">Home</a></li>
+        <li><a href="./labs.html" class="mobile-nav-link">Labs Overview</a></li>
+        <li><a href="./lab1.html" class="mobile-nav-link" style="padding-left: 24px;">└ Lab 1: Python EDA</a></li>
+        <li><a href="./lab2.html" class="mobile-nav-link" style="padding-left: 24px;">└ Lab 2: Excel Dashboard</a></li>
+        <li><a href="./lab3.html" class="mobile-nav-link active" style="padding-left: 24px;">└ Lab 3: Seaborn Analysis</a></li>
+        <li><a href="./explorer.html" class="mobile-nav-link">Data Explorer</a></li>
+        <li><a href="./insights.html" class="mobile-nav-link">Key Insights</a></li>
+        <li><a href="./resources.html" class="mobile-nav-link">Resources &amp; Provenance</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main id="main-content" class="site-main">
+    
+    <!-- Lab Article Header -->
+    <div class="lab-article-header">
+      <div class="container">
+        <div class="hero-kicker">
+          <a href="./labs.html">Laboratories</a>
+          <span style="opacity: 0.4;">/</span>
+          <span>Assignment 03</span>
+        </div>
+        <h1 class="hero-title">Statistical Visualizations with Seaborn</h1>
+        <p class="hero-subtitle">
+          Advanced statistical distributions, boxplot quartile spreads, histogram density curves, and a 6×6 Pearson correlation matrix preserving the original 0–100 score scale.
+        </p>
+
+        <div class="hero-meta-bar">
+          <div class="hero-meta-item">
+            <span class="text-subtle">Notebook:</span>
+            <code>DAV_Lab_Assignment_3_Movie_Streaming_Analysis.ipynb</code>
+          </div>
+          <div class="hero-meta-item">
+            <span class="text-subtle">Primary Libraries:</span>
+            <strong>Seaborn, Matplotlib, SciPy, Pandas</strong>
+          </div>
+          <div class="hero-meta-item">
+            <span class="text-subtle">Active Score Scale:</span>
+            <span class="badge badge-scale-alt">Scale: 0–100 (Notebook Raw)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Article Content -->
+    <div class="container" style="margin-top: var(--space-2xl);">
+      <div class="content-narrow">
+        <p class="lead">
+          Laboratory 3 extends basic descriptive charts into formal statistical visualization. Using Python's Seaborn statistical data visualization library, the analysis tests parametric normality assumptions, compares rating spreads across demographic tiers, and inspects inter-platform correlation patterns.
+        </p>
+      </div>
+
+      <!-- Scale Note Banner -->
+      <div class="callout-box callout-info" style="margin-top: var(--space-lg);">
+        <div class="callout-title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+          Academic Provenance: Preserving the 0–100 Rotten Tomatoes Scale
+        </div>
+        <p>
+          Unlike Lab 1 and Lab 2 which normalized scores to a 0–10 scale, the original Lab 3 notebook casts Rotten Tomatoes to a floating-point score on the original <strong>0–100 scale</strong>:
+          $$\text{Mean} = 53.55, \quad \text{Std} = 13.20, \quad \text{Median} = 52.00, \quad \text{IQR} = [44.0, 62.0], \quad \text{Range} = [10.0, 98.0]$$
+          All charts and statistical tables in this article adhere strictly to this native 0–100 scale.
+        </p>
+      </div>
+
+      <!-- Step 1 & 4: Boxplot and Violin Plot by Age -->
+      <section class="lab-task-block">
+        <div class="task-header">
+          <div style="display: flex; align-items: center; gap: var(--space-sm);">
+            <span class="badge badge-accent">Steps 1 &amp; 4</span>
+            <h2 class="task-title" style="margin: 0; font-family: var(--font-sans);">Score Distributions by Age Rating (Boxplot &amp; Violin Plot)</h2>
+          </div>
+          <span class="badge badge-scale-alt">0–100 Scale</span>
+        </div>
+
+        <p class="task-desc">
+          To evaluate how ratings differ across audiences, missing age values are filtered out, yielding <strong>5,338 records</strong> across the ordered ratings: <code>all</code>, <code>7+</code>, <code>13+</code>, <code>16+</code>, and <code>18+</code>.
+        </p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span>Seaborn Boxplot Implementation (Step 1)</span>
+          </div>
+          <pre><code># Step 1.1: Remove missing Age values
+plot_df = df[df['Age'].notna() & df['Rotten Tomatoes Score'].notna()]
+age_order = ['all', '7+', '13+', '16+', '18+']
+
+# Step 1.2: Boxplot by Age
+plt.figure(figsize=(8, 5))
+sns.boxplot(data=plot_df, x='Age', y='Rotten Tomatoes Score', order=age_order)
+plt.title("Rotten Tomatoes Score by Age Rating")
+plt.show()</code></pre>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-xl); margin-top: var(--space-lg);">
+          <!-- Chart: Boxplot -->
+          <div class="chart-card">
+            <div class="chart-header">
+              <div>
+                <h3 class="chart-title">Rotten Tomatoes Score by Age (Boxplot)</h3>
+                <p class="chart-subtitle">Reproduction of Lab 3 Step 1.2 boxplot</p>
+              </div>
+              <span class="badge badge-scale-alt">Scale: 0–100</span>
+            </div>
+            <div class="chart-body" id="lab3-chart-boxplot"></div>
+            <div class="chart-footer">
+              <span>Source: <code>sns.boxplot(data=plot_df, x='Age', y='Score')</code></span>
+              <span class="font-mono">N = 5,338 Cleaned Rows</span>
+            </div>
+          </div>
+
+          <!-- Chart: Violin Plot -->
+          <div class="chart-card">
+            <div class="chart-header">
+              <div>
+                <h3 class="chart-title">Density Spread by Age (Violin Plot)</h3>
+                <p class="chart-subtitle">Reproduction of Lab 3 Step 4.1 violin plot</p>
+              </div>
+              <span class="badge badge-scale-alt">Scale: 0–100</span>
+            </div>
+            <div class="chart-body" id="lab3-chart-violin"></div>
+            <div class="chart-footer">
+              <span>Source: <code>sns.violinplot(data=plot_df, x='Age', y='Score')</code></span>
+              <span class="font-mono">KDE Overlaid on Quartiles</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="task-findings" style="margin-top: var(--space-md);">
+          <strong>Distribution Takeaway:</strong> Across all age classifications, median scores remain remarkably stable between <strong>50.0 and 54.0</strong>. Outliers with ratings above 90% appear across all age tiers, while <code>18+</code> features the widest interquartile range (IQR).
+        </div>
+      </section>
+
+      <!-- Step 2: Histogram + KDE -->
+      <section class="lab-task-block">
+        <div class="task-header">
+          <div style="display: flex; align-items: center; gap: var(--space-sm);">
+            <span class="badge badge-accent">Step 2</span>
+            <h2 class="task-title" style="margin: 0; font-family: var(--font-sans);">Parametric Score Density (Histogram + KDE)</h2>
+          </div>
+          <span class="badge badge-scale-alt">0–100 Scale</span>
+        </div>
+
+        <p class="task-desc">
+          Evaluating the density shape of the 9,508 non-null Rotten Tomatoes scores confirms that critic ratings conform to a unimodal bell-shaped distribution with mild right-skewness.
+        </p>
+
+        <div class="chart-card">
+          <div class="chart-header">
+            <div>
+              <h3 class="chart-title">Distribution of Rotten Tomatoes Scores with Kernel Density</h3>
+              <p class="chart-subtitle">Direct reproduction of Lab 3 Step 2 histogram</p>
+            </div>
+            <span class="badge badge-scale-alt">Scale: 0–100</span>
+          </div>
+          <div class="chart-body" id="lab3-chart-histkde"></div>
+          <div class="chart-footer">
+            <span>Source: <code>sns.histplot(data=df, x='Rotten Tomatoes Score', kde=True)</code></span>
+            <span class="font-mono">Mean: 53.55 | Std: 13.20</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Step 3: Correlation Matrix Heatmap -->
+      <section class="lab-task-block">
+        <div class="task-header">
+          <div style="display: flex; align-items: center; gap: var(--space-sm);">
+            <span class="badge badge-accent">Step 3</span>
+            <h2 class="task-title" style="margin: 0; font-family: var(--font-sans);">6×6 Pearson Correlation Matrix Heatmap</h2>
+          </div>
+          <span class="badge badge-default">Inter-Platform Correlation</span>
+        </div>
+
+        <p class="task-desc">
+          Step 3 examines pairwise linear associations across the 6 numeric features: <code>Year</code>, <code>Rotten Tomatoes Score</code>, <code>Netflix</code>, <code>Hulu</code>, <code>Prime Video</code>, and <code>Disney+</code>.
+        </p>
+
+        <div class="chart-card">
+          <div class="chart-header">
+            <div>
+              <h3 class="chart-title">Pearson Correlation Heatmap (6×6 Matrix)</h3>
+              <p class="chart-subtitle">Direct reproduction of Lab 3 Step 3.1 heatmap</p>
+            </div>
+            <span class="badge badge-default">Step 3.1</span>
+          </div>
+          <div class="chart-body" id="lab3-chart-heatmap" style="min-height: 480px;"></div>
+          <div class="chart-footer">
+            <span>Source: <code>sns.heatmap(df[nums_cols].corr(), annot=True, cmap='coolwarm')</code></span>
+            <span class="font-mono">Verified Correlation Values</span>
+          </div>
+        </div>
+
+        <div class="formula-inspector" style="margin-top: var(--space-lg);">
+          <table class="formula-table">
+            <thead>
+              <tr>
+                <th>Variable Pair</th>
+                <th class="num">Pearson $r$</th>
+                <th>Academic Interpretation</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Netflix ↔ Prime Video</strong></td>
+                <td class="num font-mono" style="color: var(--color-netflix); font-weight: 700;">-0.6478</td>
+                <td>Strong negative correlation indicating distinct catalog differentiation and minimal library co-licensing.</td>
+              </tr>
+              <tr>
+                <td><strong>Netflix ↔ Release Year</strong></td>
+                <td class="num font-mono" style="color: var(--color-accent); font-weight: 700;">+0.3066</td>
+                <td>Moderate positive correlation showing Netflix's strategic bias toward modern releases (post-2015).</td>
+              </tr>
+              <tr>
+                <td><strong>Prime Video ↔ Release Year</strong></td>
+                <td class="num font-mono" style="color: var(--color-warning); font-weight: 700;">-0.2437</td>
+                <td>Moderate negative correlation reflecting Prime Video's extensive archive of classic and older cinema.</td>
+              </tr>
+              <tr>
+                <td><strong>Prime Video ↔ Score</strong></td>
+                <td class="num font-mono" style="color: var(--color-warning); font-weight: 700;">-0.2082</td>
+                <td>Moderate negative correlation demonstrating that massive catalog breadth dilutes average critic ratings.</td>
+              </tr>
+              <tr>
+                <td><strong>Hulu ↔ Score</strong></td>
+                <td class="num font-mono" style="color: var(--color-hulu); font-weight: 700;">+0.1827</td>
+                <td>Positive correlation reflecting a smaller, more selective curation standard.</td>
+              </tr>
+              <tr>
+                <td><strong>Release Year ↔ Score</strong></td>
+                <td class="num font-mono">+0.0356</td>
+                <td>Virtually zero linear relationship between a movie's release year and its critical acclaim.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Navigation Footnotes -->
+      <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--color-border); padding-top: var(--space-xl); margin-top: var(--space-3xl);">
+        <a href="./lab2.html" class="btn btn-secondary">← Back to Lab 2</a>
+        <a href="./explorer.html" class="btn btn-primary">Test the Data Explorer →</a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>DAV Laboratory Portfolio</h4>
+          <p style="color: #94a3b8; font-size: 0.85rem; max-width: 320px; line-height: 1.6;">
+            A rigorous academic investigation into streaming media catalogs, developed as part of the Data Analytics &amp; Visualization curriculum.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h5>Laboratory Work</h5>
+          <ul class="footer-list">
+            <li><a href="./labs.html">Curriculum Overview</a></li>
+            <li><a href="./lab1.html">Lab 1: Python EDA</a></li>
+            <li><a href="./lab2.html">Lab 2: Excel Analysis</a></li>
+            <li><a href="./lab3.html">Lab 3: Seaborn Stats</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Interactive Tools</h5>
+          <ul class="footer-list">
+            <li><a href="./explorer.html">Data Explorer</a></li>
+            <li><a href="./insights.html">Analytical Insights</a></li>
+            <li><a href="./resources.html">Provenance &amp; Files</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Academic Sources</h5>
+          <ul class="footer-list">
+            <li><span style="color: #cbd5e1;">Dataset: 9,515 Records</span></li>
+            <li><span style="color: #cbd5e1;">Format: Static HTML5 / Plotly</span></li>
+            <li><a href="./resources.html">Download Source CSV</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>Data Analytics &amp; Visualization Laboratory Project © 2026. Academic Portfolio.</div>
+        <div style="font-family: var(--font-mono); font-size: 0.75rem;">Source Verified • GitHub Pages Deployment</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./js/data.js"></script>
+  <script src="./js/charts.js"></script>
+  <script src="./js/app.js"></script>
+  <script src="./js/components.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const summary = await DAVData.loadSummary();
+      const movies = await DAVData.loadMovies();
+      
+      if (summary && summary.correlationMatrix) {
+        DAVCharts.renderCorrelationHeatmap('lab3-chart-heatmap', summary.correlationMatrix);
+      }
+      if (movies && movies.length > 0) {
+        DAVCharts.renderBoxplotAge('lab3-chart-boxplot', movies);
+        DAVCharts.renderViolinAge('lab3-chart-violin', movies);
+        DAVCharts.renderHistKDE('lab3-chart-histkde', movies);
+      }
+    });
+  </script>
+</body>
+</html>

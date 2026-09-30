@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Laboratory Curriculum Overview | DAV Laboratory Portfolio</title>
+  <meta name="description" content="Overview of the three sequential laboratory assignments in the Data Analytics & Visualization curriculum analyzing OTT movie streaming data.">
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
+  
+  <link rel="stylesheet" href="./css/global.css">
+  <link rel="stylesheet" href="./css/components.css">
+  <link rel="stylesheet" href="./css/pages.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.35.2/plotly.min.js"></script>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="container nav-container">
+      <a href="./index.html" class="nav-brand" aria-label="DAV Laboratory Home">
+        <div class="brand-mark">D</div>
+        <div class="brand-info">
+          <span class="brand-title">DAV Laboratory</span>
+          <span class="brand-subtitle">OTT Content Analytics</span>
+        </div>
+      </a>
+      <nav class="nav-menu" aria-label="Main Navigation">
+        <a href="./index.html" class="nav-link">Home</a>
+        <a href="./labs.html" class="nav-link active">Labs</a>
+        <a href="./explorer.html" class="nav-link">Data Explorer</a>
+        <a href="./insights.html" class="nav-link">Insights</a>
+        <a href="./resources.html" class="nav-link">Resources</a>
+      </nav>
+      <div class="nav-actions">
+        <a href="./explorer.html" class="btn btn-primary btn-sm">Explore Data</a>
+        <button class="mobile-toggle" aria-label="Toggle navigation drawer" aria-expanded="false">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="mobile-drawer" id="mobile-drawer">
+      <ul class="mobile-nav-list">
+        <li><a href="./index.html" class="mobile-nav-link">Home</a></li>
+        <li><a href="./labs.html" class="mobile-nav-link active">Labs Overview</a></li>
+        <li><a href="./lab1.html" class="mobile-nav-link" style="padding-left: 24px;">└ Lab 1: Python EDA</a></li>
+        <li><a href="./lab2.html" class="mobile-nav-link" style="padding-left: 24px;">└ Lab 2: Excel Dashboard</a></li>
+        <li><a href="./lab3.html" class="mobile-nav-link" style="padding-left: 24px;">└ Lab 3: Seaborn Analysis</a></li>
+        <li><a href="./explorer.html" class="mobile-nav-link">Data Explorer</a></li>
+        <li><a href="./insights.html" class="mobile-nav-link">Key Insights</a></li>
+        <li><a href="./resources.html" class="mobile-nav-link">Resources &amp; Provenance</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main id="main-content" class="site-main">
+    <div class="hero-section" style="padding: var(--space-2xl) 0;">
+      <div class="container">
+        <div class="hero-kicker">
+          <a href="./index.html">Home</a>
+          <span style="opacity: 0.4;">/</span>
+          <span>Curriculum</span>
+        </div>
+        <h1 class="hero-title">Laboratory Curriculum Overview</h1>
+        <p class="hero-subtitle">
+          A progressive three-phase academic sequence evaluating data cleaning techniques, spreadsheet formula architecture, and parametric statistical visualization on OTT streaming libraries.
+        </p>
+      </div>
+    </div>
+
+    <div class="container" style="margin-top: var(--space-2xl);">
+      <h2>Comparative Methodology Matrix</h2>
+      <p class="text-muted">
+        Each laboratory assignment was designed to test specific analytical workflows, tools, and transformation protocols on the same foundational dataset of 9,515 titles.
+      </p>
+
+      <div class="editorial-table-wrap">
+        <table class="editorial-table">
+          <thead>
+            <tr>
+              <th>Laboratory</th>
+              <th>Primary Tool / Stack</th>
+              <th>Rotten Tomatoes Scale</th>
+              <th>Data Preparation / Tasks</th>
+              <th>Key Analytical Findings</th>
+              <th style="text-align: right;">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <strong>Lab 1: Python EDA</strong><br>
+                <span class="text-subtle" style="font-size: 0.78rem;">Exploratory Analysis</span>
+              </td>
+              <td><code>Python</code>, <code>Pandas</code>, <code>Matplotlib</code></td>
+              <td><span class="badge badge-scale">0–10 (Normalized)</span></td>
+              <td>
+                • Dropped index column <code>Unnamed: 0</code><br>
+                • Deduplication audit (0 duplicate titles)<br>
+                • Missing-value audit: Age (43.9%), RT (0.07%)<br>
+                • String conversion: <code>/100</code> stripped &amp; divided by 10
+              </td>
+              <td>
+                • Mean score: 5.35/10 (Median: 5.2)<br>
+                • Netflix leads high-rated titles (168 of 335)<br>
+                • Peak release volume in 2017–2018
+              </td>
+              <td style="text-align: right;">
+                <a href="./lab1.html" class="btn btn-outline btn-sm">Read Lab 1 →</a>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <strong>Lab 2: Excel Dashboard</strong><br>
+                <span class="text-subtle" style="font-size: 0.78rem;">Spreadsheet Engineering</span>
+              </td>
+              <td><code>Microsoft Excel</code> (Formulas &amp; Charts)</td>
+              <td><span class="badge badge-scale">0–10 (Formula Parsed)</span></td>
+              <td>
+                • Created 2 sheets: <code>DATA</code> &amp; <code>DASHBOARD</code><br>
+                • Added formula column: <code>RT Score</code> (Col L)<br>
+                • Added formula column: <code>Platform Count</code> (Col M)<br>
+                • Applied <code>COUNTA</code>, <code>MINIFS</code>, <code>COUNTIF</code>, <code>COUNTIFS</code>
+              </td>
+              <td>
+                • 9 distinct dashboard modules<br>
+                • 97.34% single-platform exclusivity<br>
+                • Prime Video largest catalog (4,113 / 43.2%)<br>
+                • Rating distribution peaked in 4–6 bin (5,429)
+              </td>
+              <td style="text-align: right;">
+                <a href="./lab2.html" class="btn btn-outline btn-sm">Read Lab 2 →</a>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <strong>Lab 3: Seaborn Analysis</strong><br>
+                <span class="text-subtle" style="font-size: 0.78rem;">Statistical Distributions</span>
+              </td>
+              <td><code>Python</code>, <code>Seaborn</code>, <code>Matplotlib</code></td>
+              <td><span class="badge badge-scale-alt">0–100 (Notebook Raw)</span></td>
+              <td>
+                • Preserved original 0–100 score integer range<br>
+                • Filtered non-null age pairs (5,338 records)<br>
+                • Calculated 6×6 Pearson correlation matrix<br>
+                • Constructed boxplots and violin distributions
+              </td>
+              <td>
+                • Mean score: 53.55/100 (Std: 13.20)<br>
+                • Age 18+ median: 54.0 vs 13+ median: 50.0<br>
+                • Prime Video negatively correlated with Year (-0.24)<br>
+                • Netflix positively correlated with Year (+0.31)
+              </td>
+              <td style="text-align: right;">
+                <a href="./lab3.html" class="btn btn-outline btn-sm">Read Lab 3 →</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Detail Cards Grid -->
+      <div style="margin-top: var(--space-3xl);">
+        <h2>Laboratory Detail Modules</h2>
+        <div class="lab-cards-grid">
+          <!-- Card 1 -->
+          <div class="lab-card">
+            <div class="lab-card-top">
+              <span class="lab-card-tag">Assignment 1 • Python</span>
+              <h3 class="lab-card-title">Data Profiling, Cleaning &amp; Exploratory Analysis</h3>
+              <p class="lab-card-desc">
+                Focuses on foundational data science hygiene: identifying nulls, inspecting column data types, string manipulation to clean Rotten Tomatoes ratings, and extracting the first cross-platform catalog comparisons.
+              </p>
+            </div>
+            <div class="lab-card-meta">
+              <span><strong>10 Tasks</strong> Verified</span>
+              <a href="./lab1.html" class="btn btn-primary btn-sm">Explore Lab 1 →</a>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="lab-card">
+            <div class="lab-card-top">
+              <span class="lab-card-tag">Assignment 2 • Excel</span>
+              <h3 class="lab-card-title">Formula-Based Business Intelligence Dashboard</h3>
+              <p class="lab-card-desc">
+                Demonstrates how enterprise analytics teams use Microsoft Excel formula structures to calculate dynamic descriptive statistics, demographic breakdowns, rating distribution bins, and platform overlap metrics.
+              </p>
+            </div>
+            <div class="lab-card-meta">
+              <span><strong>9 Modules</strong> Audited</span>
+              <a href="./lab2.html" class="btn btn-primary btn-sm">Explore Lab 2 →</a>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="lab-card">
+            <div class="lab-card-top">
+              <span class="lab-card-tag">Assignment 3 • Seaborn</span>
+              <h3 class="lab-card-title">Advanced Statistical Distribution &amp; Correlation</h3>
+              <p class="lab-card-desc">
+                Investigates parametric and non-parametric properties of critic scores using kernel density estimations, boxplot quartile spreads across age tiers, and a comprehensive 6×6 feature correlation heatmap.
+              </p>
+            </div>
+            <div class="lab-card-meta">
+              <span><strong>6 Steps</strong> Preserved</span>
+              <a href="./lab3.html" class="btn btn-primary btn-sm">Explore Lab 3 →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Score Scale Caveat Callout -->
+      <div class="callout-box callout-warning" style="margin-top: var(--space-2xl);">
+        <div class="callout-title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0zM12 9v4M12 17h.01"/></svg>
+          Important Score Scale Specification Note
+        </div>
+        <p>
+          In academic evaluations, score scale consistency is critical. Notice that <strong>Lab 1 and Lab 2 normalize the Rotten Tomatoes score to a 0–10 scale</strong> (e.g. <code>9.8 / 10</code>, mean: <code>5.35</code>), whereas the <strong>original Lab 3 Jupyter notebook maintains the un-normalized 0–100 scale</strong> (e.g. <code>98 / 100</code>, mean: <code>53.55</code>). 
+          To preserve authentic laboratory provenance, each laboratory article on this website faithfully respects its notebook's original scale, prominently highlighted with visual badges.
+        </p>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>DAV Laboratory Portfolio</h4>
+          <p style="color: #94a3b8; font-size: 0.85rem; max-width: 320px; line-height: 1.6;">
+            A rigorous academic investigation into streaming media catalogs, developed as part of the Data Analytics &amp; Visualization curriculum.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h5>Laboratory Work</h5>
+          <ul class="footer-list">
+            <li><a href="./labs.html">Curriculum Overview</a></li>
+            <li><a href="./lab1.html">Lab 1: Python EDA</a></li>
+            <li><a href="./lab2.html">Lab 2: Excel Analysis</a></li>
+            <li><a href="./lab3.html">Lab 3: Seaborn Stats</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Interactive Tools</h5>
+          <ul class="footer-list">
+            <li><a href="./explorer.html">Data Explorer</a></li>
+            <li><a href="./insights.html">Analytical Insights</a></li>
+            <li><a href="./resources.html">Provenance &amp; Files</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Academic Sources</h5>
+          <ul class="footer-list">
+            <li><span style="color: #cbd5e1;">Dataset: 9,515 Records</span></li>
+            <li><span style="color: #cbd5e1;">Format: Static HTML5 / Plotly</span></li>
+            <li><a href="./resources.html">Download Source CSV</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>Data Analytics &amp; Visualization Laboratory Project © 2026. Academic Portfolio.</div>
+        <div style="font-family: var(--font-mono); font-size: 0.75rem;">Source Verified • GitHub Pages Deployment</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Key Insights &amp; Analytical Synthesis | DAV Laboratory Portfolio</title>
+  <meta name="description" content="Five evidence-backed empirical conclusions synthesizing content scale, exclusivity, demographic distribution, and quality concentration across streaming services.">
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
+  
+  <link rel="stylesheet" href="./css/global.css">
+  <link rel="stylesheet" href="./css/components.css">
+  <link rel="stylesheet" href="./css/pages.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.35.2/plotly.min.js"></script>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="container nav-container">
+      <a href="./index.html" class="nav-brand" aria-label="DAV Laboratory Home">
+        <div class="brand-mark">D</div>
+        <div class="brand-info">
+          <span class="brand-title">DAV Laboratory</span>
+          <span class="brand-subtitle">OTT Content Analytics</span>
+        </div>
+      </a>
+      <nav class="nav-menu" aria-label="Main Navigation">
+        <a href="./index.html" class="nav-link">Home</a>
+        <a href="./labs.html" class="nav-link">Labs</a>
+        <a href="./explorer.html" class="nav-link">Data Explorer</a>
+        <a href="./insights.html" class="nav-link active">Insights</a>
+        <a href="./resources.html" class="nav-link">Resources</a>
+      </nav>
+      <div class="nav-actions">
+        <a href="./explorer.html" class="btn btn-primary btn-sm">Explore Data</a>
+        <button class="mobile-toggle" aria-label="Toggle navigation drawer" aria-expanded="false">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="mobile-drawer" id="mobile-drawer">
+      <ul class="mobile-nav-list">
+        <li><a href="./index.html" class="mobile-nav-link">Home</a></li>
+        <li><a href="./labs.html" class="mobile-nav-link">Labs Overview</a></li>
+        <li><a href="./lab1.html" class="mobile-nav-link" style="padding-left: 24px;">└ Lab 1: Python EDA</a></li>
+        <li><a href="./lab2.html" class="mobile-nav-link" style="padding-left: 24px;">└ Lab 2: Excel Dashboard</a></li>
+        <li><a href="./lab3.html" class="mobile-nav-link" style="padding-left: 24px;">└ Lab 3: Seaborn Analysis</a></li>
+        <li><a href="./explorer.html" class="mobile-nav-link">Data Explorer</a></li>
+        <li><a href="./insights.html" class="mobile-nav-link active">Key Insights</a></li>
+        <li><a href="./resources.html" class="mobile-nav-link">Resources &amp; Provenance</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main id="main-content" class="site-main">
+    
+    <div class="hero-section" style="padding: var(--space-2xl) 0;">
+      <div class="container">
+        <div class="hero-kicker">
+          <a href="./index.html">Home</a>
+          <span style="opacity: 0.4;">/</span>
+          <span>Synthesis</span>
+        </div>
+        <h1 class="hero-title">Key Insights &amp; Analytical Synthesis</h1>
+        <p class="hero-subtitle">
+          Five data-backed empirical takeaways synthesizing content volume, platform exclusivity, audience demographic targeting, and quality concentration across the streaming landscape.
+        </p>
+      </div>
+    </div>
+
+    <div class="container" style="margin-top: var(--space-2xl);">
+      <div class="insights-list">
+
+        <!-- Insight 1 -->
+        <article class="insight-card">
+          <div class="insight-num">01</div>
+          <div>
+            <span class="badge badge-accent" style="margin-bottom: var(--space-xs);">Exclusivity Paradigm</span>
+            <h2 class="insight-title">The OTT Landscape Is Overwhelmingly Segregated by Exclusivity</h2>
+            <p>
+              Cross-platform overlap analysis reveals that streaming providers do not compete primarily on price or interface features, but on <strong>catalog exclusivity</strong>. Out of 9,515 unique movie titles:
+            </p>
+            <ul style="margin-left: var(--space-lg); margin-bottom: var(--space-md); color: var(--color-text-muted);">
+              <li><strong>9,262 titles (97.34%)</strong> are hosted exclusively on a single service.</li>
+              <li>Only <strong>245 titles (2.57%)</strong> are shared between two competing platforms.</li>
+              <li>Just <strong>7 titles (0.07%)</strong> are shared across three services.</li>
+              <li>Exactly <strong>1 title</strong> (<em>Zapped</em>, 2014) is simultaneously available on all four streaming platforms.</li>
+            </ul>
+            <p class="text-muted">
+              <strong>Academic Implication:</strong> Consumers cannot substitute one streaming service for another without sacrificing access to the vast majority of licensed cinematic content.
+            </p>
+          </div>
+        </article>
+
+        <!-- Insight 2 -->
+        <article class="insight-card">
+          <div class="insight-num">02</div>
+          <div>
+            <span class="badge badge-accent" style="margin-bottom: var(--space-xs);">Volume vs. Quality</span>
+            <h2 class="insight-title">Catalog Breadth Does Not Equal Quality Dominance</h2>
+            <p>
+              While Amazon Prime Video boasts the single largest volume of titles (<strong>4,113 movies</strong>, or 43.23% of the total dataset), Netflix dominates the premium tier.
+            </p>
+            <ul style="margin-left: var(--space-lg); margin-bottom: var(--space-md); color: var(--color-text-muted);">
+              <li>Out of 335 total movies rated $\ge 8.0/10$, <strong>Netflix hosts 168 titles (50.15%)</strong>.</li>
+              <li>Prime Video hosts only <strong>53 high-rated titles</strong>, yielding an elite tier conversion rate of just <strong>1.29%</strong> of its total catalog.</li>
+              <li>Disney+, despite having the smallest total catalog (922 titles), achieves the highest density of top-rated titles: <strong>75 movies rated 8.0+</strong> (an <strong>8.13%</strong> high-quality ratio).</li>
+            </ul>
+            <p class="text-muted">
+              <strong>Academic Implication:</strong> A significant portion of Prime Video's vast catalog consists of low-budget or niche indie catalog filler, whereas Netflix and Disney+ exercise stricter curation thresholds.
+            </p>
+          </div>
+        </article>
+
+        <!-- Insight 3 -->
+        <article class="insight-card">
+          <div class="insight-num">03</div>
+          <div>
+            <span class="badge badge-accent" style="margin-bottom: var(--space-xs);">Temporal Strategy</span>
+            <h2 class="insight-title">Platform Age Trajectories Show Opposing Strategic Curation</h2>
+            <p>
+              Pearson correlation modeling in Lab 3 demonstrates that release years are strongly bifurcated by platform:
+            </p>
+            <ul style="margin-left: var(--space-lg); margin-bottom: var(--space-md); color: var(--color-text-muted);">
+              <li><strong>Netflix ↔ Year ($r = +0.3066$)</strong>: A positive correlation indicating that Netflix’s catalog is heavily skewed toward modern titles produced between 2015 and 2021.</li>
+              <li><strong>Prime Video ↔ Year ($r = -0.2437$)</strong>: A negative correlation highlighting Prime Video’s extensive archival back-catalog, including historic cinema dating back to 1914.</li>
+            </ul>
+            <p class="text-muted">
+              <strong>Academic Implication:</strong> Netflix positions itself as a destination for contemporary cinema and original productions, while Prime Video acts as an archival repository for twentieth-century film history.
+            </p>
+          </div>
+        </article>
+
+        <!-- Insight 4 -->
+        <article class="insight-card">
+          <div class="insight-num">04</div>
+          <div>
+            <span class="badge badge-accent" style="margin-bottom: var(--space-xs);">Audience Demographics</span>
+            <h2 class="insight-title">Adult Content Dominates Rated Catalogs, but Metadata Missingness Is Severe</h2>
+            <p>
+              Analysis of classified content indicates clear audience targeting:
+            </p>
+            <ul style="margin-left: var(--space-lg); margin-bottom: var(--space-md); color: var(--color-text-muted);">
+              <li>Among the 5,338 rated titles, mature audiences (<code>18+</code>) represent the largest single category with <strong>2,276 movies (42.64%)</strong>.</li>
+              <li>Disney+ diverges almost completely from competitors, focusing almost exclusively on <code>all</code> (698 titles across dataset) and <code>7+</code> (1,090 titles across dataset).</li>
+              <li>However, <strong>4,177 titles (43.90%) completely lack standard MPAA age ratings</strong> in the dataset.</li>
+            </ul>
+            <p class="text-muted">
+              <strong>Academic Caveat:</strong> Because unrated titles represent nearly half the dataset, conclusions regarding overall platform maturity must be framed conditionally.
+            </p>
+          </div>
+        </article>
+
+        <!-- Insight 5 -->
+        <article class="insight-card">
+          <div class="insight-num">05</div>
+          <div>
+            <span class="badge badge-accent" style="margin-bottom: var(--space-xs);">Critic Acclaim</span>
+            <h2 class="insight-title">Critic Scores Follow Normal Bell Curves with Rare Consensus at the Extremes</h2>
+            <p>
+              Statistical kernel density estimation across the 9,508 non-null Rotten Tomatoes scores reveals that critical evaluations conform closely to Gaussian normality:
+            </p>
+            <ul style="margin-left: var(--space-lg); margin-bottom: var(--space-md); color: var(--color-text-muted);">
+              <li>The distribution mean is <strong>53.55% (5.35 / 10)</strong> with a standard deviation of <strong>13.20</strong>.</li>
+              <li>The 4–6 rating bin captures <strong>5,429 movies (57.10% of the entire library)</strong>.</li>
+              <li>Very few titles achieve unanimous critical consensus: only <strong>119 movies (1.25%)</strong> score below 20%, and only <strong>335 movies (3.52%)</strong> score at or above 80%.</li>
+            </ul>
+            <p class="text-muted">
+              <strong>Academic Implication:</strong> The bulk of commercial film production is judged as moderately competent by film critics, with genuine masterpieces and unwatchable failures representing statistical outliers.
+            </p>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- Academic Limitations & Non-Causal Guardrails -->
+      <div style="margin-top: var(--space-3xl); margin-bottom: var(--space-2xl);">
+        <h2>Academic Scope &amp; Methodological Limitations</h2>
+        <p class="text-muted">
+          Transparent scholarly research requires explicit acknowledgment of dataset constraints and analytical boundaries:
+        </p>
+
+        <div class="callout-box callout-warning">
+          <div class="callout-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0zM12 9v4M12 17h.01"/></svg>
+            Dataset Limitations &amp; Non-Causal Disclaimers
+          </div>
+          <ul style="margin-left: var(--space-lg); color: var(--color-text-muted); line-height: 1.6;">
+            <li><strong>Cross-Sectional Snapshot:</strong> The dataset captures a historical snapshot (titles up to 2021) and does not reflect ongoing streaming contract expirations or new original releases.</li>
+            <li><strong>Descriptive, Not Causal:</strong> High correlations (e.g. between Netflix and Release Year) indicate catalog curation associations, not causal relationships.</li>
+            <li><strong>Absence of Audience Viewing Data:</strong> The dataset does not contain viewing figures, streaming hours, subscriber counts, or user engagement metrics. A title's critical acclaim is not equivalent to audience popularity.</li>
+            <li><strong>Excluded Proposal Variables:</strong> Preliminary course proposals mentioned attributes such as <em>Genre</em>, <em>IMDb Ratings</em>, <em>Directors</em>, and <em>Runtime</em>; however, these fields are absent from the verified dataset and are deliberately excluded from this research to preserve academic fidelity.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>DAV Laboratory Portfolio</h4>
+          <p style="color: #94a3b8; font-size: 0.85rem; max-width: 320px; line-height: 1.6;">
+            A rigorous academic investigation into streaming media catalogs, developed as part of the Data Analytics &amp; Visualization curriculum.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h5>Laboratory Work</h5>
+          <ul class="footer-list">
+            <li><a href="./labs.html">Curriculum Overview</a></li>
+            <li><a href="./lab1.html">Lab 1: Python EDA</a></li>
+            <li><a href="./lab2.html">Lab 2: Excel Analysis</a></li>
+            <li><a href="./lab3.html">Lab 3: Seaborn Stats</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Interactive Tools</h5>
+          <ul class="footer-list">
+            <li><a href="./explorer.html">Data Explorer</a></li>
+            <li><a href="./insights.html">Analytical Insights</a></li>
+            <li><a href="./resources.html">Provenance &amp; Files</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Academic Sources</h5>
+          <ul class="footer-list">
+            <li><span style="color: #cbd5e1;">Dataset: 9,515 Records</span></li>
+            <li><span style="color: #cbd5e1;">Format: Static HTML5 / Plotly</span></li>
+            <li><a href="./resources.html">Download Source CSV</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>Data Analytics &amp; Visualization Laboratory Project © 2026. Academic Portfolio.</div>
+        <div style="font-family: var(--font-mono); font-size: 0.75rem;">Source Verified • GitHub Pages Deployment</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./js/app.js"></script>
+</body>
+</html>

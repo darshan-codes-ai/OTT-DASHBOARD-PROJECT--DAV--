@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resources &amp; Academic Provenance | DAV Laboratory Portfolio</title>
+  <meta name="description" content="Access all verified academic source materials, Jupyter notebooks, Excel workbooks, raw CSV dataset, and reproducibility guidelines.">
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
+  
+  <link rel="stylesheet" href="./css/global.css">
+  <link rel="stylesheet" href="./css/components.css">
+  <link rel="stylesheet" href="./css/pages.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.35.2/plotly.min.js"></script>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="container nav-container">
+      <a href="./index.html" class="nav-brand" aria-label="DAV Laboratory Home">
+        <div class="brand-mark">D</div>
+        <div class="brand-info">
+          <span class="brand-title">DAV Laboratory</span>
+          <span class="brand-subtitle">OTT Content Analytics</span>
+        </div>
+      </a>
+      <nav class="nav-menu" aria-label="Main Navigation">
+        <a href="./index.html" class="nav-link">Home</a>
+        <a href="./labs.html" class="nav-link">Labs</a>
+        <a href="./explorer.html" class="nav-link">Data Explorer</a>
+        <a href="./insights.html" class="nav-link">Insights</a>
+        <a href="./resources.html" class="nav-link active">Resources</a>
+      </nav>
+      <div class="nav-actions">
+        <a href="./explorer.html" class="btn btn-primary btn-sm">Explore Data</a>
+        <button class="mobile-toggle" aria-label="Toggle navigation drawer" aria-expanded="false">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="mobile-drawer" id="mobile-drawer">
+      <ul class="mobile-nav-list">
+        <li><a href="./index.html" class="mobile-nav-link">Home</a></li>
+        <li><a href="./labs.html" class="mobile-nav-link">Labs Overview</a></li>
+        <li><a href="./lab1.html" class="mobile-nav-link" style="padding-left: 24px;">└ Lab 1: Python EDA</a></li>
+        <li><a href="./lab2.html" class="mobile-nav-link" style="padding-left: 24px;">└ Lab 2: Excel Dashboard</a></li>
+        <li><a href="./lab3.html" class="mobile-nav-link" style="padding-left: 24px;">└ Lab 3: Seaborn Analysis</a></li>
+        <li><a href="./explorer.html" class="mobile-nav-link">Data Explorer</a></li>
+        <li><a href="./insights.html" class="mobile-nav-link">Key Insights</a></li>
+        <li><a href="./resources.html" class="mobile-nav-link active">Resources &amp; Provenance</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main id="main-content" class="site-main">
+    
+    <div class="hero-section" style="padding: var(--space-2xl) 0;">
+      <div class="container">
+        <div class="hero-kicker">
+          <a href="./index.html">Home</a>
+          <span style="opacity: 0.4;">/</span>
+          <span>Provenance</span>
+        </div>
+        <h1 class="hero-title">Academic Resources &amp; Provenance</h1>
+        <p class="hero-subtitle">
+          Direct access to the underlying repository artifacts, raw CSV files, Jupyter computational notebooks, formula-driven Excel models, and environment specifications.
+        </p>
+      </div>
+    </div>
+
+    <div class="container" style="margin-top: var(--space-2xl);">
+      <h2>Repository Artifact Inventory</h2>
+      <p class="text-muted">
+        All academic materials referenced across this website are preserved in their original format within the project repository.
+      </p>
+
+      <div class="resources-grid">
+        
+        <!-- Artifact 1: CSV -->
+        <div class="resource-card">
+          <div>
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-xs);">
+              <span class="badge badge-accent">Dataset</span>
+              <span class="font-mono text-subtle" style="font-size: 0.75rem;">515 KB</span>
+            </div>
+            <h3 style="margin-top: 0; font-size: 1.15rem;">MoviesOnStreamingPlatforms.csv</h3>
+            <p class="text-muted" style="font-size: 0.88rem; line-height: 1.5;">
+              The foundational dataset containing 9,515 movie records, release years, age classifications, Rotten Tomatoes ratings, and binary platform availability flags.
+            </p>
+          </div>
+          <div style="border-top: 1px solid var(--color-border-subtle); padding-top: var(--space-md); margin-top: var(--space-md);">
+            <a href="./data/MoviesOnStreamingPlatforms.csv" download class="btn btn-secondary btn-sm" style="width: 100%;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+              Download Raw CSV
+            </a>
+          </div>
+        </div>
+
+        <!-- Artifact 2: Lab 1 Notebook -->
+        <div class="resource-card">
+          <div>
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-xs);">
+              <span class="badge badge-default">Jupyter Notebook</span>
+              <span class="font-mono text-subtle" style="font-size: 0.75rem;">189 KB</span>
+            </div>
+            <h3 style="margin-top: 0; font-size: 1.15rem;">DAV_Lab_Assignment_1.ipynb</h3>
+            <p class="text-muted" style="font-size: 0.88rem; line-height: 1.5;">
+              Assignment 1 Python notebook implementing data profiling, missing-value imputation reports, Rotten Tomatoes string stripping, and introductory platform visualization.
+            </p>
+          </div>
+          <div style="border-top: 1px solid var(--color-border-subtle); padding-top: var(--space-md); margin-top: var(--space-md);">
+            <a href="../DAV_Lab_Assignment_1_Movie_Streaming_Analysis.ipynb" download class="btn btn-secondary btn-sm" style="width: 100%;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+              Download Lab 1 Notebook
+            </a>
+          </div>
+        </div>
+
+        <!-- Artifact 3: Lab 2 Workbook -->
+        <div class="resource-card">
+          <div>
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-xs);">
+              <span class="badge badge-default">Excel Workbook</span>
+              <span class="font-mono text-subtle" style="font-size: 0.75rem;">731 KB</span>
+            </div>
+            <h3 style="margin-top: 0; font-size: 1.15rem;">DAV_Lab_Assignment_2.xlsx</h3>
+            <p class="text-muted" style="font-size: 0.88rem; line-height: 1.5;">
+              Assignment 2 Microsoft Excel workbook containing the master <code>DATA</code> sheet and the formula-driven <code>DASHBOARD</code> sheet with 9 analytical modules and 9 charts.
+            </p>
+          </div>
+          <div style="border-top: 1px solid var(--color-border-subtle); padding-top: var(--space-md); margin-top: var(--space-md);">
+            <a href="../DAV_Lab_Assignment_2_Movie_Streaming_Platform.xlsx" download class="btn btn-secondary btn-sm" style="width: 100%;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+              Download Lab 2 Excel
+            </a>
+          </div>
+        </div>
+
+        <!-- Artifact 4: Lab 3 Notebook -->
+        <div class="resource-card">
+          <div>
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-xs);">
+              <span class="badge badge-default">Jupyter Notebook</span>
+              <span class="font-mono text-subtle" style="font-size: 0.75rem;">399 KB</span>
+            </div>
+            <h3 style="margin-top: 0; font-size: 1.15rem;">DAV_Lab_Assignment_3.ipynb</h3>
+            <p class="text-muted" style="font-size: 0.88rem; line-height: 1.5;">
+              Assignment 3 Python notebook implementing Seaborn boxplots by age rating, kernel density estimation histograms, and the 6×6 feature correlation matrix.
+            </p>
+          </div>
+          <div style="border-top: 1px solid var(--color-border-subtle); padding-top: var(--space-md); margin-top: var(--space-md);">
+            <a href="../DAV_Lab_Assignment_3_Movie_Streaming_Analysis.ipynb" download class="btn btn-secondary btn-sm" style="width: 100%;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+              Download Lab 3 Notebook
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Environment Setup & Reproducibility Guide -->
+      <div style="margin-top: var(--space-3xl);">
+        <h2>Computational Reproducibility Specification</h2>
+        <p class="text-muted">
+          To replicate the empirical results in a local Python environment, install the verified dependencies:
+        </p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span>Terminal / Shell Environment</span>
+          </div>
+          <pre><code># Create and activate virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows: .\venv\Scripts\activate
+
+# Install core analytical stack
+pip install pandas numpy matplotlib seaborn openpyxl scipy
+
+# Launch Jupyter Notebook
+jupyter notebook</code></pre>
+        </div>
+      </div>
+
+      <!-- Academic Citation Box -->
+      <div style="margin-top: var(--space-2xl); margin-bottom: var(--space-2xl);">
+        <h2>Academic Citation</h2>
+        <p class="text-muted">
+          If referencing this laboratory portfolio in course evaluations or academic presentations, use the following bibliographic format:
+        </p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span>BibTeX Citation</span>
+          </div>
+          <pre><code>@misc{dav_ott_analytics_2026,
+  author = {Darshan Kumar},
+  title = {OTT Streaming Platforms Content Analytics: A Data Analytics & Visualization Laboratory Portfolio},
+  year = {2026},
+  publisher = {GitHub Pages},
+  howpublished = {\url{https://github.com/darshan-codes-ai/OTT-DSAHBOARD-PROJECT-DAV-}}
+}</code></pre>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>DAV Laboratory Portfolio</h4>
+          <p style="color: #94a3b8; font-size: 0.85rem; max-width: 320px; line-height: 1.6;">
+            A rigorous academic investigation into streaming media catalogs, developed as part of the Data Analytics &amp; Visualization curriculum.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h5>Laboratory Work</h5>
+          <ul class="footer-list">
+            <li><a href="./labs.html">Curriculum Overview</a></li>
+            <li><a href="./lab1.html">Lab 1: Python EDA</a></li>
+            <li><a href="./lab2.html">Lab 2: Excel Analysis</a></li>
+            <li><a href="./lab3.html">Lab 3: Seaborn Stats</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Interactive Tools</h5>
+          <ul class="footer-list">
+            <li><a href="./explorer.html">Data Explorer</a></li>
+            <li><a href="./insights.html">Analytical Insights</a></li>
+            <li><a href="./resources.html">Provenance &amp; Files</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Academic Sources</h5>
+          <ul class="footer-list">
+            <li><span style="color: #cbd5e1;">Dataset: 9,515 Records</span></li>
+            <li><span style="color: #cbd5e1;">Format: Static HTML5 / Plotly</span></li>
+            <li><a href="./resources.html">Download Source CSV</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>Data Analytics &amp; Visualization Laboratory Project © 2026. Academic Portfolio.</div>
+        <div style="font-family: var(--font-mono); font-size: 0.75rem;">Source Verified • GitHub Pages Deployment</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./js/app.js"></script>
+  <script src="./js/components.js"></script>
+</body>
+</html>

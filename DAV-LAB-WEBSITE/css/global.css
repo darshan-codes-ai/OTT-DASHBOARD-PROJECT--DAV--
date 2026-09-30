@@ -1,0 +1,255 @@
+/* ==========================================================================
+   DAV LAB WEBSITE - GLOBAL STYLES & DESIGN TOKENS
+   Aesthetic: Modern Academic Editorial / Data Journalism Portfolio
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+  /* Surface & Canvas Colors */
+  --color-canvas: #fcfbf9;
+  --color-surface: #ffffff;
+  --color-surface-subtle: #f6f5f0;
+  --color-surface-hover: #f1efe8;
+  
+  /* Borders & Dividers */
+  --color-border: #e6e3dc;
+  --color-border-subtle: #eceae3;
+  --color-border-dark: #cbd5e1;
+  
+  /* Text Colors */
+  --color-text-main: #1e2329;
+  --color-text-muted: #57606a;
+  --color-text-subtle: #8c959f;
+  --color-text-inverse: #ffffff;
+  
+  /* Single Strong Accent Color: Deep Academic Indigo */
+  --color-accent: #3b28cc;
+  --color-accent-hover: #2e1fa8;
+  --color-accent-subtle: #eef0fd;
+  --color-accent-border: #c7d2fe;
+  
+  /* Platform Accent Accents (Restrained for Identification) */
+  --color-netflix: #e50914;
+  --color-netflix-subtle: #fde8e8;
+  --color-hulu: #0f9d58;
+  --color-hulu-subtle: #e6f7ef;
+  --color-prime: #0088cc;
+  --color-prime-subtle: #e5f6fd;
+  --color-disney: #113ccf;
+  --color-disney-subtle: #eaeffd;
+
+  /* Alert / Semantic Accents */
+  --color-warning: #b45309;
+  --color-warning-subtle: #fef3c7;
+  --color-warning-border: #fde68a;
+  --color-success: #15803d;
+  --color-success-subtle: #dcfce7;
+  
+  /* Typography Stacks */
+  --font-editorial: "Newsreader", Georgia, Cambria, "Times New Roman", serif;
+  --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", "SF Mono", Consolas, Menlo, monospace;
+  
+  /* Spacing Scale */
+  --space-2xs: 4px;
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+  --space-4xl: 96px;
+
+  /* Borders & Shadows */
+  --radius-xs: 3px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+  --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+  --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+
+  /* Container Max Width */
+  --container-max: 1240px;
+  --content-max: 820px;
+}
+
+/* ==========================================================================
+   CSS Reset & Base Rules
+   ========================================================================== */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--color-canvas);
+  color: var(--color-text-main);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.65;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Accessible Skip Link */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 16px;
+  background: var(--color-accent);
+  color: #fff;
+  padding: 8px 16px;
+  z-index: 1000;
+  border-radius: var(--radius-sm);
+  transition: top 0.2s ease;
+  font-weight: 600;
+  text-decoration: none;
+}
+.skip-link:focus {
+  top: 16px;
+}
+
+/* Typography Hierarchy */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--color-text-main);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+}
+
+h1 {
+  font-family: var(--font-editorial);
+  font-size: 2.75rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-md);
+}
+
+h2 {
+  font-family: var(--font-editorial);
+  font-size: 2rem;
+  font-weight: 500;
+  margin-bottom: var(--space-md);
+  margin-top: var(--space-xl);
+}
+
+h3 {
+  font-family: var(--font-sans);
+  font-size: 1.35rem;
+  font-weight: 600;
+  margin-bottom: var(--space-sm);
+  margin-top: var(--space-lg);
+}
+
+h4 {
+  font-family: var(--font-sans);
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: var(--space-xs);
+}
+
+p {
+  margin-bottom: var(--space-md);
+  color: var(--color-text-main);
+}
+
+p.lead {
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: var(--color-text-muted);
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+a:hover {
+  color: var(--color-accent-hover);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+code, kbd, samp, pre {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+}
+
+code {
+  background: var(--color-surface-subtle);
+  border: 1px solid var(--color-border-subtle);
+  padding: 0.15em 0.4em;
+  border-radius: var(--radius-xs);
+  color: #c026d3;
+}
+
+pre {
+  background: #181c22;
+  color: #e2e8f0;
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+  border: 1px solid #2d3748;
+}
+
+pre code {
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: inherit;
+}
+
+/* Layout Utilities */
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--space-lg);
+  padding-right: var(--space-lg);
+}
+
+.content-narrow {
+  max-width: var(--content-max);
+}
+
+.site-main {
+  flex: 1 0 auto;
+  padding-bottom: var(--space-4xl);
+}
+
+.text-muted { color: var(--color-text-muted); }
+.text-subtle { color: var(--color-text-subtle); }
+.text-accent { color: var(--color-accent); }
+.font-mono { font-family: var(--font-mono); }
+.font-editorial { font-family: var(--font-editorial); }
+.font-sans { font-family: var(--font-sans); }
+
+.flex { display: flex; }
+.flex-col { display: flex; flex-direction: column; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.gap-xs { gap: var(--space-xs); }
+.gap-sm { gap: var(--space-sm); }
+.gap-md { gap: var(--space-md); }
+.gap-lg { gap: var(--space-lg); }
+
+/* Focus styles for accessibility */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}

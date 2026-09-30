@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OTT Streaming Platforms Content Analytics | DAV Laboratory Portfolio</title>
+  <meta name="description" content="A comprehensive academic laboratory portfolio analyzing content volume, age classification, and critic ratings across Netflix, Hulu, Prime Video, and Disney+.">
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
+  
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="./css/global.css">
+  <link rel="stylesheet" href="./css/components.css">
+  <link rel="stylesheet" href="./css/pages.css">
+
+  <!-- External Libraries (CDN) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.35.2/plotly.min.js"></script>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Top Sticky Navigation -->
+  <header class="site-header">
+    <div class="container nav-container">
+      <a href="./index.html" class="nav-brand" aria-label="DAV Laboratory Home">
+        <div class="brand-mark">D</div>
+        <div class="brand-info">
+          <span class="brand-title">DAV Laboratory</span>
+          <span class="brand-subtitle">OTT Content Analytics</span>
+        </div>
+      </a>
+      <nav class="nav-menu" aria-label="Main Navigation">
+        <a href="./index.html" class="nav-link active">Home</a>
+        <a href="./labs.html" class="nav-link">Labs</a>
+        <a href="./explorer.html" class="nav-link">Data Explorer</a>
+        <a href="./insights.html" class="nav-link">Insights</a>
+        <a href="./resources.html" class="nav-link">Resources</a>
+      </nav>
+      <div class="nav-actions">
+        <a href="./explorer.html" class="btn btn-primary btn-sm">Explore Data</a>
+        <button class="mobile-toggle" aria-label="Toggle navigation drawer" aria-expanded="false">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="mobile-drawer" id="mobile-drawer">
+      <ul class="mobile-nav-list">
+        <li><a href="./index.html" class="mobile-nav-link active">Home</a></li>
+        <li><a href="./labs.html" class="mobile-nav-link">Labs Overview</a></li>
+        <li><a href="./lab1.html" class="mobile-nav-link" style="padding-left: 24px;">└ Lab 1: Python EDA</a></li>
+        <li><a href="./lab2.html" class="mobile-nav-link" style="padding-left: 24px;">└ Lab 2: Excel Dashboard</a></li>
+        <li><a href="./lab3.html" class="mobile-nav-link" style="padding-left: 24px;">└ Lab 3: Seaborn Analysis</a></li>
+        <li><a href="./explorer.html" class="mobile-nav-link">Data Explorer</a></li>
+        <li><a href="./insights.html" class="mobile-nav-link">Key Insights</a></li>
+        <li><a href="./resources.html" class="mobile-nav-link">Resources &amp; Provenance</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main id="main-content" class="site-main">
+    
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="container">
+        <div class="hero-kicker">
+          <span>Academic Portfolio</span>
+          <span style="opacity: 0.4;">/</span>
+          <span>Data Analytics &amp; Visualization</span>
+        </div>
+        <h1 class="hero-title">OTT Streaming Platforms Content Analytics</h1>
+        <p class="hero-subtitle">
+          An empirical investigation into content library depth, age classification demographics, and critic score quality across Netflix, Hulu, Prime Video, and Disney+.
+        </p>
+        
+        <div class="hero-meta-bar">
+          <div class="hero-meta-item">
+            <span class="text-subtle">Course:</span>
+            <strong>Data Analytics &amp; Visualization (DAV)</strong>
+          </div>
+          <div class="hero-meta-item">
+            <span class="text-subtle">Primary Dataset:</span>
+            <code>MoviesOnStreamingPlatforms.csv</code>
+          </div>
+          <div class="hero-meta-item">
+            <span class="text-subtle">Unique Titles:</span>
+            <strong>9,515 Movies</strong>
+          </div>
+          <div class="hero-meta-item">
+            <span class="text-subtle">Temporal Span:</span>
+            <strong>1914 – 2021</strong>
+          </div>
+        </div>
+
+        <div class="hero-cta-group">
+          <a href="./explorer.html" class="btn btn-primary">Launch Data Explorer →</a>
+          <a href="./labs.html" class="btn btn-secondary">Review Laboratory Curriculum</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Verified Baseline Metrics (KPI Grid) -->
+    <section class="container" style="margin-top: var(--space-2xl);">
+      <div style="display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px solid var(--color-border); padding-bottom: var(--space-xs);">
+        <h2>Verified Dataset Baseline</h2>
+        <span class="badge badge-accent">Source of Truth Verified</span>
+      </div>
+      <p class="text-muted" style="margin-top: var(--space-xs);">
+        Descriptive summary statistics audited directly from the raw records without synthetic data or model inferences.
+      </p>
+
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-card-header">
+            <span class="stat-label">Unique Movies</span>
+            <span class="badge badge-default">Deduplicated</span>
+          </div>
+          <div class="stat-value" id="stat-total-movies">9,515</div>
+          <p class="stat-desc">Distinct catalog titles evaluated across all platforms.</p>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-card-header">
+            <span class="stat-label">Platform Availability</span>
+            <span class="badge badge-default">Sum of Flags</span>
+          </div>
+          <div class="stat-value" id="stat-total-instances">9,777</div>
+          <p class="stat-desc">Total availability instances across the four streaming services.</p>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-card-header">
+            <span class="stat-label">Mean Rotten Tomatoes</span>
+            <span class="badge badge-scale">0–10 Scale</span>
+          </div>
+          <div class="stat-value" id="stat-mean-score">5.35</div>
+          <p class="stat-desc">Overall average critic rating (median: 5.20, raw mean: 53.55%).</p>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-card-header">
+            <span class="stat-label">High-Rated Titles</span>
+            <span class="badge badge-default">RT ≥ 8.0/10</span>
+          </div>
+          <div class="stat-value" id="stat-high-rated">335</div>
+          <p class="stat-desc">Top-tier titles representing 3.52% of the catalog.</p>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-card-header">
+            <span class="stat-label">Missing Age Rating</span>
+            <span class="badge badge-warning">43.90%</span>
+          </div>
+          <div class="stat-value" id="stat-missing-age">4,177</div>
+          <p class="stat-desc">Unclassified movies requiring careful demographic caveats.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Methodology & Analytical Pipeline Flowchart -->
+    <section class="pipeline-section">
+      <div class="container">
+        <h2>Analytical Progression Workflow</h2>
+        <p class="text-muted">
+          The project follows a structured data-analytics methodology transitioning raw tabular records into actionable data stories.
+        </p>
+
+        <div class="pipeline-flow">
+          <div class="pipeline-step">
+            <div class="pipeline-step-header">
+              <span class="pipeline-step-num">01</span>
+            </div>
+            <div class="pipeline-step-title">Raw Dataset</div>
+            <p class="pipeline-step-desc">9,515 records with 11 initial fields, binary streaming flags, and unparsed string ratings.</p>
+          </div>
+
+          <div class="pipeline-step">
+            <div class="pipeline-step-header">
+              <span class="pipeline-step-num">02</span>
+            </div>
+            <div class="pipeline-step-title">Inspection &amp; Cleaning</div>
+            <p class="pipeline-step-desc">Removal of index artifact <code>Unnamed: 0</code>, missing value audits, and string stripping of <code>/100</code>.</p>
+          </div>
+
+          <div class="pipeline-step">
+            <div class="pipeline-step-header">
+              <span class="pipeline-step-num">03</span>
+            </div>
+            <div class="pipeline-step-title">Exploratory EDA</div>
+            <p class="pipeline-step-desc">Descriptive statistical profiling, frequency histograms, and cross-platform catalog comparisons.</p>
+          </div>
+
+          <div class="pipeline-step">
+            <div class="pipeline-step-header">
+              <span class="pipeline-step-num">04</span>
+            </div>
+            <div class="pipeline-step-title">Visualization</div>
+            <p class="pipeline-step-desc">Comparative bar graphs, release trajectories, Seaborn KDE curves, and correlation heatmaps.</p>
+          </div>
+
+          <div class="pipeline-step">
+            <div class="pipeline-step-header">
+              <span class="pipeline-step-num">05</span>
+            </div>
+            <div class="pipeline-step-title">Synthesis &amp; Insights</div>
+            <p class="pipeline-step-desc">Evidence-based assessment of catalog exclusivity, age rating demographics, and quality concentration.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Research Findings Visualizations -->
+    <section class="container" style="margin-top: var(--space-3xl);">
+      <div style="display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px solid var(--color-border); padding-bottom: var(--space-xs);">
+        <h2>Selected Laboratory Findings</h2>
+        <a href="./insights.html" class="btn btn-outline btn-sm">Read All Insights →</a>
+      </div>
+      <p class="text-muted" style="margin-top: var(--space-xs);">
+        Interactive visual evidence exploring the trade-off between total catalog scale and premium content concentration.
+      </p>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-xl); margin-top: var(--space-lg);">
+        <!-- Chart 1: Platform Volume -->
+        <div class="chart-card">
+          <div class="chart-header">
+            <div>
+              <h3 class="chart-title">Content Availability by Platform</h3>
+              <p class="chart-subtitle">Total movies accessible on each streaming platform</p>
+            </div>
+            <span class="badge badge-default">Total Library</span>
+          </div>
+          <div class="chart-body" id="home-chart-platform"></div>
+          <div class="chart-footer">
+            <span>Source: Lab 1 (Task 5) &amp; Lab 2 (Section 3)</span>
+            <span class="font-mono">Total Flags: 9,777</span>
+          </div>
+        </div>
+
+        <!-- Chart 2: High Rated Availability -->
+        <div class="chart-card">
+          <div class="chart-header">
+            <div>
+              <h3 class="chart-title">Highly Rated Content (RT ≥ 8.0 / 10)</h3>
+              <p class="chart-subtitle">Distribution of the 335 premium movies across platforms</p>
+            </div>
+            <span class="badge badge-scale">Scale: 0–10</span>
+          </div>
+          <div class="chart-body" id="home-chart-high-rated"></div>
+          <div class="chart-footer">
+            <span>Source: Lab 1 (Task 10) &amp; Lab 2 (Section 8)</span>
+            <span class="font-mono">Netflix: 50.1% Share</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Critical Academic Distinction Callout -->
+      <div class="callout-box callout-info" style="margin-top: var(--space-xl);">
+        <div class="callout-title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+          Academic Methodology Note: Availability Flags vs. Unique Movies
+        </div>
+        <p>
+          Summing the platform totals yields <strong>9,777 availability instances</strong> (Prime Video: 4,113 + Netflix: 3,695 + Hulu: 1,047 + Disney+: 922). However, because licensing agreements can overlap across services, the actual dataset contains <strong>9,515 unique movie titles</strong>. 
+          Specifically, <strong>245 titles</strong> are simultaneously hosted on 2 services, <strong>7 titles</strong> on 3 services, and <strong>1 title</strong> (<em>Zapped</em>, 2014) is available across all 4 services.
+        </p>
+      </div>
+    </section>
+
+    <!-- The Three Laboratory Pillars -->
+    <section class="container" style="margin-top: var(--space-3xl);">
+      <h2>The Three Laboratory Modules</h2>
+      <p class="text-muted">
+        Explore each stage of the academic analysis, from initial data sanitation in Python to formula auditing in Excel and advanced statistical distributions in Seaborn.
+      </p>
+
+      <div class="lab-cards-grid">
+        <!-- Lab 1 Card -->
+        <a href="./lab1.html" class="lab-card">
+          <div class="lab-card-top">
+            <span class="lab-card-tag">Lab Assignment 01</span>
+            <h3 class="lab-card-title">Python &amp; Pandas Exploratory Analysis</h3>
+            <p class="lab-card-desc">
+              Data profiling, duplicate detection, missing-value treatment, Rotten Tomatoes score parsing, and initial cross-platform visual comparisons.
+            </p>
+          </div>
+          <div class="lab-card-meta">
+            <span><strong>Tech:</strong> Pandas, Matplotlib</span>
+            <span class="text-accent">Read Article →</span>
+          </div>
+        </a>
+
+        <!-- Lab 2 Card -->
+        <a href="./lab2.html" class="lab-card">
+          <div class="lab-card-top">
+            <span class="lab-card-tag">Lab Assignment 02</span>
+            <h3 class="lab-card-title">Excel Formula-Based Analytics Dashboard</h3>
+            <p class="lab-card-desc">
+              Comprehensive spreadsheet audit of the 9 dashboard modules, formulas (<code>COUNTIF</code>, <code>MINIFS</code>, <code>AVERAGEIFS</code>), and catalog exclusivity metrics.
+            </p>
+          </div>
+          <div class="lab-card-meta">
+            <span><strong>Tech:</strong> Microsoft Excel</span>
+            <span class="text-accent">Read Article →</span>
+          </div>
+        </a>
+
+        <!-- Lab 3 Card -->
+        <a href="./lab3.html" class="lab-card">
+          <div class="lab-card-top">
+            <span class="lab-card-tag">Lab Assignment 03</span>
+            <h3 class="lab-card-title">Statistical Visualizations with Seaborn</h3>
+            <p class="lab-card-desc">
+              In-depth distributional analysis preserving the original 0–100 scale: boxplots by age rating, histogram + KDE curve, and 6×6 correlation matrix heatmap.
+            </p>
+          </div>
+          <div class="lab-card-meta">
+            <span><strong>Tech:</strong> Seaborn, SciPy</span>
+            <span class="text-accent">Read Article →</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Editorial Site Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>DAV Laboratory Portfolio</h4>
+          <p style="color: #94a3b8; font-size: 0.85rem; max-width: 320px; line-height: 1.6;">
+            A rigorous academic investigation into streaming media catalogs, developed as part of the Data Analytics &amp; Visualization curriculum.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h5>Laboratory Work</h5>
+          <ul class="footer-list">
+            <li><a href="./labs.html">Curriculum Overview</a></li>
+            <li><a href="./lab1.html">Lab 1: Python EDA</a></li>
+            <li><a href="./lab2.html">Lab 2: Excel Analysis</a></li>
+            <li><a href="./lab3.html">Lab 3: Seaborn Stats</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Interactive Tools</h5>
+          <ul class="footer-list">
+            <li><a href="./explorer.html">Data Explorer</a></li>
+            <li><a href="./insights.html">Analytical Insights</a></li>
+            <li><a href="./resources.html">Provenance &amp; Files</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Academic Sources</h5>
+          <ul class="footer-list">
+            <li><span style="color: #cbd5e1;">Dataset: 9,515 Records</span></li>
+            <li><span style="color: #cbd5e1;">Format: Static HTML5 / Plotly</span></li>
+            <li><a href="./resources.html">Download Source CSV</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>Data Analytics &amp; Visualization Laboratory Project © 2026. Academic Portfolio.</div>
+        <div style="font-family: var(--font-mono); font-size: 0.75rem;">Source Verified • GitHub Pages Deployment</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Application Logic -->
+  <script src="./js/data.js"></script>
+  <script src="./js/charts.js"></script>
+  <script src="./js/app.js"></script>
+  <script src="./js/components.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const summary = await DAVData.loadSummary();
+      if (summary) {
+        DAVCharts.renderPlatformBar('home-chart-platform', summary.platformCounts);
+        DAVCharts.renderHighRatedComparison('home-chart-high-rated', summary.platformCounts, summary.highRatedPlatformCounts);
+      }
+    });
+  </script>
+</body>
+</html>
