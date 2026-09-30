@@ -121,13 +121,14 @@ function renderTable(rows){
 function renderExplorerCharts(rows){plotYearChart(rows);plotRtHistogram(rows);plotAgeChart(rows);}
 function applyFilters(){
   const search=$('searchInput').value.trim().toLowerCase(),platform=$('platformFilter').value,age=$('ageFilter').value;
-  const minYear=Number($('yearMin').value),maxYear=Number($('yearMax').value),minRt=Number($('rtFilter').value)||0;
+  const minYearRaw=$('yearMin').value.trim(),maxYearRaw=$('yearMax').value.trim();
+  const minYear=minYearRaw===''?null:Number(minYearRaw),maxYear=maxYearRaw===''?null:Number(maxYearRaw),minRt=Number($('rtFilter').value)||0;
   filteredRows=allRows.filter(r=>{
     if(search&&!r.Title.toLowerCase().includes(search))return false;
     if(platform!=='all'&&!r[platform])return false;
     if(age!=='all'&&r.Age!==age)return false;
-    if(Number.isFinite(minYear)&&r.Year<minYear)return false;
-    if(Number.isFinite(maxYear)&&r.Year>maxYear)return false;
+    if(minYear!==null&&Number.isFinite(minYear)&&r.Year<minYear)return false;
+    if(maxYear!==null&&Number.isFinite(maxYear)&&r.Year>maxYear)return false;
     if(Number.isFinite(minRt)&&(r.rt??-Infinity)<minRt)return false;
     return true;
   });
