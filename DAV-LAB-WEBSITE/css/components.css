@@ -638,6 +638,174 @@
   color: #64748b;
 }
 
+/* --------------------------------------------------------------------------
+   Tabs Component
+   -------------------------------------------------------------------------- */
+.tabs-container {
+  margin: var(--space-xl) 0;
+}
+
+.tabs-nav {
+  display: flex;
+  gap: var(--space-xs);
+  border-bottom: 2px solid var(--color-border);
+  margin-bottom: var(--space-lg);
+  overflow-x: auto;
+}
+
+.tab-btn {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  padding: var(--space-sm) var(--space-md);
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.tab-btn:hover {
+  color: var(--color-text-main);
+}
+
+.tab-btn.active {
+  color: var(--color-accent);
+  border-bottom-color: var(--color-accent);
+}
+
+.tab-pane {
+  display: none;
+}
+
+.tab-pane.active {
+  display: block;
+}
+
+/* --------------------------------------------------------------------------
+   Excel Charts Gallery Grid
+   -------------------------------------------------------------------------- */
+.excel-charts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: var(--space-lg);
+  margin-top: var(--space-lg);
+}
+
+.excel-chart-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-subtle);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.excel-chart-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}
+
+.excel-chart-header {
+  padding: var(--space-sm) var(--space-md);
+  border-bottom: 1px solid var(--color-border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--color-surface-subtle);
+}
+
+.excel-chart-num {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--color-accent);
+  text-transform: uppercase;
+}
+
+.excel-chart-img-wrap {
+  background: #ffffff;
+  padding: var(--space-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid var(--color-border-subtle);
+  min-height: 220px;
+}
+
+.excel-chart-img-wrap img {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+.excel-chart-body {
+  padding: var(--space-md);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.excel-chart-title {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-text-main);
+  margin-bottom: 4px;
+}
+
+.excel-chart-formula {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  color: #0369a1;
+  background: #f0f9ff;
+  border: 1px solid #e0f2fe;
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin: var(--space-xs) 0;
+  word-break: break-all;
+}
+
+.excel-chart-caption {
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+/* Full Dashboard Snapshot Card */
+.excel-full-dash-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-subtle);
+  overflow: hidden;
+  margin-top: var(--space-xl);
+}
+
+.excel-full-dash-preview {
+  max-height: 520px;
+  overflow-y: auto;
+  border-bottom: 1px solid var(--color-border-subtle);
+  background: #f1f5f9;
+  text-align: center;
+  padding: var(--space-md);
+}
+
+.excel-full-dash-preview img {
+  max-width: 100%;
+  height: auto;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+}
+
 /* Responsive Component Hooks */
 @media (max-width: 900px) {
   .nav-menu { display: none; }
@@ -649,4 +817,5 @@
   .footer-grid { grid-template-columns: 1fr; }
   .stat-grid { grid-template-columns: 1fr 1fr; }
   .chart-header { flex-direction: column; align-items: flex-start; }
+  .excel-charts-grid { grid-template-columns: 1fr; }
 }
