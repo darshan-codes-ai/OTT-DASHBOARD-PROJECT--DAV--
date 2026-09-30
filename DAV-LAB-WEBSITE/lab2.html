@@ -244,290 +244,52 @@
         </div>
       </section>
 
-      <!-- Section C: Actual Excel Dashboard Visualizations & Reproductions -->
+      <!-- Section C: Visual Reproductions of Lab 2 Dashboard Charts -->
       <section class="lab-task-block">
         <div class="task-header">
           <div style="display: flex; align-items: center; gap: var(--space-sm);">
             <span class="badge badge-accent">Visualizations</span>
-            <h2 class="task-title" style="margin: 0; font-family: var(--font-sans);">Actual Excel Dashboard Graphs (9 Charts)</h2>
+            <h2 class="task-title" style="margin: 0; font-family: var(--font-sans);">Key Excel Dashboard Visual Reproductions</h2>
           </div>
-          <span class="badge badge-default">Excel Workbook Artifacts</span>
+          <span class="badge badge-default">Plotly Reproductions</span>
         </div>
 
         <p class="task-desc">
-          The <code>DASHBOARD</code> worksheet in <code>DAV_Lab_Assignment_2_Movie_Streaming_Platform.xlsx</code> contains <strong>9 distinct charts</strong> created natively in Microsoft Excel. Below you can inspect all 9 actual charts exported directly from the workbook, view the full spreadsheet layout, and switch to interactive web visualizations.
+          The workbook features 9 embedded charts. Below are clean interactive reproductions of the two most critical analytical models: the 5-tier Rating Bins distribution and the Platform Exclusivity / Overlap breakdown.
         </p>
 
-        <!-- Interactive Tabs for Actual Excel vs Interactive Recreations -->
-        <div class="tabs-container">
-          <div class="tabs-nav">
-            <button class="tab-btn active">📊 Actual Excel Graphs (All 9 Charts)</button>
-            <button class="tab-btn">⚡ Interactive Re-creations (Plotly.js)</button>
-            <button class="tab-btn">📋 Full Worksheet Layout (A1:T92)</button>
-          </div>
-
-          <!-- TAB 1: Actual 9 Excel Charts -->
-          <div class="tab-pane active">
-            <div class="excel-charts-grid">
-              
-              <!-- Chart 1: Streaming Platforms -->
-              <div class="excel-chart-card">
-                <div class="excel-chart-header">
-                  <span class="excel-chart-num">Chart 01 • Clustered Column</span>
-                  <span class="badge badge-default">Section 3</span>
-                </div>
-                <div class="excel-chart-img-wrap">
-                  <img src="./assets/excel-charts/excel_chart_1.png" alt="Excel Chart 1 - Streaming Platforms">
-                </div>
-                <div class="excel-chart-body">
-                  <h3 class="excel-chart-title">Streaming Platforms</h3>
-                  <div class="excel-chart-formula">Ref: DASHBOARD!$A$26:$D$30 • Formula: =COUNTIF(DATA!G2:G9516, 1)</div>
-                  <p class="excel-chart-caption">
-                    Total movie offerings per service: Prime Video (4,113), Netflix (3,695), Hulu (1,047), and Disney+ (922).
-                  </p>
-                </div>
+        <div class="charts-dual-grid">
+          <!-- Chart 1: Rating Bins -->
+          <div class="chart-card">
+            <div class="chart-header">
+              <div>
+                <h3 class="chart-title">Rating Distribution Bins</h3>
+                <p class="chart-subtitle">Reproduction of Excel Dashboard Chart 4 (Section 5)</p>
               </div>
-
-              <!-- Chart 2: Dataset Profile -->
-              <div class="excel-chart-card">
-                <div class="excel-chart-header">
-                  <span class="excel-chart-num">Chart 02 • Clustered Column</span>
-                  <span class="badge badge-default">Section 1</span>
-                </div>
-                <div class="excel-chart-img-wrap">
-                  <img src="./assets/excel-charts/excel_chart_2.png" alt="Excel Chart 2 - Dataset Profile">
-                </div>
-                <div class="excel-chart-body">
-                  <h3 class="excel-chart-title">Dataset Profile</h3>
-                  <div class="excel-chart-formula">Ref: DASHBOARD!$A$8:$D$14 • Formula: =COUNTA(DATA!C2:C9516)</div>
-                  <p class="excel-chart-caption">
-                    Profiles the 7 macro dimensions: records (9,515), columns (11), earliest year (1914), latest year (2021), average year (2007.42), missing age (4,177), and missing RT (7).
-                  </p>
-                </div>
-              </div>
-
-              <!-- Chart 3: Rotten Tomatoes Score -->
-              <div class="excel-chart-card">
-                <div class="excel-chart-header">
-                  <span class="excel-chart-num">Chart 03 • Clustered Column</span>
-                  <span class="badge badge-default">Section 2</span>
-                </div>
-                <div class="excel-chart-img-wrap">
-                  <img src="./assets/excel-charts/excel_chart_3.png" alt="Excel Chart 3 - Rotten Tomatoes Score">
-                </div>
-                <div class="excel-chart-body">
-                  <h3 class="excel-chart-title">Rotten Tomatoes Score</h3>
-                  <div class="excel-chart-formula">Ref: DASHBOARD!$A$19:$D$22 • Formula: =AVERAGE(DATA!L2:L9516)</div>
-                  <p class="excel-chart-caption">
-                    Compares score parameters: 5.35 mean rating, 9.8 peak rating, 1.0 minimum, and 335 movies scoring in the 8+ tier.
-                  </p>
-                </div>
-              </div>
-
-              <!-- Chart 4: Platform Percentage -->
-              <div class="excel-chart-card">
-                <div class="excel-chart-header">
-                  <span class="excel-chart-num">Chart 04 • Doughnut Chart</span>
-                  <span class="badge badge-default">Section 4</span>
-                </div>
-                <div class="excel-chart-img-wrap">
-                  <img src="./assets/excel-charts/excel_chart_4.png" alt="Excel Chart 4 - Platform Percentage">
-                </div>
-                <div class="excel-chart-body">
-                  <h3 class="excel-chart-title">Platform Percentage Share</h3>
-                  <div class="excel-chart-formula">Ref: DASHBOARD!$A$34:$D$38 • Formula: =COUNTIF(...)/COUNTA(...)</div>
-                  <p class="excel-chart-caption">
-                    Market share breakdown: Prime Video (43.23%), Netflix (38.83%), Hulu (11.00%), and Disney+ (9.69%).
-                  </p>
-                </div>
-              </div>
-
-              <!-- Chart 5: Rating Distribution (3D) -->
-              <div class="excel-chart-card">
-                <div class="excel-chart-header">
-                  <span class="excel-chart-num">Chart 05 • 3D Column Chart</span>
-                  <span class="badge badge-scale">Section 5</span>
-                </div>
-                <div class="excel-chart-img-wrap">
-                  <img src="./assets/excel-charts/excel_chart_5.png" alt="Excel Chart 5 - Rating Distribution">
-                </div>
-                <div class="excel-chart-body">
-                  <h3 class="excel-chart-title">Rating Distribution (0–10 Scale)</h3>
-                  <div class="excel-chart-formula">Ref: DASHBOARD!$A$47:$C$52 • Formula: =COUNTIFS(DATA!L:L, ">=4", DATA!L:L, "<6")</div>
-                  <p class="excel-chart-caption">
-                    Binned frequency distribution proving 5,429 titles (57.1%) cluster in the 4–6 interval.
-                  </p>
-                </div>
-              </div>
-
-              <!-- Chart 6: Age Rating Distribution -->
-              <div class="excel-chart-card">
-                <div class="excel-chart-header">
-                  <span class="excel-chart-num">Chart 06 • Doughnut Chart</span>
-                  <span class="badge badge-default">Section 6</span>
-                </div>
-                <div class="excel-chart-img-wrap">
-                  <img src="./assets/excel-charts/excel_chart_6.png" alt="Excel Chart 6 - Age Rating">
-                </div>
-                <div class="excel-chart-body">
-                  <h3 class="excel-chart-title">Age Rating Breakdown</h3>
-                  <div class="excel-chart-formula">Ref: DASHBOARD!$A$60:$C$66 • Formula: =COUNTIF(DATA!E2:E9516, "18+")</div>
-                  <p class="excel-chart-caption">
-                    Visualizes 18+ (2,276), 7+ (1,090), 13+ (998), all (698), 16+ (276), and unrated blank records (4,177).
-                  </p>
-                </div>
-              </div>
-
-              <!-- Chart 7: Highly Rated Movies by Platform -->
-              <div class="excel-chart-card">
-                <div class="excel-chart-header">
-                  <span class="excel-chart-num">Chart 07 • Clustered Column</span>
-                  <span class="badge badge-default">Section 8</span>
-                </div>
-                <div class="excel-chart-img-wrap">
-                  <img src="./assets/excel-charts/excel_chart_7.png" alt="Excel Chart 7 - Highly Rated Movies by Platform">
-                </div>
-                <div class="excel-chart-body">
-                  <h3 class="excel-chart-title">Highly Rated Movies by Platform</h3>
-                  <div class="excel-chart-formula">Ref: DASHBOARD!$A$74:$D$78 • Formula: =COUNTIFS(DATA!G:G, 1, DATA!L:L, ">=8")</div>
-                  <p class="excel-chart-caption">
-                    Premium content distribution (RT ≥ 8.0/10): Netflix (168), Disney+ (75), Prime Video (53), and Hulu (49).
-                  </p>
-                </div>
-              </div>
-
-              <!-- Chart 8: Platform Count & Exclusivity -->
-              <div class="excel-chart-card">
-                <div class="excel-chart-header">
-                  <span class="excel-chart-num">Chart 08 • 3D Pie Chart</span>
-                  <span class="badge badge-default">Section 9</span>
-                </div>
-                <div class="excel-chart-img-wrap">
-                  <img src="./assets/excel-charts/excel_chart_8.png" alt="Excel Chart 8 - Platform Count">
-                </div>
-                <div class="excel-chart-body">
-                  <h3 class="excel-chart-title">Platform Exclusivity Overlap</h3>
-                  <div class="excel-chart-formula">Ref: DASHBOARD!$A$86:$C$90 • Formula: =COUNTIF(DATA!M2:M9516, 1)</div>
-                  <p class="excel-chart-caption">
-                    3D pie chart proving that 97.34% of the catalog (9,262 titles) is exclusively licensed to a single platform.
-                  </p>
-                </div>
-              </div>
-
-              <!-- Chart 9: Movies Released by Year -->
-              <div class="excel-chart-card">
-                <div class="excel-chart-header">
-                  <span class="excel-chart-num">Chart 09 • Line Chart</span>
-                  <span class="badge badge-default">Section 7</span>
-                </div>
-                <div class="excel-chart-img-wrap">
-                  <img src="./assets/excel-charts/excel_chart_9.png" alt="Excel Chart 9 - Movies Released by year">
-                </div>
-                <div class="excel-chart-body">
-                  <h3 class="excel-chart-title">Movies Released by Year</h3>
-                  <div class="excel-chart-formula">Ref: DASHBOARD!$O$7:$R$12 • Formula: =SUMPRODUCT(--(DATA!D:D=...))</div>
-                  <p class="excel-chart-caption">
-                    Time series trajectory tracking chronological movie release volumes in recent release years.
-                  </p>
-                </div>
-              </div>
-
+              <span class="badge badge-scale">0–10 Scale</span>
+            </div>
+            <div class="chart-body" id="lab2-chart-bins"></div>
+            <div class="chart-footer">
+              <span>Formula: <code>=COUNTIFS(DATA!L:L, ">=4", DATA!L:L, "<6")</code></span>
+              <span class="font-mono">Peak: 4–6 Bin (5,429 Titles)</span>
             </div>
           </div>
 
-          <!-- TAB 2: Interactive Web Visualizations (Plotly.js) -->
-          <div class="tab-pane">
-            <div class="charts-dual-grid">
-              <!-- Chart 1: Rating Bins -->
-              <div class="chart-card">
-                <div class="chart-header">
-                  <div>
-                    <h3 class="chart-title">Rating Distribution Bins</h3>
-                    <p class="chart-subtitle">Interactive recreation of Excel Dashboard Chart 5 (Section 5)</p>
-                  </div>
-                  <span class="badge badge-scale">0–10 Scale</span>
-                </div>
-                <div class="chart-body" id="lab2-chart-bins"></div>
-                <div class="chart-footer">
-                  <span>Formula: <code>=COUNTIFS(DATA!L:L, ">=4", DATA!L:L, "<6")</code></span>
-                  <span class="font-mono">Peak: 4–6 Bin (5,429 Titles)</span>
-                </div>
+          <!-- Chart 2: Exclusivity Donut -->
+          <div class="chart-card">
+            <div class="chart-header">
+              <div>
+                <h3 class="chart-title">Platform Exclusivity &amp; Overlap</h3>
+                <p class="chart-subtitle">Reproduction of Excel Dashboard Chart 7 (Section 9)</p>
               </div>
-
-              <!-- Chart 2: Exclusivity Donut -->
-              <div class="chart-card">
-                <div class="chart-header">
-                  <div>
-                    <h3 class="chart-title">Platform Exclusivity &amp; Overlap</h3>
-                    <p class="chart-subtitle">Interactive recreation of Excel Dashboard Chart 8 (Section 9)</p>
-                  </div>
-                  <span class="badge badge-default">Exclusivity Metric</span>
-                </div>
-                <div class="chart-body" id="lab2-chart-overlap"></div>
-                <div class="chart-footer">
-                  <span>Formula: <code>=COUNTIF(DATA!M2:M9516, 1)</code></span>
-                  <span class="font-mono">Exclusives: 97.34%</span>
-                </div>
-              </div>
+              <span class="badge badge-default">Exclusivity Metric</span>
             </div>
-
-            <div class="charts-dual-grid">
-              <!-- Chart 3: Platform Availability -->
-              <div class="chart-card">
-                <div class="chart-header">
-                  <div>
-                    <h3 class="chart-title">Platform Availability Comparison</h3>
-                    <p class="chart-subtitle">Interactive recreation of Excel Dashboard Chart 1 (Section 3)</p>
-                  </div>
-                  <span class="badge badge-default">Total Library</span>
-                </div>
-                <div class="chart-body" id="lab2-chart-platforms"></div>
-                <div class="chart-footer">
-                  <span>Formula: <code>=COUNTIF(DATA!G2:G9516, 1)</code></span>
-                  <span class="font-mono">Prime: 4,113 | Netflix: 3,695</span>
-                </div>
-              </div>
-
-              <!-- Chart 4: High Rated Distribution -->
-              <div class="chart-card">
-                <div class="chart-header">
-                  <div>
-                    <h3 class="chart-title">Highly Rated Content (RT ≥ 8.0)</h3>
-                    <p class="chart-subtitle">Interactive recreation of Excel Dashboard Chart 7 (Section 8)</p>
-                  </div>
-                  <span class="badge badge-scale">0–10 Scale</span>
-                </div>
-                <div class="chart-body" id="lab2-chart-high"></div>
-                <div class="chart-footer">
-                  <span>Formula: <code>=COUNTIFS(DATA!G:G, 1, DATA!L:L, ">=8")</code></span>
-                  <span class="font-mono">Netflix: 168 (50.1%)</span>
-                </div>
-              </div>
+            <div class="chart-body" id="lab2-chart-overlap"></div>
+            <div class="chart-footer">
+              <span>Formula: <code>=COUNTIF(DATA!M2:M9516, 1)</code></span>
+              <span class="font-mono">Exclusives: 97.34%</span>
             </div>
           </div>
-
-          <!-- TAB 3: Full Excel Worksheet Snapshot -->
-          <div class="tab-pane">
-            <div class="excel-full-dash-card">
-              <div class="excel-chart-header" style="padding: var(--space-md);">
-                <div>
-                  <h3 class="excel-chart-title" style="margin: 0;">Complete Excel DASHBOARD Worksheet (Rows 1–92, Cols A–T)</h3>
-                  <p class="excel-chart-caption" style="margin: 4px 0 0 0;">
-                    High-resolution full-canvas render of the Microsoft Excel workbook interface showing all formula tables, summary blocks, and embedded charts in their original spatial arrangement.
-                  </p>
-                </div>
-                <a href="./assets/excel-charts/excel_dashboard_full.png" target="_blank" class="btn btn-outline btn-sm">View Full Resolution ↗</a>
-              </div>
-              <div class="excel-full-dash-preview">
-                <img src="./assets/excel-charts/excel_dashboard_full.png" alt="Complete Microsoft Excel DASHBOARD Worksheet Layout">
-              </div>
-              <div class="chart-footer" style="padding: var(--space-md);">
-                <span>Source File: <code>DAV_Lab_Assignment_2_Movie_Streaming_Platform.xlsx</code></span>
-                <span class="font-mono">Resolution: 1601 × 2477 px</span>
-              </div>
-            </div>
-          </div>
-
         </div>
 
         <div class="callout-box callout-info" style="margin-top: var(--space-xl);">
@@ -536,7 +298,7 @@
             Excel Exclusivity Audit Takeaway
           </div>
           <p>
-            Section 9 of the Excel dashboard proves that competition between OTT services is overwhelmingly driven by <strong>content exclusivity</strong>. Out of 9,515 titles, <strong>9,262 titles (97.34%) are available on exactly one platform</strong>. Only 245 titles are shared between 2 services, 7 between 3 services, and a single title (<em>Zapped</em>, 2014) is licensed across all 4.
+            Section 9 of the Excel dashboard proves that competition between OTT services is overwhelmingly driven by <strong>content exclusivity</strong>. Out of 9,515 titles, <strong>9,262 titles (97.34%) are available on exactly one platform</strong>. Only 245 titles are shared between 2 services, 7 between 3 services, and a single title is licensed by all 4.
           </p>
         </div>
       </section>
@@ -603,8 +365,6 @@
       if (summary) {
         DAVCharts.renderRatingBins('lab2-chart-bins', summary.ratingBins);
         DAVCharts.renderOverlapDonut('lab2-chart-overlap', summary.platformOverlap);
-        DAVCharts.renderPlatformBar('lab2-chart-platforms', summary.platformCounts);
-        DAVCharts.renderHighRatedComparison('lab2-chart-high', summary.platformCounts, summary.highRatedPlatformCounts);
       }
     });
   </script>
