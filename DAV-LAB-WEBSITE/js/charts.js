@@ -46,7 +46,13 @@ const DAVCharts = (function () {
     if (!el) return;
     if (window.ResizeObserver) {
       const ro = new ResizeObserver(() => {
-        Plotly.Plots.resize(el);
+        if (el && el.offsetParent !== null && el.data) {
+          try {
+            Plotly.Plots.resize(el);
+          } catch (e) {
+            // ignore benign resize errors when container is hidden
+          }
+        }
       });
       ro.observe(el);
     }
@@ -95,6 +101,55 @@ const DAVCharts = (function () {
   }
 
   /**
+   * 1b. Horizontal Platform Availability Bar Chart
+   */
+  function renderPlatformHorizontalBar(containerId, counts) {
+    const el = document.getElementById(containerId);
+    if (!el) return;
+
+    const platforms = ['Disney+', 'Hulu', 'Netflix', 'Prime Video'];
+    const values = [
+      counts['Disney+'] || 922,
+      counts['Hulu'] || 1047,
+      counts['Netflix'] || 3695,
+      counts['Prime Video'] || 4113
+    ];
+    const colors = ['#113ccf', '#0f9d58', '#e50914', '#0088cc'];
+
+    const data = [{
+      y: platforms,
+      x: values,
+      type: 'bar',
+      orientation: 'h',
+      marker: {
+        color: colors,
+        line: { width: 1, color: '#e6e3dc' }
+      },
+      text: values.map(v => v.toLocaleString()),
+      textposition: 'outside',
+      cliponaxis: false,
+      hovertemplate: '<b>%{y}</b><br>Available Titles: %{x:,}<extra></extra>'
+    }];
+
+    const layout = {
+      ...BASE_LAYOUT,
+      margin: { t: 20, r: 45, b: 35, l: 85 },
+      xaxis: {
+        ...BASE_LAYOUT.xaxis,
+        title: { text: 'Available Titles', font: { size: 11, color: '#57606a' } },
+        range: [0, 4800]
+      },
+      yaxis: {
+        ...BASE_LAYOUT.yaxis,
+        autorange: true
+      }
+    };
+
+    Plotly.newPlot(el, data, layout, CONFIG);
+    observeResize(containerId);
+  }
+
+  /**
    * 2. Chronological Release Year Trend
    */
   function renderYearTrend(containerId, yearDist) {
@@ -117,14 +172,31 @@ const DAVCharts = (function () {
 
     const layout = {
       ...BASE_LAYOUT,
+      margin: { t: 25, r: 25, b: 40, l: 45 },
       xaxis: {
         ...BASE_LAYOUT.xaxis,
-        title: { text: 'Release Year', font: { size: 12, color: '#57606a' } }
+        title: { text: 'Release Year', font: { size: 11, color: '#57606a' } }
       },
       yaxis: {
         ...BASE_LAYOUT.yaxis,
-        title: { text: 'Number of Titles', font: { size: 12, color: '#57606a' } }
-      }
+        title: { text: 'Number of Titles', font: { size: 11, color: '#57606a' } }
+      },
+      annotations: [{
+        x: 2019,
+        y: 1014,
+        xref: 'x',
+        yref: 'y',
+        text: 'Peak: 2019 (1,014)',
+        showarrow: true,
+        arrowhead: 2,
+        ax: -40,
+        ay: -25,
+        font: { size: 10, color: '#3b28cc' },
+        bgcolor: '#ffffff',
+        bordercolor: '#3b28cc',
+        borderwidth: 1,
+        borderpad: 3
+      }]
     };
 
     Plotly.newPlot(el, data, layout, CONFIG);
@@ -203,6 +275,99 @@ const DAVCharts = (function () {
         ...BASE_LAYOUT.yaxis,
         title: { text: 'Titles Rated 8.0+ / 10', font: { size: 12, color: '#57606a' } },
         range: [0, 200]
+      }
+    };
+
+    Plotly.newPlot(el, data, layout, CONFIG);
+    observeResize(containerId);
+  }
+
+  /**
+   * 4b. Horizontal Highly Rated by Platform Bar Chart
+   */
+  function renderHighRatedHorizontalBar(containerId, highCounts) {
+    const el = document.getElementById(containerId);
+    if (!el) return;
+
+    const platforms = ['Hulu', 'Prime Video', 'Disney+', 'Netflix'];
+    const values = [
+      highCounts['Hulu'] || 49,
+      highCounts['Prime Video'] || 53,
+      highCounts['Disney+'] || 75,
+      highCounts['Netflix'] || 168
+    ];
+    const colors = ['#0f9d58', '#0088cc', '#113ccf', '#e50914'];
+
+    const data = [{
+      y: platforms,
+      x: values,
+      type: 'bar',
+      orientation: 'h',
+      marker: {
+        color: colors,
+        line: { width: 1, color: '#e6e3dc' }
+      },
+      text: values.map(v => v.toString()),
+      textposition: 'outside',
+      cliponaxis: false,
+      hovertemplate: '<b>%{y}</b><br>High-Rated Titles (RT ≥ 8.0): %{x}<extra></extra>'
+    }];
+
+    const layout = {
+      ...BASE_LAYOUT,
+      margin: { t: 20, r: 40, b: 35, l: 85 },
+      xaxis: {
+        ...BASE_LAYOUT.xaxis,
+        title: { text: 'Titles Rated 8.0+ / 10', font: { size: 11, color: '#57606a' } },
+        range: [0, 200]
+      },
+      yaxis: {
+        ...BASE_LAYOUT.yaxis,
+        autorange: true
+      }
+    };
+
+    Plotly.newPlot(el, data, layout, CONFIG);
+    observeResize(containerId);
+  }
+
+  /**
+   * 3b. Age Rating Donut Chart
+   */
+  function renderAgeDonut(containerId, ageDist) {
+    const el = document.getElementById(containerId);
+    if (!el) return;
+
+    const labels = ['18+', '7+', '13+', 'All', '16+', 'Unrated'];
+    const values = [
+      ageDist['18+'] || 2276,
+      ageDist['7+'] || 1090,
+      ageDist['13+'] || 998,
+      ageDist['all'] || 698,
+      ageDist['16+'] || 276,
+      ageDist['nan'] || 4177
+    ];
+    const colors = ['#e50914', '#0088cc', '#0f9d58', '#113ccf', '#d97706', '#94a3b8'];
+
+    const data = [{
+      labels: labels,
+      values: values,
+      type: 'pie',
+      hole: 0.55,
+      marker: { colors: colors },
+      textinfo: 'percent',
+      hovertemplate: '<b>%{label}</b><br>Titles: %{value:,} (%{percent})<extra></extra>'
+    }];
+
+    const layout = {
+      ...BASE_LAYOUT,
+      margin: { t: 10, r: 10, b: 40, l: 10 },
+      showlegend: true,
+      legend: {
+        orientation: 'h',
+        y: -0.15,
+        x: 0,
+        font: { size: 10, color: '#57606a' }
       }
     };
 
@@ -479,9 +644,12 @@ const DAVCharts = (function () {
 
   return {
     renderPlatformBar,
+    renderPlatformHorizontalBar,
     renderYearTrend,
     renderAgeDistribution,
+    renderAgeDonut,
     renderHighRatedComparison,
+    renderHighRatedHorizontalBar,
     renderRatingBins,
     renderOverlapDonut,
     renderBoxplotAge,

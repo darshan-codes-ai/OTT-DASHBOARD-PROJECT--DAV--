@@ -3,1271 +3,433 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Movie Streaming Analytics Dashboard | DAV Laboratory Portfolio</title>
-  <meta name="description" content="Interactive overview of movie availability, critic ratings, age classifications, chronological trends, and platform exclusivity across Netflix, Hulu, Prime Video, and Disney+.">
+  <title>Movie Streaming Analytics Dashboard | DAV Laboratory</title>
+  <meta name="description" content="Modern analytics dashboard visualizing movie availability, critic ratings, age certifications, and platform exclusivity across Netflix, Hulu, Prime Video, and Disney+.">
   <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
 
-  <!-- CSS Stylesheets (with cache-busting version query) -->
-  <link rel="stylesheet" href="./css/global.css?v=dashboard-20261006">
-  <link rel="stylesheet" href="./css/components.css?v=dashboard-20261006">
-  <link rel="stylesheet" href="./css/pages.css?v=dashboard-20261006">
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="./css/global.css?v=dash-v2">
+  <link rel="stylesheet" href="./css/components.css?v=dash-v2">
+  <link rel="stylesheet" href="./css/pages.css?v=dash-v2">
 
   <!-- External Libraries (CDN) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
   <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
 </head>
-<body>
-  <a href="#main-content" class="skip-link">Skip to main content</a>
+<body class="dash-page-body">
+  <a href="#main-canvas" class="skip-link">Skip to main dashboard canvas</a>
 
-  <!-- Top Sticky Navigation -->
-  <header class="site-header">
-    <div class="container nav-container">
-      <a href="./index.html" class="nav-brand" aria-label="DAV Laboratory Home">
-        <div class="brand-mark">D</div>
-        <div class="brand-info">
-          <span class="brand-title">DAV Laboratory</span>
-          <span class="brand-subtitle">OTT Content Analytics</span>
+  <div class="dash-app-layout">
+    <!-- 1. LEFT SIDEBAR (Power BI / Admin Style Navigation) -->
+    <aside class="dash-sidebar" aria-label="Dashboard Sidebar">
+      <div class="dash-sidebar-header">
+        <div class="dash-brand-icon">D</div>
+        <div class="dash-brand-info">
+          <span class="dash-brand-title">DAV Laboratory</span>
+          <span class="dash-brand-sub">Content Analytics</span>
         </div>
-      </a>
-      <nav class="nav-menu" aria-label="Main Navigation">
-        <a href="./index.html" class="nav-link">Home</a>
-        <a href="./labs.html" class="nav-link">Labs</a>
-        <a href="./dashboard.html" class="nav-link active">Dashboard</a>
-        <a href="./explorer.html" class="nav-link">Data Explorer</a>
-        <a href="./insights.html" class="nav-link">Insights</a>
-        <a href="./resources.html" class="nav-link">Resources</a>
+      </div>
+
+      <nav class="dash-sidebar-nav" aria-label="Main Application Navigation">
+        <a href="./index.html" class="dash-nav-link">
+          <span class="dash-nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </span>
+          Overview
+        </a>
+        <a href="./labs.html" class="dash-nav-link">
+          <span class="dash-nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 2v7.31L4.2 18.5A2 2 0 0 0 6 22h12a2 2 0 0 0 1.8-3.5L14 9.31V2"/><line x1="8.5" y1="2" x2="15.5" y2="2"/><line x1="8.5" y1="14" x2="15.5" y2="14"/></svg>
+          </span>
+          Labs
+        </a>
+        <a href="./dashboard.html" class="dash-nav-link active">
+          <span class="dash-nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
+          </span>
+          Dashboard
+        </a>
+        <a href="./explorer.html" class="dash-nav-link">
+          <span class="dash-nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18"/></svg>
+          </span>
+          Data Explorer
+        </a>
+        <a href="./insights.html" class="dash-nav-link">
+          <span class="dash-nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6M10 22h4M12 2v1M4.22 4.22l.71.71M1 12h1M4.22 19.78l.71-.71M19.78 4.22l-.71.71M23 12h-1M19.78 19.78l-.71-.71"/><circle cx="12" cy="12" r="5"/></svg>
+          </span>
+          Insights
+        </a>
+        <a href="./resources.html" class="dash-nav-link">
+          <span class="dash-nav-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+          </span>
+          Resources
+        </a>
       </nav>
-      <div class="nav-actions">
-        <a href="./explorer.html" class="btn btn-primary btn-sm">Explore Data</a>
-        <button class="mobile-toggle" aria-label="Toggle navigation drawer" aria-expanded="false">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
-        </button>
-      </div>
-    </div>
-    <div class="mobile-drawer" id="mobile-drawer">
-      <ul class="mobile-nav-list">
-        <li><a href="./index.html" class="mobile-nav-link">Home</a></li>
-        <li><a href="./labs.html" class="mobile-nav-link">Labs Overview</a></li>
-        <li><a href="./lab1.html" class="mobile-nav-link" style="padding-left: 24px;">└ Lab 1: Python EDA</a></li>
-        <li><a href="./lab2.html" class="mobile-nav-link" style="padding-left: 24px;">└ Lab 2: Excel Dashboard</a></li>
-        <li><a href="./lab3.html" class="mobile-nav-link" style="padding-left: 24px;">└ Lab 3: Seaborn Analysis</a></li>
-        <li><a href="./dashboard.html" class="mobile-nav-link active">Dashboard</a></li>
-        <li><a href="./explorer.html" class="mobile-nav-link">Data Explorer</a></li>
-        <li><a href="./insights.html" class="mobile-nav-link">Key Insights</a></li>
-        <li><a href="./resources.html" class="mobile-nav-link">Resources &amp; Provenance</a></li>
-      </ul>
-    </div>
-  </header>
 
-  <!-- Section 2: Dashboard Hero Section -->
-  <section class="hero-section" id="hero">
-    <div class="container">
-      <div class="hero-kicker">
-        <span>DAV LABORATORY PROJECT</span>
-        <span style="opacity: 0.4;">/</span>
-        <span>EXECUTIVE DASHBOARD</span>
+      <div class="dash-sidebar-footer">
+        <div><strong>DAV Academic Project</strong></div>
+        <div>9,515 Records • Verified</div>
       </div>
-      <h1 class="hero-title">Movie Streaming Analytics Dashboard</h1>
-      <p class="hero-subtitle">
-        Interactive overview of movie availability, ratings, age classifications, yearly trends, and platform overlap across Netflix, Hulu, Prime Video, and Disney+.
-      </p>
+    </aside>
 
-      <div class="hero-meta-bar">
-        <div class="hero-meta-item">
-          <span class="text-subtle">Audited Dataset:</span>
-          <strong>9,515 Movies</strong>
+    <!-- Mobile Drawer Overlay -->
+    <div class="dash-sidebar-overlay"></div>
+
+    <!-- 2. MAIN APPLICATION CONTENT AREA -->
+    <div class="dash-main-area">
+      <!-- TOP TOOLBAR -->
+      <header class="dash-topbar">
+        <div class="dash-topbar-left">
+          <button class="dash-mobile-toggle" aria-label="Toggle navigation sidebar">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <h1 class="dash-topbar-title">
+            Movie Streaming Analytics
+            <span class="dash-status-pill">
+              <span class="dash-status-dot"></span> 9,515 Titles
+            </span>
+          </h1>
         </div>
-        <div class="hero-meta-item">
-          <span class="text-subtle">Streaming Platforms:</span>
-          <strong>4 Providers</strong>
-        </div>
-        <div class="hero-meta-item">
-          <span class="text-subtle">Chronological Span:</span>
-          <strong>1914–2021</strong>
-        </div>
-        <div class="hero-meta-item">
-          <span class="badge badge-accent">Source Verified</span>
-        </div>
-      </div>
 
-      <div class="hero-cta-group">
-        <a href="#kpis" class="btn btn-primary">Explore Analytics</a>
-        <a href="./explorer.html" class="btn btn-secondary">Open Interactive Explorer</a>
-        <a href="./lab2.html" class="btn btn-outline">Inspect Excel Workbook</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Sticky Quick Jump Subnav -->
-  <nav class="dashboard-subnav" aria-label="Dashboard Section Navigation">
-    <div class="container">
-      <div class="dashboard-subnav-links">
-        <a href="#kpis" class="dashboard-subnav-link">KPIs</a>
-        <a href="#overview" class="dashboard-subnav-link">Dataset Profile</a>
-        <a href="#platforms" class="dashboard-subnav-link">Availability</a>
-        <a href="#share" class="dashboard-subnav-link">Offering Share</a>
-        <a href="#ratings" class="dashboard-subnav-link">Rotten Tomatoes</a>
-        <a href="#age" class="dashboard-subnav-link">Age Demographics</a>
-        <a href="#trends" class="dashboard-subnav-link">Release Trends</a>
-        <a href="#high-rated" class="dashboard-subnav-link">Highly Rated</a>
-        <a href="#exclusivity" class="dashboard-subnav-link">Exclusivity Overlap</a>
-        <a href="#advanced" class="dashboard-subnav-link">Advanced Models</a>
-        <a href="#correlations" class="dashboard-subnav-link">Correlation Matrix</a>
-        <a href="#insights" class="dashboard-subnav-link">Viva Takeaways</a>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Main Dashboard Content -->
-  <main class="container" id="main-content">
-
-    <!-- Section 3: KPI / Summary Cards -->
-    <section class="dashboard-section" id="kpis">
-      <div class="stat-grid" style="margin-top: 0;">
-        <div class="stat-card">
-          <div class="stat-card-header">
-            <span class="stat-label">Total Movies</span>
-            <span class="badge badge-accent">Deduplicated</span>
+        <div class="dash-topbar-right">
+          <!-- Global View Mode Switcher -->
+          <div class="dash-mode-switcher" aria-label="Dashboard view mode">
+            <button class="dash-mode-btn active" data-mode="plot" title="Display interactive Plotly charts">⚡ Interactive</button>
+            <button class="dash-mode-btn" data-mode="excel" title="Display authentic Excel workbook charts">📊 Excel Mode</button>
           </div>
-          <div class="stat-value">9,515</div>
-          <p class="stat-desc">Deduplicated movie records evaluated across all 4 streaming services.</p>
-        </div>
 
-        <div class="stat-card">
-          <div class="stat-card-header">
-            <span class="stat-label">Streaming Platforms</span>
-            <span class="badge badge-default">4 Services</span>
-          </div>
-          <div class="stat-value">4</div>
-          <p class="stat-desc">Netflix, Hulu, Prime Video, and Disney+ evaluated simultaneously.</p>
+          <a href="./explorer.html" class="btn btn-primary btn-sm">Explore Data</a>
         </div>
+      </header>
 
-        <div class="stat-card">
-          <div class="stat-card-header">
-            <span class="stat-label">High-Rated Movies</span>
-            <span class="badge badge-scale">RT ≥ 8.0/10</span>
-          </div>
-          <div class="stat-value">335</div>
-          <p class="stat-desc">Titles with Rotten Tomatoes score ≥ 8.0/10 (3.52% of rated catalog).</p>
-        </div>
+      <!-- 3. MAIN ANALYTICS CANVAS -->
+      <main class="dash-canvas" id="main-canvas">
 
-        <div class="stat-card">
-          <div class="stat-card-header">
-            <span class="stat-label">Year Range</span>
-            <span class="badge badge-default">107-Year Span</span>
-          </div>
-          <div class="stat-value">1914–2021</div>
-          <p class="stat-desc">Earliest title released in 1914; dataset mean year is 2007.4, median 2014.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section 4: Dataset Profile Section -->
-    <section class="dashboard-section" id="overview">
-      <div class="dashboard-section-header">
-        <div class="dashboard-section-title-wrap">
-          <span class="dashboard-section-num">Module 01</span>
-          <h2 class="dashboard-section-title">Dataset Overview &amp; Data Profile</h2>
-          <p class="dashboard-section-subtitle">
-            Structural audit and dimensional parameters of the master streaming catalog, verified against the repository source CSV and Lab 2 Excel workbook.
-          </p>
-        </div>
-        <span class="badge badge-default">Source: DATA!A1:K9516</span>
-      </div>
-
-      <div class="dashboard-profile-grid">
-        <div class="profile-card">
-          <div class="profile-card-label">Total Records</div>
-          <div class="profile-card-value font-mono">9,515</div>
-          <div class="profile-card-sub">Individual movie rows indexed</div>
-        </div>
-
-        <div class="profile-card">
-          <div class="profile-card-label">CSV Original Columns</div>
-          <div class="profile-card-value font-mono">11</div>
-          <div class="profile-card-sub">Raw columns in source CSV</div>
-        </div>
-
-        <div class="profile-card">
-          <div class="profile-card-label">Analytical Columns</div>
-          <div class="profile-card-value font-mono">10</div>
-          <div class="profile-card-sub">Excluding index artifact <code>Unnamed: 0</code></div>
-        </div>
-
-        <div class="profile-card">
-          <div class="profile-card-label">Exact Duplicate Rows</div>
-          <div class="profile-card-value font-mono">0</div>
-          <div class="profile-card-sub">0.00% complete row duplication</div>
-        </div>
-
-        <div class="profile-card">
-          <div class="profile-card-label">Duplicate Title + Year</div>
-          <div class="profile-card-value font-mono">0</div>
-          <div class="profile-card-sub">Zero identical entity duplicates</div>
-        </div>
-
-        <div class="profile-card">
-          <div class="profile-card-label">Missing Age Rating</div>
-          <div class="profile-card-value font-mono">4,177</div>
-          <div class="profile-card-sub">43.90% null certificate values</div>
-        </div>
-
-        <div class="profile-card">
-          <div class="profile-card-label">Missing Rotten Tomatoes</div>
-          <div class="profile-card-value font-mono">7</div>
-          <div class="profile-card-sub">0.07% missing ratings in catalog</div>
-        </div>
-
-        <div class="profile-card">
-          <div class="profile-card-label">Release Year Span</div>
-          <div class="profile-card-value font-mono">1914–2021</div>
-          <div class="profile-card-sub">Mean: 2007.42 | Median: 2014.0</div>
-        </div>
-      </div>
-
-      <!-- Dataset Profile Chart Card -->
-      <div class="excel-chart-card" style="max-width: 820px; margin: 0 auto var(--space-xl) auto;">
-        <div class="excel-chart-header">
-          <span class="excel-chart-num">Excel Chart 02 • Clustered Column</span>
-          <span class="badge badge-accent">Workbook Section 1</span>
-        </div>
-        <div class="excel-chart-img-wrap">
-          <img src="./assets/excel-charts/excel_chart_2.png" alt="Excel Chart 2 - Dataset Profile">
-        </div>
-        <div class="excel-chart-body">
-          <h3 class="excel-chart-title">Workbook Dataset Profile Overview</h3>
-          <div class="excel-chart-formula">Ref: DASHBOARD!$A$8:$D$14 • Formulas: =COUNTA(DATA!C2:C9516), =MINIFS(), =MAX()</div>
-          <p class="excel-chart-caption">
-            Macro-level profile reflecting 9,515 records, 11 dimensions, earliest year 1914, latest year 2021, average release year 2007.42, 4,177 missing age tags, and 7 missing Rotten Tomatoes ratings.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section 5: Platform Analysis -->
-    <section class="dashboard-section" id="platforms">
-      <div class="dashboard-section-header">
-        <div class="dashboard-section-title-wrap">
-          <span class="dashboard-section-num">Module 02</span>
-          <h2 class="dashboard-section-title">Platform Availability &amp; Catalog Volumes</h2>
-          <p class="dashboard-section-subtitle">
-            Absolute count of titles indexed per streaming provider. These flags indicate availability and demonstrate catalog size variations across services.
-          </p>
-        </div>
-        <span class="badge badge-default">Section 3 in Excel Workbook</span>
-      </div>
-
-      <div class="callout-box callout-warning">
-        <div class="callout-title">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-          Important Methodological Note: Platform Flags Are Non-Mutually Exclusive
-        </div>
-        <p>
-          In this dataset, platform presence is represented by binary indicators (<code>1</code> or <code>0</code>) across multiple columns. Because titles may be co-licensed and indexed simultaneously on more than one service, <strong>these counts represent catalog availability instances rather than partitioned unique movie titles</strong>.
-        </p>
-      </div>
-
-      <div class="stat-grid" style="margin-top: var(--space-md); margin-bottom: var(--space-lg);">
-        <div class="stat-card" style="border-top: 3px solid #0088cc;">
-          <div class="stat-card-header">
-            <span class="stat-label">Prime Video</span>
-            <span class="badge badge-prime">Largest Volume</span>
-          </div>
-          <div class="stat-value font-mono">4,113</div>
-          <p class="stat-desc">Movies available • Formula: <code>=COUNTIF(DATA!I2:I9516, 1)</code></p>
-        </div>
-
-        <div class="stat-card" style="border-top: 3px solid #e50914;">
-          <div class="stat-card-header">
-            <span class="stat-label">Netflix</span>
-            <span class="badge badge-netflix">Second Volume</span>
-          </div>
-          <div class="stat-value font-mono">3,695</div>
-          <p class="stat-desc">Movies available • Formula: <code>=COUNTIF(DATA!G2:G9516, 1)</code></p>
-        </div>
-
-        <div class="stat-card" style="border-top: 3px solid #0f9d58;">
-          <div class="stat-card-header">
-            <span class="stat-label">Hulu</span>
-            <span class="badge badge-hulu">Curated</span>
-          </div>
-          <div class="stat-value font-mono">1,047</div>
-          <p class="stat-desc">Movies available • Formula: <code>=COUNTIF(DATA!H2:H9516, 1)</code></p>
-        </div>
-
-        <div class="stat-card" style="border-top: 3px solid #113ccf;">
-          <div class="stat-card-header">
-            <span class="stat-label">Disney+</span>
-            <span class="badge badge-disney">Specialized</span>
-          </div>
-          <div class="stat-value font-mono">922</div>
-          <p class="stat-desc">Movies available • Formula: <code>=COUNTIF(DATA!J2:J9516, 1)</code></p>
-        </div>
-      </div>
-
-      <!-- Tabs: Excel Chart vs Interactive Plotly -->
-      <div class="tabs-container">
-        <div class="tabs-nav">
-          <button class="tab-btn active">📊 Actual Excel Chart (Workbook Artifact)</button>
-          <button class="tab-btn">⚡ Interactive Plotly Chart (Dynamic)</button>
-        </div>
-
-        <!-- TAB 1: Actual Excel Chart -->
-        <div class="tab-pane active">
-          <div class="excel-chart-card" style="max-width: 820px; margin: 0 auto;">
-            <div class="excel-chart-header">
-              <span class="excel-chart-num">Excel Chart 01 • Clustered Column</span>
-              <span class="badge badge-accent">Cells A26:D30</span>
+        <!-- ROW 1: FOUR MINIMAL KPI CARDS -->
+        <section class="dash-kpi-row" aria-label="Summary KPIs">
+          <!-- Card 1 -->
+          <div class="dash-kpi-card">
+            <div class="dash-kpi-header">
+              <span class="dash-kpi-label">Total Movies</span>
+              <span class="badge badge-accent">Deduplicated</span>
             </div>
-            <div class="excel-chart-img-wrap">
-              <img src="./assets/excel-charts/excel_chart_1.png" alt="Excel Chart 1 - Streaming Platforms Availability">
-            </div>
-            <div class="excel-chart-body">
-              <h3 class="excel-chart-title">Streaming Platform Movie Availability</h3>
-              <div class="excel-chart-formula">Ref: DASHBOARD!$A$26:$D$30 • Source: DATA!G:J</div>
-              <p class="excel-chart-caption">
-                Exported from the Excel DASHBOARD sheet. Displays Prime Video at 4,113 titles, Netflix at 3,695, Hulu at 1,047, and Disney+ at 922.
-              </p>
-            </div>
+            <div class="dash-kpi-value font-mono">9,515</div>
+            <div class="dash-kpi-sub">Across Netflix, Hulu, Prime &amp; Disney+</div>
           </div>
-        </div>
 
-        <!-- TAB 2: Interactive Plotly Chart -->
-        <div class="tab-pane">
-          <div class="chart-card">
-            <div class="chart-header">
-              <div>
-                <h3 class="chart-title">Platform Movie Offerings (Interactive View)</h3>
-                <p class="chart-subtitle">Direct browser-side rendering using Plotly.js</p>
+          <!-- Card 2 -->
+          <div class="dash-kpi-card">
+            <div class="dash-kpi-header">
+              <span class="dash-kpi-label">Streaming Platforms</span>
+              <span class="badge badge-default">4 Services</span>
+            </div>
+            <div class="dash-kpi-value font-mono">4</div>
+            <div class="dash-kpi-sub">Simultaneously cataloged providers</div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="dash-kpi-card">
+            <div class="dash-kpi-header">
+              <span class="dash-kpi-label">High-Rated Movies</span>
+              <span class="badge badge-scale">RT ≥ 8.0/10</span>
+            </div>
+            <div class="dash-kpi-value font-mono">335</div>
+            <div class="dash-kpi-sub">3.52% of scored catalog</div>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="dash-kpi-card">
+            <div class="dash-kpi-header">
+              <span class="dash-kpi-label">Release Range</span>
+              <span class="badge badge-default">107-Year Span</span>
+            </div>
+            <div class="dash-kpi-value font-mono">1914–2021</div>
+            <div class="dash-kpi-sub">Dataset median release year: 2014</div>
+          </div>
+        </section>
+
+        <!-- ROW 2: GRAPH 1 (PLATFORM AVAILABILITY) & GRAPH 2 (MOVIES BY YEAR) -->
+        <section class="dash-grid-2col">
+          <!-- Graph 1: Platform Availability -->
+          <div class="dash-card">
+            <div class="dash-card-header">
+              <div class="dash-card-title-group">
+                <h2 class="dash-card-title">Platform Availability</h2>
+                <p class="dash-card-sub">Total catalog listings per service (non-mutually exclusive)</p>
               </div>
-              <span class="badge badge-default">Interactive Plotly</span>
-            </div>
-            <div class="chart-body" id="dashboard-chart-platform"></div>
-            <div class="chart-footer">
-              <span>Data Source: <code>summary.platformCounts</code></span>
-              <span>Hover bars for exact title counts</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section 6: Platform Percentage Section -->
-    <section class="dashboard-section" id="share">
-      <div class="dashboard-section-header">
-        <div class="dashboard-section-title-wrap">
-          <span class="dashboard-section-num">Module 03</span>
-          <h2 class="dashboard-section-title">Platform Offering Share</h2>
-          <p class="dashboard-section-subtitle">
-            Proportional representation of platform availability flags across total indexed offerings in the dataset.
-          </p>
-        </div>
-        <span class="badge badge-default">Section 4 in Excel Workbook</span>
-      </div>
-
-      <div class="callout-box callout-info">
-        <div class="callout-title">Methodological Clarification</div>
-        <p>
-          "Movies may be available on multiple platforms, so percentages represent platform offerings rather than mutually exclusive market share." The total instances of platform availability across all rows sum to 9,777 (4,113 + 3,695 + 1,047 + 922), exceeding 9,515 due to multi-platform co-licensing.
-        </p>
-      </div>
-
-      <div class="chart-card-grid">
-        <!-- Excel Chart 4 -->
-        <div class="excel-chart-card">
-          <div class="excel-chart-header">
-            <span class="excel-chart-num">Excel Chart 04 • Doughnut Chart</span>
-            <span class="badge badge-accent">Section 4</span>
-          </div>
-          <div class="excel-chart-img-wrap">
-            <img src="./assets/excel-charts/excel_chart_4.png" alt="Excel Chart 4 - Platform Percentage Share">
-          </div>
-          <div class="excel-chart-body">
-            <h3 class="excel-chart-title">Excel Doughnut: Platform Offering Proportions</h3>
-            <div class="excel-chart-formula">Ref: DASHBOARD!$A$34:$D$38 • Formula: =COUNTIF(...)/COUNTA(...)</div>
-            <p class="excel-chart-caption">
-              Visualizes Prime Video (43.23%), Netflix (38.83%), Hulu (11.00%), and Disney+ (9.69%).
-            </p>
-          </div>
-        </div>
-
-        <!-- Breakdown Table -->
-        <div class="chart-card" style="margin: 0; display: flex; flex-direction: column; justify-content: space-between;">
-          <div class="chart-header">
-            <div>
-              <h3 class="chart-title">Offering Proportions Summary</h3>
-              <p class="chart-subtitle">Calculated percentages and catalog instances</p>
-            </div>
-            <span class="badge badge-default">Verified Values</span>
-          </div>
-          <div style="padding: var(--space-lg); flex-grow: 1;">
-            <div class="editorial-table-wrap" style="margin: 0;">
-              <table class="editorial-table">
-                <thead>
-                  <tr>
-                    <th>Platform</th>
-                    <th class="num">Available Titles</th>
-                    <th class="num">Catalog Share %</th>
-                    <th class="num">Approx. Round</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><strong>Prime Video</strong></td>
-                    <td class="num font-mono">4,113</td>
-                    <td class="num font-mono">43.23%</td>
-                    <td class="num font-mono">~43%</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Netflix</strong></td>
-                    <td class="num font-mono">3,695</td>
-                    <td class="num font-mono">38.83%</td>
-                    <td class="num font-mono">~39%</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Hulu</strong></td>
-                    <td class="num font-mono">1,047</td>
-                    <td class="num font-mono">11.00%</td>
-                    <td class="num font-mono">~11%</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Disney+</strong></td>
-                    <td class="num font-mono">922</td>
-                    <td class="num font-mono">9.69%</td>
-                    <td class="num font-mono">~10%</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <p style="font-size: 0.85rem; color: var(--color-text-muted); margin-top: var(--space-md); line-height: 1.5;">
-              Prime Video and Netflix together provide the vast majority (~82%) of indexed movie availability instances in this 9,515-title catalog snapshot.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section 7: Rotten Tomatoes Rating Distribution -->
-    <section class="dashboard-section" id="ratings">
-      <div class="dashboard-section-header">
-        <div class="dashboard-section-title-wrap">
-          <span class="dashboard-section-num">Module 04</span>
-          <h2 class="dashboard-section-title">Rotten Tomatoes Rating Distribution</h2>
-          <p class="dashboard-section-subtitle">
-            Parametric summary statistics, binned frequency intervals, and critic score concentration on normalized 0–10 and 0–100 scales.
-          </p>
-        </div>
-        <span class="badge badge-default">Section 2 &amp; 5 in Excel Workbook</span>
-      </div>
-
-      <div class="stat-grid">
-        <div class="stat-card">
-          <div class="stat-card-header">
-            <span class="stat-label">Mean Score</span>
-            <span class="badge badge-default">Arithmetic Avg</span>
-          </div>
-          <div class="stat-value font-mono">5.35 <span style="font-size: 1rem; color: var(--color-text-muted);">/ 10</span></div>
-          <p class="stat-desc">53.55 on 100-point scale • Formula: <code>=AVERAGE(DATA!L2:L9516)</code></p>
-        </div>
-
-        <div class="stat-card">
-          <div class="stat-card-header">
-            <span class="stat-label">Median Score</span>
-            <span class="badge badge-default">50th Percentile</span>
-          </div>
-          <div class="stat-value font-mono">5.20 <span style="font-size: 1rem; color: var(--color-text-muted);">/ 10</span></div>
-          <p class="stat-desc">52.00 on 100-point scale • Central tendency benchmark</p>
-        </div>
-
-        <div class="stat-card">
-          <div class="stat-card-header">
-            <span class="stat-label">Min / Max Scores</span>
-            <span class="badge badge-default">Observed Extremes</span>
-          </div>
-          <div class="stat-value font-mono">1.0 / 9.8</div>
-          <p class="stat-desc">Lowest: 1.0 (10/100) | Highest: 9.8 (98/100)</p>
-        </div>
-
-        <div class="stat-card">
-          <div class="stat-card-header">
-            <span class="stat-label">High-Rated (8.0+)</span>
-            <span class="badge badge-scale">RT ≥ 8.0/10</span>
-          </div>
-          <div class="stat-value font-mono">335</div>
-          <p class="stat-desc">Formula: <code>=COUNTIF(DATA!L2:L9516, ">=8")</code></p>
-        </div>
-      </div>
-
-      <!-- Tabs: Excel Charts vs Interactive Plotly -->
-      <div class="tabs-container">
-        <div class="tabs-nav">
-          <button class="tab-btn active">📊 Actual Excel Graphs (Charts 03 &amp; 05)</button>
-          <button class="tab-btn">⚡ Interactive Plotly Rating Bins</button>
-        </div>
-
-        <!-- TAB 1: Actual Excel Charts -->
-        <div class="tab-pane active">
-          <div class="excel-charts-grid">
-            <div class="excel-chart-card">
-              <div class="excel-chart-header">
-                <span class="excel-chart-num">Excel Chart 03 • Clustered Column</span>
-                <span class="badge badge-accent">Section 2</span>
-              </div>
-              <div class="excel-chart-img-wrap">
-                <img src="./assets/excel-charts/excel_chart_3.png" alt="Excel Chart 3 - Rotten Tomatoes Score">
-              </div>
-              <div class="excel-chart-body">
-                <h3 class="excel-chart-title">Rotten Tomatoes Descriptive Summary</h3>
-                <div class="excel-chart-formula">Ref: DASHBOARD!$A$19:$D$22 • Formulas: =AVERAGE(), =MIN(), =MAX()</div>
-                <p class="excel-chart-caption">
-                  Compares summary parameters: 5.35 mean rating, 9.8 peak rating, 1.0 minimum, and 335 high-rated titles.
-                </p>
+              <div class="dash-view-toggle">
+                <button class="dash-view-btn active" data-view="plot">⚡ Interactive</button>
+                <button class="dash-view-btn" data-view="excel">📊 Excel Chart</button>
               </div>
             </div>
-
-            <div class="excel-chart-card">
-              <div class="excel-chart-header">
-                <span class="excel-chart-num">Excel Chart 05 • 3D Column Chart</span>
-                <span class="badge badge-scale">Section 5</span>
+            <div class="dash-card-body">
+              <div class="dash-plot-container" id="dashboard-chart-platform"></div>
+              <div class="dash-excel-container">
+                <img src="./assets/excel-charts/excel_chart_1.png" alt="Excel Chart 1 - Streaming Platforms">
+                <div class="dash-excel-caption">Excel Chart 01 • DASHBOARD!A26:D30 • =COUNTIF(DATA!G:J, 1)</div>
               </div>
-              <div class="excel-chart-img-wrap">
+            </div>
+            <div class="dash-card-footer">
+              <span>Prime: 4,113 • Netflix: 3,695 • Hulu: 1,047 • Disney+: 922</span>
+              <span>Non-mutually exclusive catalog counts</span>
+            </div>
+          </div>
+
+          <!-- Graph 2: Movies Released by Year -->
+          <div class="dash-card">
+            <div class="dash-card-header">
+              <div class="dash-card-title-group">
+                <h2 class="dash-card-title">Movies Released by Year</h2>
+                <p class="dash-card-sub">Chronological release volume across 107 years (1914–2021)</p>
+              </div>
+              <div class="dash-view-toggle">
+                <button class="dash-view-btn active" data-view="plot">⚡ Interactive</button>
+                <button class="dash-view-btn" data-view="excel">📊 Excel Chart</button>
+              </div>
+            </div>
+            <div class="dash-card-body">
+              <div class="dash-plot-container" id="dashboard-chart-year"></div>
+              <div class="dash-excel-container">
+                <img src="./assets/excel-charts/excel_chart_9.png" alt="Excel Chart 9 - Movies Released by Year">
+                <div class="dash-excel-caption">Excel Chart 09 • DASHBOARD!O7:R12 • Release Trajectory</div>
+              </div>
+            </div>
+            <div class="dash-card-footer">
+              <span>All-time peak: <strong>2019 with 1,014 movies</strong></span>
+              <span>1914–2021 span</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- ROW 3: GRAPH 3 (RATING DISTRIBUTION) & GRAPH 4 (AGE RATING BREAKDOWN) -->
+        <section class="dash-grid-2col">
+          <!-- Graph 3: Rotten Tomatoes Rating Distribution -->
+          <div class="dash-card">
+            <div class="dash-card-header">
+              <div class="dash-card-title-group">
+                <h2 class="dash-card-title">Rotten Tomatoes Rating Distribution</h2>
+                <p class="dash-card-sub">Frequency histogram &amp; empirical density across 9,508 scored titles</p>
+              </div>
+              <div class="dash-view-toggle">
+                <button class="dash-view-btn active" data-view="plot">⚡ Interactive</button>
+                <button class="dash-view-btn" data-view="excel">📊 Excel Chart</button>
+              </div>
+            </div>
+            <div class="dash-card-body">
+              <div class="dash-plot-container" id="dashboard-chart-kde"></div>
+              <div class="dash-excel-container">
                 <img src="./assets/excel-charts/excel_chart_5.png" alt="Excel Chart 5 - Rating Distribution">
-              </div>
-              <div class="excel-chart-body">
-                <h3 class="excel-chart-title">Rating Distribution (0–10 Scale Bins)</h3>
-                <div class="excel-chart-formula">Ref: DASHBOARD!$A$47:$C$52 • Formula: =COUNTIFS(DATA!L:L, ">=4", DATA!L:L, "&lt;6")</div>
-                <p class="excel-chart-caption">
-                  Proves that 5,429 titles (57.1%) cluster in the 4–6 interval, exhibiting a near-symmetric bell curve.
-                </p>
+                <div class="dash-excel-caption">Excel Chart 05 • 3D Rating Bins • 5,429 titles in 4–6 range</div>
               </div>
             </div>
+            <div class="dash-card-footer">
+              <span>Mean: <strong>5.35/10</strong> (53.55/100)</span>
+              <span>Median: <strong>5.20/10</strong> (52.00/100) • Min 1.0 / Max 9.8</span>
+            </div>
           </div>
-        </div>
 
-        <!-- TAB 2: Interactive Plotly Chart -->
-        <div class="tab-pane">
-          <div class="chart-card">
-            <div class="chart-header">
-              <div>
-                <h3 class="chart-title">Binned Rating Frequencies (0–10 Scale)</h3>
-                <p class="chart-subtitle">Interactive bar visualization of the 5 discrete score intervals</p>
+          <!-- Graph 4: Age Rating Breakdown -->
+          <div class="dash-card">
+            <div class="dash-card-header">
+              <div class="dash-card-title-group">
+                <h2 class="dash-card-title">Age Rating Breakdown</h2>
+                <p class="dash-card-sub">Catalog distribution across content maturity certifications</p>
               </div>
-              <span class="badge badge-default">Interactive Plotly</span>
-            </div>
-            <div class="chart-body" id="dashboard-chart-bins"></div>
-            <div class="chart-footer">
-              <span>Source: <code>summary.ratingBins</code></span>
-              <span>5,429 titles in 4–6 interval (57.10% modal density)</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section 8: Age Rating Distribution -->
-    <section class="dashboard-section" id="age">
-      <div class="dashboard-section-header">
-        <div class="dashboard-section-title-wrap">
-          <span class="dashboard-section-num">Module 05</span>
-          <h2 class="dashboard-section-title">Age Rating Demographics</h2>
-          <p class="dashboard-section-subtitle">
-            Classification breakdown across content maturity certifications, highlighting both classified tiers and unrated records.
-          </p>
-        </div>
-        <span class="badge badge-default">Section 6 in Excel Workbook</span>
-      </div>
-
-      <div class="stat-grid">
-        <div class="stat-card" style="border-top: 3px solid #e50914;">
-          <div class="stat-card-header">
-            <span class="stat-label">18+ (Mature)</span>
-            <span class="badge badge-netflix">23.92%</span>
-          </div>
-          <div class="stat-value font-mono">2,276</div>
-          <p class="stat-desc">Largest certified category in catalog.</p>
-        </div>
-
-        <div class="stat-card" style="border-top: 3px solid #0088cc;">
-          <div class="stat-card-header">
-            <span class="stat-label">7+ (Older Kids)</span>
-            <span class="badge badge-prime">11.46%</span>
-          </div>
-          <div class="stat-value font-mono">1,090</div>
-          <p class="stat-desc">Second largest certified classification.</p>
-        </div>
-
-        <div class="stat-card" style="border-top: 3px solid #0f9d58;">
-          <div class="stat-card-header">
-            <span class="stat-label">13+ (Teens)</span>
-            <span class="badge badge-hulu">10.49%</span>
-          </div>
-          <div class="stat-value font-mono">998</div>
-          <p class="stat-desc">PG-13 equivalent certified titles.</p>
-        </div>
-
-        <div class="stat-card" style="border-top: 3px solid #113ccf;">
-          <div class="stat-card-header">
-            <span class="stat-label">all (General)</span>
-            <span class="badge badge-disney">7.34%</span>
-          </div>
-          <div class="stat-value font-mono">698</div>
-          <p class="stat-desc">General audience certification tier.</p>
-        </div>
-
-        <div class="stat-card" style="border-top: 3px solid #f59e0b;">
-          <div class="stat-card-header">
-            <span class="stat-label">16+ (Youth)</span>
-            <span class="badge badge-warning">2.90%</span>
-          </div>
-          <div class="stat-value font-mono">276</div>
-          <p class="stat-desc">International teen rating category.</p>
-        </div>
-
-        <div class="stat-card" style="border-top: 3px solid #64748b;">
-          <div class="stat-card-header">
-            <span class="stat-label">Missing / Blank</span>
-            <span class="badge badge-default">43.90%</span>
-          </div>
-          <div class="stat-value font-mono">4,177</div>
-          <p class="stat-desc">Unrated titles in master dataset.</p>
-        </div>
-      </div>
-
-      <!-- Tabs: Excel Chart vs Interactive Plotly -->
-      <div class="tabs-container">
-        <div class="tabs-nav">
-          <button class="tab-btn active">📊 Actual Excel Doughnut (Chart 06)</button>
-          <button class="tab-btn">⚡ Interactive Plotly Bar Chart</button>
-        </div>
-
-        <!-- TAB 1: Actual Excel Chart -->
-        <div class="tab-pane active">
-          <div class="excel-chart-card" style="max-width: 820px; margin: 0 auto;">
-            <div class="excel-chart-header">
-              <span class="excel-chart-num">Excel Chart 06 • Doughnut Chart</span>
-              <span class="badge badge-accent">Section 6</span>
-            </div>
-            <div class="excel-chart-img-wrap">
-              <img src="./assets/excel-charts/excel_chart_6.png" alt="Excel Chart 6 - Age Rating Breakdown">
-            </div>
-            <div class="excel-chart-body">
-              <h3 class="excel-chart-title">Age Rating Breakdown (Excel Artifact)</h3>
-              <div class="excel-chart-formula">Ref: DASHBOARD!$A$60:$C$66 • Formula: =COUNTIF(DATA!E2:E9516, "18+")</div>
-              <p class="excel-chart-caption">
-                Visualizes the complete breakdown: 18+ (2,276), 7+ (1,090), 13+ (998), all (698), 16+ (276), and unrated blank records (4,177).
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <!-- TAB 2: Interactive Plotly Chart -->
-        <div class="tab-pane">
-          <div class="chart-card">
-            <div class="chart-header">
-              <div>
-                <h3 class="chart-title">Classified Age Tiers (Interactive View)</h3>
-                <p class="chart-subtitle">Distribution across certified age tiers excluding missing rows</p>
+              <div class="dash-view-toggle">
+                <button class="dash-view-btn active" data-view="plot">⚡ Interactive</button>
+                <button class="dash-view-btn" data-view="excel">📊 Excel Chart</button>
               </div>
-              <span class="badge badge-default">Interactive Plotly</span>
             </div>
-            <div class="chart-body" id="dashboard-chart-age"></div>
-            <div class="chart-footer">
-              <span>Source: <code>summary.ageDistribution</code></span>
-              <span>18+ dominates certified titles with 2,276 entries</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section 9: Movies Released by Year -->
-    <section class="dashboard-section" id="trends">
-      <div class="dashboard-section-header">
-        <div class="dashboard-section-title-wrap">
-          <span class="dashboard-section-num">Module 06</span>
-          <h2 class="dashboard-section-title">Chronological Release Year Trends</h2>
-          <p class="dashboard-section-subtitle">
-            Longitudinal distribution of movie release dates from 1914 to 2021, illustrating catalog recency.
-          </p>
-        </div>
-        <span class="badge badge-default">Section 7 in Excel Workbook</span>
-      </div>
-
-      <div class="callout-box callout-info">
-        <div class="callout-title">Trajectory Milestone: 2019 Peak</div>
-        <p>
-          The master dataset reaches its all-time chronological peak in <strong>2019 with 1,014 movie releases</strong> (10.66% of the entire catalog). Over 44% of all titles were released between 2015 and 2020.
-        </p>
-      </div>
-
-      <!-- Tabs: Excel Chart vs Interactive Plotly -->
-      <div class="tabs-container">
-        <div class="tabs-nav">
-          <button class="tab-btn active">📊 Actual Excel Line Graph (Chart 09)</button>
-          <button class="tab-btn">⚡ Interactive Plotly Area Curve (1914–2021)</button>
-        </div>
-
-        <!-- TAB 1: Actual Excel Chart -->
-        <div class="tab-pane active">
-          <div class="excel-chart-card" style="max-width: 820px; margin: 0 auto;">
-            <div class="excel-chart-header">
-              <span class="excel-chart-num">Excel Chart 09 • Line Chart</span>
-              <span class="badge badge-accent">Section 7</span>
-            </div>
-            <div class="excel-chart-img-wrap">
-              <img src="./assets/excel-charts/excel_chart_9.png" alt="Excel Chart 9 - Movies Released by Year">
-            </div>
-            <div class="excel-chart-body">
-              <h3 class="excel-chart-title">Movies Released by Year (Excel Line Graph)</h3>
-              <div class="excel-chart-formula">Ref: DASHBOARD!$O$7:$R$12 • Formula: =SUMPRODUCT(--(DATA!D:D=...))</div>
-              <p class="excel-chart-caption">
-                Chronological trajectory demonstrating exponential acceleration toward the 2019 peak.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <!-- TAB 2: Interactive Plotly Chart -->
-        <div class="tab-pane">
-          <div class="chart-card">
-            <div class="chart-header">
-              <div>
-                <h3 class="chart-title">107-Year Release Distribution (Interactive View)</h3>
-                <p class="chart-subtitle">Continuous time series from 1914 through 2021</p>
+            <div class="dash-card-body">
+              <div class="dash-plot-container" id="dashboard-chart-age"></div>
+              <div class="dash-excel-container">
+                <img src="./assets/excel-charts/excel_chart_6.png" alt="Excel Chart 6 - Age Rating Breakdown">
+                <div class="dash-excel-caption">Excel Chart 06 • DASHBOARD!A60:C66 • Age Certifications</div>
               </div>
-              <span class="badge badge-default">Interactive Plotly</span>
             </div>
-            <div class="chart-body" id="dashboard-chart-year"></div>
-            <div class="chart-footer">
-              <span>Source: <code>summary.yearDistribution</code></span>
-              <span>Hover points to examine title volume per calendar year</span>
+            <div class="dash-card-footer">
+              <span>18+: 2,276 • 7+: 1,090 • 13+: 998 • All: 698 • 16+: 276</span>
+              <span>Missing/Unrated: 4,177</span>
             </div>
           </div>
-        </div>
-      </div>
-    </section>
+        </section>
 
-    <!-- Section 10: Highly Rated Movies by Platform -->
-    <section class="dashboard-section" id="high-rated">
-      <div class="dashboard-section-header">
-        <div class="dashboard-section-title-wrap">
-          <span class="dashboard-section-num">Module 07</span>
-          <h2 class="dashboard-section-title">Highly Rated Movies by Platform (RT ≥ 8.0 / 10)</h2>
-          <p class="dashboard-section-subtitle">
-            Examination of premium critic-acclaimed cinema (scores ≥ 8.0 / 10; 80 / 100), comparing absolute volume against relative catalog density.
-          </p>
-        </div>
-        <span class="badge badge-default">Section 8 in Excel Workbook</span>
-      </div>
-
-      <div class="stat-grid">
-        <div class="stat-card" style="border-top: 3px solid #e50914;">
-          <div class="stat-card-header">
-            <span class="stat-label">Netflix</span>
-            <span class="badge badge-netflix">Highest Volume</span>
-          </div>
-          <div class="stat-value font-mono">168</div>
-          <p class="stat-desc">50.15% of all 335 high-rated titles • 4.55% of Netflix catalog</p>
-        </div>
-
-        <div class="stat-card" style="border-top: 3px solid #113ccf;">
-          <div class="stat-card-header">
-            <span class="stat-label">Disney+</span>
-            <span class="badge badge-disney">Highest Density</span>
-          </div>
-          <div class="stat-value font-mono">75</div>
-          <p class="stat-desc">22.39% of high-rated titles • 8.13% of Disney+ catalog (Top concentration)</p>
-        </div>
-
-        <div class="stat-card" style="border-top: 3px solid #0088cc;">
-          <div class="stat-card-header">
-            <span class="stat-label">Prime Video</span>
-            <span class="badge badge-prime">Broad Catalog</span>
-          </div>
-          <div class="stat-value font-mono">53</div>
-          <p class="stat-desc">15.82% of high-rated titles • 1.29% of Prime catalog</p>
-        </div>
-
-        <div class="stat-card" style="border-top: 3px solid #0f9d58;">
-          <div class="stat-card-header">
-            <span class="stat-label">Hulu</span>
-            <span class="badge badge-hulu">Curated Share</span>
-          </div>
-          <div class="stat-value font-mono">49</div>
-          <p class="stat-desc">14.63% of high-rated titles • 4.68% of Hulu catalog</p>
-        </div>
-      </div>
-
-      <!-- Tabs: Excel Chart vs Interactive Plotly -->
-      <div class="tabs-container">
-        <div class="tabs-nav">
-          <button class="tab-btn active">📊 Actual Excel Clustered Column (Chart 07)</button>
-          <button class="tab-btn">⚡ Interactive Plotly High-Rated Comparison</button>
-        </div>
-
-        <!-- TAB 1: Actual Excel Chart -->
-        <div class="tab-pane active">
-          <div class="excel-chart-card" style="max-width: 820px; margin: 0 auto;">
-            <div class="excel-chart-header">
-              <span class="excel-chart-num">Excel Chart 07 • Clustered Column</span>
-              <span class="badge badge-accent">Section 8</span>
-            </div>
-            <div class="excel-chart-img-wrap">
-              <img src="./assets/excel-charts/excel_chart_7.png" alt="Excel Chart 7 - Highly Rated Movies by Platform">
-            </div>
-            <div class="excel-chart-body">
-              <h3 class="excel-chart-title">Highly Rated Content by Platform (Excel Artifact)</h3>
-              <div class="excel-chart-formula">Ref: DASHBOARD!$A$74:$D$78 • Formula: =COUNTIFS(DATA!G:G, 1, DATA!L:L, ">=8")</div>
-              <p class="excel-chart-caption">
-                Exports the high-rated counts: Netflix (168), Disney+ (75), Prime Video (53), and Hulu (49).
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <!-- TAB 2: Interactive Plotly Chart -->
-        <div class="tab-pane">
-          <div class="chart-card">
-            <div class="chart-header">
-              <div>
-                <h3 class="chart-title">High-Rated Offerings Comparison (Interactive View)</h3>
-                <p class="chart-subtitle">Direct comparison across services</p>
+        <!-- ROW 4: GRAPH 5 (HIGHLY RATED BY PLATFORM) & GRAPH 6 (MOVIES BY NUMBER OF PLATFORMS) -->
+        <section class="dash-grid-2col">
+          <!-- Graph 5: Highly Rated by Platform -->
+          <div class="dash-card">
+            <div class="dash-card-header">
+              <div class="dash-card-title-group">
+                <h2 class="dash-card-title">Highly Rated Movies by Platform</h2>
+                <p class="dash-card-sub">Titles with critic rating RT ≥ 8.0/10 (80/100)</p>
               </div>
-              <span class="badge badge-default">Interactive Plotly</span>
-            </div>
-            <div class="chart-body" id="dashboard-chart-high-rated"></div>
-            <div class="chart-footer">
-              <span>Source: <code>summary.highRatedPlatformCounts</code></span>
-              <span>Netflix leads in absolute volume (168); Disney+ leads in proportion (8.13%)</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section 11: Platform Exclusivity / Overlap -->
-    <section class="dashboard-section" id="exclusivity">
-      <div class="dashboard-section-header">
-        <div class="dashboard-section-title-wrap">
-          <span class="dashboard-section-num">Module 08</span>
-          <h2 class="dashboard-section-title">Platform Exclusivity &amp; Catalog Overlap</h2>
-          <p class="dashboard-section-subtitle">
-            Analysis of multi-platform co-licensing, proving minimal duplication across the 4 major services.
-          </p>
-        </div>
-        <span class="badge badge-default">Section 9 in Excel Workbook</span>
-      </div>
-
-      <div class="stat-grid">
-        <div class="stat-card" style="border-top: 3px solid #3b28cc;">
-          <div class="stat-card-header">
-            <span class="stat-label">1 Platform (Exclusive)</span>
-            <span class="badge badge-accent">97.34% Dominance</span>
-          </div>
-          <div class="stat-value font-mono">9,262</div>
-          <p class="stat-desc">Solely licensed to a single streaming provider in this dataset.</p>
-        </div>
-
-        <div class="stat-card" style="border-top: 3px solid #6366f1;">
-          <div class="stat-card-header">
-            <span class="stat-label">2 Platforms Overlap</span>
-            <span class="badge badge-default">2.57%</span>
-          </div>
-          <div class="stat-value font-mono">245</div>
-          <p class="stat-desc">Shared simultaneously between exactly two providers.</p>
-        </div>
-
-        <div class="stat-card" style="border-top: 3px solid #d97706;">
-          <div class="stat-card-header">
-            <span class="stat-label">3 Platforms Overlap</span>
-            <span class="badge badge-warning">0.07%</span>
-          </div>
-          <div class="stat-value font-mono">7</div>
-          <p class="stat-desc">Rare multi-licensed titles across three providers.</p>
-        </div>
-
-        <div class="stat-card" style="border-top: 3px solid #e50914;">
-          <div class="stat-card-header">
-            <span class="stat-label">All 4 Platforms Overlap</span>
-            <span class="badge badge-netflix">0.01% (Unique)</span>
-          </div>
-          <div class="stat-value font-mono">1</div>
-          <p class="stat-desc">Exactly one title: <em>The Good, the Bad and the Ugly</em>.</p>
-        </div>
-      </div>
-
-      <!-- Tabs: Excel Chart vs Interactive Plotly -->
-      <div class="tabs-container">
-        <div class="tabs-nav">
-          <button class="tab-btn active">📊 Actual Excel 3D Pie Chart (Chart 08)</button>
-          <button class="tab-btn">⚡ Interactive Plotly Donut Chart</button>
-        </div>
-
-        <!-- TAB 1: Actual Excel Chart -->
-        <div class="tab-pane active">
-          <div class="excel-chart-card" style="max-width: 820px; margin: 0 auto;">
-            <div class="excel-chart-header">
-              <span class="excel-chart-num">Excel Chart 08 • 3D Pie Chart</span>
-              <span class="badge badge-accent">Section 9</span>
-            </div>
-            <div class="excel-chart-img-wrap">
-              <img src="./assets/excel-charts/excel_chart_8.png" alt="Excel Chart 8 - Platform Count Overlap">
-            </div>
-            <div class="excel-chart-body">
-              <h3 class="excel-chart-title">Platform Exclusivity Overlap (Excel Artifact)</h3>
-              <div class="excel-chart-formula">Ref: DASHBOARD!$A$86:$C$90 • Formula: =COUNTIF(DATA!M2:M9516, 1)</div>
-              <p class="excel-chart-caption">
-                Excel 3D pie chart proving that 97.34% of titles (9,262) appear on exactly one service, demonstrating catalog exclusivity.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <!-- TAB 2: Interactive Plotly Chart -->
-        <div class="tab-pane">
-          <div class="chart-card">
-            <div class="chart-header">
-              <div>
-                <h3 class="chart-title">Catalog Exclusivity Proportions (Interactive View)</h3>
-                <p class="chart-subtitle">Proportional breakdown of multi-platform presence</p>
+              <div class="dash-view-toggle">
+                <button class="dash-view-btn active" data-view="plot">⚡ Interactive</button>
+                <button class="dash-view-btn" data-view="excel">📊 Excel Chart</button>
               </div>
-              <span class="badge badge-default">Interactive Plotly</span>
             </div>
-            <div class="chart-body" id="dashboard-chart-overlap"></div>
-            <div class="chart-footer">
-              <span>Source: <code>summary.platformOverlap</code></span>
-              <span>Only 253 total titles (2.66%) are available on more than one service</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section 12: Advanced Visualizations Section -->
-    <section class="dashboard-section" id="advanced">
-      <div class="dashboard-section-header">
-        <div class="dashboard-section-title-wrap">
-          <span class="dashboard-section-num">Module 09</span>
-          <h2 class="dashboard-section-title">Advanced Statistical Visualizations</h2>
-          <p class="dashboard-section-subtitle">
-            High-fidelity statistical distributions rendered in real time across the full dataset (Lab 3 Seaborn models implemented in Plotly.js).
-          </p>
-        </div>
-        <span class="badge badge-default">Lab 3 Python/Seaborn Models</span>
-      </div>
-
-      <div class="tabs-container">
-        <div class="tabs-nav">
-          <button class="tab-btn active">📦 Age Rating Boxplot</button>
-          <button class="tab-btn">📈 Rating Density &amp; KDE</button>
-          <button class="tab-btn">🎻 Age Rating Violin Plot</button>
-        </div>
-
-        <!-- Sub-tab 1: Boxplot -->
-        <div class="tab-pane active">
-          <div class="chart-card">
-            <div class="chart-header">
-              <div>
-                <h3 class="chart-title">Rotten Tomatoes Score Distribution by Age Tier</h3>
-                <p class="chart-subtitle">Five-number summary (Min, Q1, Median, Q3, Max) across certified tiers</p>
+            <div class="dash-card-body">
+              <div class="dash-plot-container" id="dashboard-chart-high-rated"></div>
+              <div class="dash-excel-container">
+                <img src="./assets/excel-charts/excel_chart_7.png" alt="Excel Chart 7 - Highly Rated Movies by Platform">
+                <div class="dash-excel-caption">Excel Chart 07 • DASHBOARD!A74:D78 • RT ≥ 8.0/10 Threshold</div>
               </div>
-              <span class="badge badge-default">Boxplot Model</span>
             </div>
-            <div class="chart-body" id="dashboard-chart-boxplot"></div>
-            <div class="chart-footer">
-              <span>Score Scale: 0–100 Rotten Tomatoes</span>
-              <span>Medians remain remarkably consistent across certifications (~51.0–54.0)</span>
+            <div class="dash-card-footer">
+              <span>Netflix: 168 • Disney+: 75 • Prime Video: 53 • Hulu: 49</span>
+              <span>Disney+ has highest density (8.13% of its catalog)</span>
             </div>
           </div>
-        </div>
 
-        <!-- Sub-tab 2: KDE / Histogram -->
-        <div class="tab-pane">
-          <div class="chart-card">
-            <div class="chart-header">
-              <div>
-                <h3 class="chart-title">Critic Score Frequency Histogram (0–100 Scale)</h3>
-                <p class="chart-subtitle">Empirical density distribution of 9,508 scored movie titles</p>
+          <!-- Graph 6: Platform Availability Overlap -->
+          <div class="dash-card">
+            <div class="dash-card-header">
+              <div class="dash-card-title-group">
+                <h2 class="dash-card-title">Movies by Number of Platforms</h2>
+                <p class="dash-card-sub">Multi-platform availability &amp; co-licensing breakdown</p>
               </div>
-              <span class="badge badge-default">Histogram Density</span>
-            </div>
-            <div class="chart-body" id="dashboard-chart-kde"></div>
-            <div class="chart-footer">
-              <span>Bin Width: ~3.3 points</span>
-              <span>Modal peak centers in the 50–55 interval</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Sub-tab 3: Violin Plot -->
-        <div class="tab-pane">
-          <div class="chart-card">
-            <div class="chart-header">
-              <div>
-                <h3 class="chart-title">Kernel Density Violin Plot by Age Classification</h3>
-                <p class="chart-subtitle">Continuous density contours with embedded boxplot indicators</p>
+              <div class="dash-view-toggle">
+                <button class="dash-view-btn active" data-view="plot">⚡ Interactive</button>
+                <button class="dash-view-btn" data-view="excel">📊 Excel Chart</button>
               </div>
-              <span class="badge badge-default">Violin Model</span>
             </div>
-            <div class="chart-body" id="dashboard-chart-violin"></div>
-            <div class="chart-footer">
-              <span>Width represents probability density at each rating level</span>
-              <span>Uniform bell contours indicate consistent spread across certification groups</span>
+            <div class="dash-card-body">
+              <div class="dash-plot-container" id="dashboard-chart-overlap"></div>
+              <div class="dash-excel-container">
+                <img src="./assets/excel-charts/excel_chart_8.png" alt="Excel Chart 8 - Platform Count Overlap">
+                <div class="dash-excel-caption">Excel Chart 08 • DASHBOARD!A86:C90 • Overlap 3D Pie</div>
+              </div>
+            </div>
+            <div class="dash-card-footer">
+              <span>1 Platform: 9,262 (97.34%) • 2: 245 • 3: 7 • 4: 1</span>
+              <span>Minimal cross-platform licensing</span>
             </div>
           </div>
-        </div>
-      </div>
-    </section>
+        </section>
 
-    <!-- Section 13: Correlation Analysis -->
-    <section class="dashboard-section" id="correlations">
-      <div class="dashboard-section-header">
-        <div class="dashboard-section-title-wrap">
-          <span class="dashboard-section-num">Module 10</span>
-          <h2 class="dashboard-section-title">Pearson Correlation Analysis</h2>
-          <p class="dashboard-section-subtitle">
-            Linear association matrix evaluating pairwise relationships between release year, critic ratings, and platform indicators.
-          </p>
-        </div>
-        <span class="badge badge-default">6×6 Pearson Matrix</span>
-      </div>
-
-      <div class="callout-box callout-info">
-        <div class="callout-title">Statistical Interpretation Guideline</div>
-        <p>
-          "These correlation coefficients evaluate linear associations across catalog flags in this static dataset snapshot; they describe catalog composition and co-occurrence, and should not be interpreted as causal relationships or consumer preference drivers."
-        </p>
-      </div>
-
-      <div class="chart-card-grid">
-        <!-- Interactive Heatmap -->
-        <div class="chart-card" style="margin: 0;">
-          <div class="chart-header">
-            <div>
-              <h3 class="chart-title">Correlation Heatmap (Interactive)</h3>
-              <p class="chart-subtitle">Color spectrum: Blue (-0.65) to Red (+1.00)</p>
+        <!-- ROW 5: ADVANCED STATISTICAL VISUALIZATION ROW (3 CARDS) -->
+        <section class="dash-grid-3col">
+          <!-- Card A: Boxplot -->
+          <div class="dash-card">
+            <div class="dash-card-header">
+              <div class="dash-card-title-group">
+                <h2 class="dash-card-title">Score Boxplot by Age Rating</h2>
+                <p class="dash-card-sub">Five-number summary across certifications (0–100 scale)</p>
+              </div>
             </div>
-            <span class="badge badge-default">Plotly Heatmap</span>
-          </div>
-          <div class="chart-body" id="dashboard-chart-correlation" style="min-height: 400px;"></div>
-          <div class="chart-footer">
-            <span>Source: <code>summary.correlationMatrix</code></span>
-            <span>Hover matrix cells for precise coefficients</span>
-          </div>
-        </div>
-
-        <!-- Correlation Table and Analysis -->
-        <div class="chart-card" style="margin: 0; display: flex; flex-direction: column; justify-content: space-between;">
-          <div class="chart-header">
-            <div>
-              <h3 class="chart-title">Key Pairwise Linear Coefficients</h3>
-              <p class="chart-subtitle">Audited Pearson values from Lab 3 matrix</p>
+            <div class="dash-card-body">
+              <div class="dash-plot-container" id="dashboard-chart-boxplot"></div>
             </div>
-            <span class="badge badge-accent">Audited Values</span>
-          </div>
-          <div style="padding: var(--space-md) var(--space-lg); flex-grow: 1;">
-            <div class="editorial-table-wrap" style="margin: 0;">
-              <table class="editorial-table">
-                <thead>
-                  <tr>
-                    <th>Variable Pair</th>
-                    <th class="num">Pearson <em>r</em></th>
-                    <th>Analytical Interpretation</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><strong>Netflix ↔ Prime Video</strong></td>
-                    <td class="num font-mono"><strong>-0.6478</strong></td>
-                    <td>Strongest negative association; reflects mutual catalog exclusivity</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Netflix ↔ Release Year</strong></td>
-                    <td class="num font-mono"><strong>+0.3066</strong></td>
-                    <td>Moderate positive association with more recent releases</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Prime Video ↔ Release Year</strong></td>
-                    <td class="num font-mono"><strong>-0.2437</strong></td>
-                    <td>Moderate negative association with recent calendar releases</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Prime Video ↔ RT Score</strong></td>
-                    <td class="num font-mono"><strong>-0.2082</strong></td>
-                    <td>Negative linear association with Rotten Tomatoes rating</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Hulu ↔ RT Score</strong></td>
-                    <td class="num font-mono"><strong>+0.1827</strong></td>
-                    <td>Positive linear association with Rotten Tomatoes rating</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Disney+ ↔ RT Score</strong></td>
-                    <td class="num font-mono"><strong>+0.1184</strong></td>
-                    <td>Positive linear association with Rotten Tomatoes rating</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Year ↔ RT Score</strong></td>
-                    <td class="num font-mono"><strong>+0.0356</strong></td>
-                    <td>Near-zero correlation between release year and critic rating</td>
-                  </tr>
-                </tbody>
-              </table>
+            <div class="dash-card-footer">
+              <span>Medians remain consistent (~51–54)</span>
+              <span>Python Seaborn / Plotly model</span>
             </div>
-
-            <p style="font-size: 0.85rem; color: var(--color-text-muted); margin-top: var(--space-md); line-height: 1.5;">
-              The strong negative correlation between Netflix and Prime Video (r = -0.65) reflects catalog segregation: titles licensed to Prime Video rarely appear on Netflix in this dataset snapshot.
-            </p>
           </div>
-        </div>
-      </div>
-    </section>
 
-    <!-- Section 14: Key Analytical Insights (Viva / Presentation Ready) -->
-    <section class="dashboard-section" id="insights">
-      <div class="dashboard-section-header">
-        <div class="dashboard-section-title-wrap">
-          <span class="dashboard-section-num">Module 11</span>
-          <h2 class="dashboard-section-title">Key Analytical Takeaways (Viva Ready)</h2>
-          <p class="dashboard-section-subtitle">
-            Core findings structured for viva examination, academic reporting, and presentation slides.
-          </p>
-        </div>
-        <span class="badge badge-accent">Executive Synthesis</span>
-      </div>
-
-      <div class="insights-list">
-        <!-- Insight 1 -->
-        <article class="insight-card">
-          <div class="insight-num">01</div>
-          <div>
-            <div style="display: flex; gap: var(--space-xs); margin-bottom: var(--space-2xs); align-items: center;">
-              <span class="badge badge-accent">Catalog Structure</span>
-              <span class="text-subtle" style="font-size: 0.8rem;">97.34% Single-Platform</span>
+          <!-- Card B: Rating Bins Histogram -->
+          <div class="dash-card">
+            <div class="dash-card-header">
+              <div class="dash-card-title-group">
+                <h2 class="dash-card-title">Rating Bins Distribution</h2>
+                <p class="dash-card-sub">Discrete intervals on normalized 0–10 scale</p>
+              </div>
+              <div class="dash-view-toggle">
+                <button class="dash-view-btn active" data-view="plot">⚡ Plot</button>
+                <button class="dash-view-btn" data-view="excel">📊 Excel</button>
+              </div>
             </div>
-            <h3 class="insight-title">Near-Total Catalog Exclusivity</h3>
-            <p style="color: var(--color-text-muted); line-height: 1.6; margin-bottom: var(--space-md);">
-              9,262 out of 9,515 titles (97.34%) are available on exactly one streaming service. Co-licensing across multiple platforms is exceptionally rare (only 253 multi-platform titles, and only 1 movie present on all 4). This confirms that movie streaming availability in this catalog is heavily partitioned by provider.
-            </p>
-          </div>
-        </article>
-
-        <!-- Insight 2 -->
-        <article class="insight-card">
-          <div class="insight-num">02</div>
-          <div>
-            <div style="display: flex; gap: var(--space-xs); margin-bottom: var(--space-2xs); align-items: center;">
-              <span class="badge badge-accent">Quality vs Volume</span>
-              <span class="text-subtle" style="font-size: 0.8rem;">Raw Count vs Proportion</span>
+            <div class="dash-card-body">
+              <div class="dash-plot-container" id="dashboard-chart-density"></div>
+              <div class="dash-excel-container">
+                <img src="./assets/excel-charts/excel_chart_3.png" alt="Excel Chart 3 - RT Metrics">
+                <div class="dash-excel-caption">Excel Chart 03 • Descriptive Metrics Table</div>
+              </div>
             </div>
-            <h3 class="insight-title">Catalog Volume vs. High-Rated Concentration</h3>
-            <p style="color: var(--color-text-muted); line-height: 1.6; margin-bottom: var(--space-md);">
-              While Prime Video possesses the largest overall catalog (4,113 movies), Netflix holds the highest raw volume of high-rated titles (168 titles rated ≥ 8.0/10). However, Disney+ exhibits the highest concentration of high-rated titles relative to its catalog size (75 / 922 = 8.13%), compared to Netflix (4.55%), Hulu (4.68%), and Prime Video (1.29%).
-            </p>
-          </div>
-        </article>
-
-        <!-- Insight 3 -->
-        <article class="insight-card">
-          <div class="insight-num">03</div>
-          <div>
-            <div style="display: flex; gap: var(--space-xs); margin-bottom: var(--space-2xs); align-items: center;">
-              <span class="badge badge-warning">Data Hygiene</span>
-              <span class="text-subtle" style="font-size: 0.8rem;">43.9% Missing Values</span>
+            <div class="dash-card-footer">
+              <span>Modal peak: 4–6 interval (5,429 titles • 57.1%)</span>
+              <span>Bins: 0–2, 2–4, 4–6, 6–8, 8–10</span>
             </div>
-            <h3 class="insight-title">Age Classification Data Sparsity</h3>
-            <p style="color: var(--color-text-muted); line-height: 1.6; margin-bottom: var(--space-md);">
-              4,177 out of 9,515 movies (43.90%) lack an age classification certificate in the master dataset. Among rated titles, the 18+ tier is the largest (2,276 titles), followed by 7+ (1,090 titles). This high proportion of unrated titles highlights the importance of accounting for missing data when analyzing content ratings.
-            </p>
           </div>
-        </article>
 
-        <!-- Insight 4 -->
-        <article class="insight-card">
-          <div class="insight-num">04</div>
-          <div>
-            <div style="display: flex; gap: var(--space-xs); margin-bottom: var(--space-2xs); align-items: center;">
-              <span class="badge badge-accent">Temporal Distribution</span>
-              <span class="text-subtle" style="font-size: 0.8rem;">Peak Year: 2019</span>
+          <!-- Card C: Violin Distribution -->
+          <div class="dash-card">
+            <div class="dash-card-header">
+              <div class="dash-card-title-group">
+                <h2 class="dash-card-title">Violin Distribution by Age</h2>
+                <p class="dash-card-sub">Probability density contours by content certificate</p>
+              </div>
             </div>
-            <h3 class="insight-title">Recent Release Clustering</h3>
-            <p style="color: var(--color-text-muted); line-height: 1.6; margin-bottom: var(--space-md);">
-              The catalog spans 107 years (1914–2021) with an average release year of 2007.42 and median of 2014. Content volume escalates sharply after 2010, reaching an all-time peak in 2019 with 1,014 titles before dropping slightly in 2020 (862) and 2021 (327).
-            </p>
-          </div>
-        </article>
-
-        <!-- Insight 5 -->
-        <article class="insight-card">
-          <div class="insight-num">05</div>
-          <div>
-            <div style="display: flex; gap: var(--space-xs); margin-bottom: var(--space-2xs); align-items: center;">
-              <span class="badge badge-accent">Critic Distribution</span>
-              <span class="text-subtle" style="font-size: 0.8rem;">Mean 5.35 / Median 5.20</span>
+            <div class="dash-card-body">
+              <div class="dash-plot-container" id="dashboard-chart-violin"></div>
             </div>
-            <h3 class="insight-title">Central Tendency in Rotten Tomatoes Ratings</h3>
-            <p style="color: var(--color-text-muted); line-height: 1.6; margin-bottom: var(--space-md);">
-              Critic scores conform closely to a unimodal bell-shaped distribution centered at a mean of 5.35/10 and a median of 5.20/10. 57.1% of all movies (5,429 titles) cluster within the mid-range 4.0–6.0 rating bin, with only 3.52% achieving scores ≥ 8.0/10.
-            </p>
+            <div class="dash-card-footer">
+              <span>Uniform bell contours across tiers</span>
+              <span>Lab 3 Seaborn / Plotly</span>
+            </div>
           </div>
-        </article>
-      </div>
-    </section>
+        </section>
 
-  </main>
+        <!-- ROW 6: FULL-WIDTH CORRELATION HEATMAP -->
+        <section class="dash-card dash-card-full">
+          <div class="dash-card-header">
+            <div class="dash-card-title-group">
+              <h2 class="dash-card-title">Correlation Heatmap</h2>
+              <p class="dash-card-sub">6×6 Pearson correlation matrix across release year, critic ratings, and streaming providers</p>
+            </div>
+            <div class="dash-view-toggle">
+              <button class="dash-view-btn active" data-view="plot">⚡ Heatmap</button>
+              <button class="dash-view-btn" data-view="excel">📊 Profile</button>
+            </div>
+          </div>
+          <div class="dash-card-body" style="min-height: 380px;">
+            <div class="dash-plot-container" id="dashboard-chart-correlation"></div>
+            <div class="dash-excel-container">
+              <img src="./assets/excel-charts/excel_chart_2.png" alt="Excel Chart 2 - Dataset Profile">
+              <div class="dash-excel-caption">Excel Chart 02 • DASHBOARD!A8:D14 • Master Dataset Profile</div>
+            </div>
+          </div>
+          <div class="dash-heatmap-footer">
+            Correlation measures linear association; it does not prove causation.
+          </div>
+        </section>
 
-  <!-- Editorial Site Footer -->
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <h4>DAV Laboratory Portfolio</h4>
-          <p style="color: #94a3b8; font-size: 0.85rem; max-width: 320px; line-height: 1.6;">
-            A rigorous academic investigation into streaming media catalogs, developed as part of the Data Analytics &amp; Visualization curriculum.
-          </p>
-        </div>
-        <div class="footer-col">
-          <h5>Laboratory Work</h5>
-          <ul class="footer-list">
-            <li><a href="./labs.html">Curriculum Overview</a></li>
-            <li><a href="./lab1.html">Lab 1: Python EDA</a></li>
-            <li><a href="./lab2.html">Lab 2: Excel Analysis</a></li>
-            <li><a href="./lab3.html">Lab 3: Seaborn Stats</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h5>Interactive Tools</h5>
-          <ul class="footer-list">
-            <li><a href="./dashboard.html">Analytics Dashboard</a></li>
-            <li><a href="./explorer.html">Data Explorer</a></li>
-            <li><a href="./insights.html">Analytical Insights</a></li>
-            <li><a href="./resources.html">Provenance &amp; Files</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h5>Academic Sources</h5>
-          <ul class="footer-list">
-            <li><span style="color: #cbd5e1;">Dataset: 9,515 Records</span></li>
-            <li><span style="color: #cbd5e1;">Format: Static HTML5 / Plotly</span></li>
-            <li><a href="./resources.html">Download Source CSV</a></li>
-          </ul>
-        </div>
-      </div>
+        <!-- ROW 7: COMPACT KEY INSIGHTS (4 CARDS) -->
+        <section class="dash-insights-grid" aria-label="Key Insights Summary">
+          <div class="dash-insight-card">
+            <span class="dash-insight-badge">Exclusivity</span>
+            <h3 class="dash-insight-title">97.34% Single-Platform</h3>
+            <p class="dash-insight-text">9,262 titles exist on only one provider. Multi-service co-licensing is exceedingly rare in this catalog.</p>
+          </div>
 
-      <div class="footer-bottom">
-        <div>Data Analytics &amp; Visualization Laboratory Project © 2026. Academic Portfolio.</div>
-        <div style="font-family: var(--font-mono); font-size: 0.75rem;">Source Verified • GitHub Pages Deployment</div>
-      </div>
+          <div class="dash-insight-card">
+            <span class="dash-insight-badge">Catalog Strategy</span>
+            <h3 class="dash-insight-title">Volume vs. Concentration</h3>
+            <p class="dash-insight-text">Prime Video leads total volume (4,113); Netflix leads high-rated count (168); Disney+ has highest quality density (8.13%).</p>
+          </div>
+
+          <div class="dash-insight-card">
+            <span class="dash-insight-badge">Temporal Trend</span>
+            <h3 class="dash-insight-title">2019 Historic Peak</h3>
+            <p class="dash-insight-text">Catalog volume surges after 2010, reaching an all-time peak of 1,014 releases in 2019 before stabilizing.</p>
+          </div>
+
+          <div class="dash-insight-card">
+            <span class="dash-insight-badge">Critic Consensus</span>
+            <h3 class="dash-insight-title">Unimodal Normal Curve</h3>
+            <p class="dash-insight-text">Rotten Tomatoes scores form a bell-shaped curve centered at Mean 5.35 / Median 5.20, with 57.1% clustering in the 4–6 interval.</p>
+          </div>
+        </section>
+
+      </main>
     </div>
-  </footer>
+  </div>
 
   <!-- Application Logic -->
   <script src="./js/data.js"></script>
   <script src="./js/charts.js"></script>
-  <script src="./js/app.js"></script>
-  <script src="./js/components.js"></script>
   <script src="./js/dashboard.js"></script>
 </body>
 </html>
-

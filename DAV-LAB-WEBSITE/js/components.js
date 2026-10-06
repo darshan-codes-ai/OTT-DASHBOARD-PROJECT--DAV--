@@ -54,8 +54,12 @@ function initTabs() {
           setTimeout(() => {
             window.dispatchEvent(new Event('resize'));
             panes[idx].querySelectorAll('.plotly-chart, .js-plotly-plot, .chart-body').forEach(chartEl => {
-              if (window.Plotly && chartEl.data) {
-                Plotly.Plots.resize(chartEl);
+              if (window.Plotly && chartEl.data && chartEl.offsetParent !== null) {
+                try {
+                  Plotly.Plots.resize(chartEl);
+                } catch (e) {
+                  // benign
+                }
               }
             });
           }, 60);
