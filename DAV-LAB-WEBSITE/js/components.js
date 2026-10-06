@@ -53,12 +53,12 @@ function initTabs() {
           // Trigger resize for Plotly charts or responsive elements inside the newly visible pane
           setTimeout(() => {
             window.dispatchEvent(new Event('resize'));
-            panes[idx].querySelectorAll('.plotly-chart').forEach(chartEl => {
+            panes[idx].querySelectorAll('.plotly-chart, .js-plotly-plot, .chart-body').forEach(chartEl => {
               if (window.Plotly && chartEl.data) {
                 Plotly.Plots.resize(chartEl);
               }
             });
-          }, 50);
+          }, 60);
         }
       });
     });
