@@ -31,11 +31,36 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // 3. Sub-navigation Active State Observer on Scroll
     initDashboardScrollSpy();
+    initSmoothAnchors();
+
+    // Ensure page loads at the top if no anchor is explicitly provided in URL
+    if (!window.location.hash) {
+      if (window.history.scrollRestoration) {
+        window.history.scrollRestoration = 'manual';
+      }
+      window.scrollTo(0, 0);
+    }
 
   } catch (err) {
     console.error('Error initializing dashboard controller:', err);
   }
 });
+
+function initSmoothAnchors() {
+  document.querySelectorAll('.dashboard-subnav-link, .hero-cta-group a[href^="#"]').forEach(link => {
+    link.addEventListener('click', (e) => {
+      const targetId = link.getAttribute('href');
+      if (targetId && targetId.startsWith('#')) {
+        const targetEl = document.querySelector(targetId);
+        if (targetEl) {
+          e.preventDefault();
+          targetEl.scrollIntoView({ behavior: 'smooth' });
+          history.replaceState(null, '', targetId);
+        }
+      }
+    });
+  });
+}
 
 function initDashboardScrollSpy() {
   const sections = document.querySelectorAll('.dashboard-section');
