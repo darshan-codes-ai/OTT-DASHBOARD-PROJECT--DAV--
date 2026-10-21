@@ -73,30 +73,39 @@ const DAVExplorer = (function () {
       });
     }
 
-    // Year inputs
+    // Year inputs (debounced)
     const minYearInput = document.getElementById('min-year-input');
     const maxYearInput = document.getElementById('max-year-input');
     if (minYearInput) {
+      let minYearDebounce;
       minYearInput.addEventListener('input', (e) => {
         const val = parseInt(e.target.value, 10);
         state.minYear = isNaN(val) ? null : val;
         state.page = 1;
-        applyFilters();
+        clearTimeout(minYearDebounce);
+        minYearDebounce = setTimeout(() => {
+          applyFilters();
+        }, 120);
       });
     }
     if (maxYearInput) {
+      let maxYearDebounce;
       maxYearInput.addEventListener('input', (e) => {
         const val = parseInt(e.target.value, 10);
         state.maxYear = isNaN(val) ? null : val;
         state.page = 1;
-        applyFilters();
+        clearTimeout(maxYearDebounce);
+        maxYearDebounce = setTimeout(() => {
+          applyFilters();
+        }, 120);
       });
     }
 
-    // Score filter slider / input
+    // Score filter slider / input (debounced update, instant label)
     const scoreSlider = document.getElementById('score-slider');
     const scoreValDisplay = document.getElementById('score-val-display');
     if (scoreSlider) {
+      let scoreDebounce;
       scoreSlider.addEventListener('input', (e) => {
         const val = parseFloat(e.target.value);
         state.minScore = isNaN(val) ? 0 : val;
@@ -104,7 +113,10 @@ const DAVExplorer = (function () {
           scoreValDisplay.textContent = state.minScore > 0 ? `≥ ${state.minScore.toFixed(1)}/10` : 'All Scores';
         }
         state.page = 1;
-        applyFilters();
+        clearTimeout(scoreDebounce);
+        scoreDebounce = setTimeout(() => {
+          applyFilters();
+        }, 60);
       });
     }
 
@@ -206,6 +218,10 @@ const DAVExplorer = (function () {
     updateLiveMetrics();
     renderTable();
     renderPagination();
+
+    if (typeof DAVExplorerCharts !== 'undefined') {
+      DAVExplorerCharts.render(filteredRecords, allRecords);
+    }
   }
 
   function sortRecords() {
