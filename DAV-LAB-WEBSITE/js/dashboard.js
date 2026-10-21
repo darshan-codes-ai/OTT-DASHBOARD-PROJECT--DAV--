@@ -1,6 +1,6 @@
 /**
  * DAV LAB WEBSITE - MODERN ANALYTICS DASHBOARD CONTROLLER (dashboard.js)
- * High-performance data ingestion, Plotly graph rendering, and view switching
+ * High-performance data ingestion, Plotly graph rendering, Lab 4 integration, and view switching
  */
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -12,22 +12,37 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 2. Load Precomputed Summary Metrics (Zero-Latency Baseline)
     const summary = await DAVData.loadSummary();
     if (summary) {
-      // Primary Analytics Charts
+      // Primary Platform & Catalog Distribution Charts
       DAVCharts.renderPlatformHorizontalBar('dashboard-chart-platform', summary.platformCounts);
       DAVCharts.renderYearTrend('dashboard-chart-year', summary.yearDistribution);
       DAVCharts.renderAgeDonut('dashboard-chart-age', summary.ageDistribution);
       DAVCharts.renderHighRatedHorizontalBar('dashboard-chart-high-rated', summary.highRatedPlatformCounts);
-      DAVCharts.renderOverlapDonut('dashboard-chart-overlap', summary.platformOverlap);
-      DAVCharts.renderCorrelationHeatmap('dashboard-chart-correlation', summary.correlationMatrix);
       DAVCharts.renderRatingBins('dashboard-chart-density', summary.ratingBins);
     }
 
-    // 3. Load Cleaned Records for Advanced Distribution Models (KDE, Boxplot, Violin)
+    // 3. Load Cleaned Records for Lab 4 Interactive Visualizations
     const movies = await DAVData.loadMovies();
-    if (movies && movies.length > 0) {
-      DAVCharts.renderHistKDE('dashboard-chart-kde', movies);
-      DAVCharts.renderBoxplotAge('dashboard-chart-boxplot', movies);
-      DAVCharts.renderViolinAge('dashboard-chart-violin', movies);
+    if (movies && movies.length > 0 && window.DAVLab4) {
+      // 1. Distribution of Rotten Tomatoes Ratings (with range slider)
+      DAVLab4.renderHistogram('dashboard-chart-histogram', movies, { isDashboard: true });
+
+      // 2. Movie Release Year vs. Rotten Tomatoes Score (Multivariate Scatter Plot)
+      DAVLab4.renderScatter('dashboard-chart-scatter', movies, { isDashboard: true });
+
+      // 3. Average Rotten Tomatoes Rating by Release Year (Line Chart)
+      DAVLab4.renderYearlyTrend('dashboard-chart-yearly', movies, { isDashboard: true });
+
+      // 4. Movies by Number of Platforms (Donut Chart)
+      DAVLab4.renderPlatformOverlap('dashboard-chart-overlap', movies, null, { isDashboard: true });
+
+      // 5. Score Boxplot by Age Rating (0–10 Scale)
+      DAVLab4.renderBoxplot('dashboard-chart-boxplot', movies, { isDashboard: true });
+
+      // 6. Violin Distribution by Age (0–10 Scale)
+      DAVLab4.renderViolin('dashboard-chart-violin', movies, { isDashboard: true });
+
+      // 7. 6×6 Pearson Correlation Heatmap
+      DAVLab4.renderHeatmap('dashboard-chart-correlation', movies, { isDashboard: true });
     }
 
   } catch (err) {

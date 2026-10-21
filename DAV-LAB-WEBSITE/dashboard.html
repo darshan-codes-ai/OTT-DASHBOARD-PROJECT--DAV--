@@ -204,14 +204,14 @@
           </div>
         </section>
 
-        <!-- ROW 3: GRAPH 3 (RATING DISTRIBUTION) & GRAPH 4 (AGE RATING BREAKDOWN) -->
+        <!-- ROW 2: GRAPH 3 (ROTTEN TOMATOES HISTOGRAM) & GRAPH 4 (AGE RATING BREAKDOWN) -->
         <section class="dash-grid-2col">
           <!-- Graph 3: Rotten Tomatoes Rating Distribution -->
           <div class="dash-card">
             <div class="dash-card-header">
               <div class="dash-card-title-group">
-                <h2 class="dash-card-title">Rotten Tomatoes Rating Distribution</h2>
-                <p class="dash-card-sub">Frequency histogram &amp; empirical density across 9,508 scored titles</p>
+                <h2 class="dash-card-title">Distribution of Rotten Tomatoes Ratings</h2>
+                <p class="dash-card-sub">Interactive frequency histogram with range slider across 9,508 scored titles</p>
               </div>
               <div class="dash-view-toggle">
                 <button class="dash-view-btn active" data-view="plot">⚡ Interactive</button>
@@ -219,15 +219,15 @@
               </div>
             </div>
             <div class="dash-card-body">
-              <div class="dash-plot-container" id="dashboard-chart-kde"></div>
+              <div class="dash-plot-container" id="dashboard-chart-histogram"></div>
               <div class="dash-excel-container">
                 <img src="./assets/excel-charts/excel_chart_5.png" alt="Excel Chart 5 - Rating Distribution">
                 <div class="dash-excel-caption">Excel Chart 05 • 3D Rating Bins • 5,429 titles in 4–6 range</div>
               </div>
             </div>
             <div class="dash-card-footer">
-              <span>Mean: <strong>5.35/10</strong> (53.55/100)</span>
-              <span>Median: <strong>5.20/10</strong> (52.00/100) • Min 1.0 / Max 9.8</span>
+              <span>Mean: <strong>5.35/10</strong> • Median: <strong>5.20/10</strong></span>
+              <span>Use range slider below chart to zoom intervals</span>
             </div>
           </div>
 
@@ -257,7 +257,46 @@
           </div>
         </section>
 
-        <!-- ROW 4: GRAPH 5 (HIGHLY RATED BY PLATFORM) & GRAPH 6 (MOVIES BY NUMBER OF PLATFORMS) -->
+        <!-- ROW 3: GRAPH 5 (RELEASE YEAR VS RT SCORE) & GRAPH 6 (AVERAGE RATING BY YEAR) -->
+        <section class="dash-grid-2col">
+          <!-- Graph 5: Release Year vs. Rotten Tomatoes Score -->
+          <div class="dash-card">
+            <div class="dash-card-header">
+              <div class="dash-card-title-group">
+                <h2 class="dash-card-title">Release Year vs. Rotten Tomatoes Score</h2>
+                <p class="dash-card-sub">Multivariate distribution colored by age classification with rich hover data</p>
+              </div>
+              <span class="badge badge-accent">Interactive Scatter</span>
+            </div>
+            <div class="dash-card-body">
+              <div class="dash-plot-container" id="dashboard-chart-scatter"></div>
+            </div>
+            <div class="dash-card-footer">
+              <span>9,508 scored movies • 1914–2021 release span</span>
+              <span>Click legend to filter age cohorts</span>
+            </div>
+          </div>
+
+          <!-- Graph 6: Average Rotten Tomatoes Rating by Year -->
+          <div class="dash-card">
+            <div class="dash-card-header">
+              <div class="dash-card-title-group">
+                <h2 class="dash-card-title">Average Rotten Tomatoes Rating by Year</h2>
+                <p class="dash-card-sub">Chronological average score trajectory across 103 distinct release years</p>
+              </div>
+              <span class="badge badge-scale">0–10 Scale</span>
+            </div>
+            <div class="dash-card-body">
+              <div class="dash-plot-container" id="dashboard-chart-yearly"></div>
+            </div>
+            <div class="dash-card-footer">
+              <span>Annual averages stabilized at 5.2–5.4 post-1990</span>
+              <span>Hover displays yearly sample count</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- ROW 4: GRAPH 7 (HIGHLY RATED BY PLATFORM) & GRAPH 8 (MOVIES BY NUMBER OF PLATFORMS) -->
         <section class="dash-grid-2col">
           <!-- Graph 5: Highly Rated by Platform -->
           <div class="dash-card">
@@ -305,7 +344,7 @@
             </div>
             <div class="dash-card-footer">
               <span>1 Platform: 9,262 (97.34%) • 2: 245 • 3: 7 • 4: 1</span>
-              <span>Minimal cross-platform licensing</span>
+              <span>Catalog presence does not prove exclusive licensing</span>
             </div>
           </div>
         </section>
@@ -317,15 +356,16 @@
             <div class="dash-card-header">
               <div class="dash-card-title-group">
                 <h2 class="dash-card-title">Score Boxplot by Age Rating</h2>
-                <p class="dash-card-sub">Five-number summary across certifications (0–100 scale)</p>
+                <p class="dash-card-sub">Five-number summary across certifications (0–10 scale)</p>
               </div>
+              <span class="badge badge-scale">0–10 Scale</span>
             </div>
             <div class="dash-card-body">
               <div class="dash-plot-container" id="dashboard-chart-boxplot"></div>
             </div>
             <div class="dash-card-footer">
-              <span>Medians remain consistent (~51–54)</span>
-              <span>Python Seaborn / Plotly model</span>
+              <span>Medians remain consistent (~5.0–5.8/10)</span>
+              <span>Outliers individually inspectable</span>
             </div>
           </div>
 
@@ -359,15 +399,16 @@
             <div class="dash-card-header">
               <div class="dash-card-title-group">
                 <h2 class="dash-card-title">Violin Distribution by Age</h2>
-                <p class="dash-card-sub">Probability density contours by content certificate</p>
+                <p class="dash-card-sub">Probability density contours by content certificate (0–10 scale)</p>
               </div>
+              <span class="badge badge-scale">0–10 Scale</span>
             </div>
             <div class="dash-card-body">
               <div class="dash-plot-container" id="dashboard-chart-violin"></div>
             </div>
             <div class="dash-card-footer">
-              <span>Uniform bell contours across tiers</span>
-              <span>Lab 3 Seaborn / Plotly</span>
+              <span>Uniform bell contours with inner boxplot</span>
+              <span>0–10 Normalized Scale</span>
             </div>
           </div>
         </section>
@@ -430,6 +471,7 @@
   <!-- Application Logic -->
   <script src="./js/data.js"></script>
   <script src="./js/charts.js"></script>
+  <script src="./js/lab4.js"></script>
   <script src="./js/dashboard.js"></script>
 </body>
 </html>
