@@ -1032,3 +1032,55 @@
   .dash-mode-switcher { display: none; }
 }
 
+/* --------------------------------------------------------------------------
+   LAB 4: INTERACTIVE PLOTLY VISUALIZATIONS LAYOUT
+   -------------------------------------------------------------------------- */
+.lab4-grid-2col {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-xl);
+  margin-bottom: var(--space-xl);
+}
+
+.lab4-grid-full {
+  width: 100%;
+  margin-bottom: var(--space-xl);
+}
+
+.lab4-grid-2col .chart-card,
+.lab4-grid-full .chart-card {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.lab4-donut-container {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: var(--space-lg);
+  align-items: center;
+  padding: var(--space-md);
+}
+
+.lab4-observation-box {
+  background: var(--color-surface);
+  border-left: 3px solid var(--color-accent);
+  padding: var(--space-sm) var(--space-md);
+  margin-top: var(--space-xs);
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+@media (max-width: 960px) {
+  .lab4-grid-2col {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+  .lab4-donut-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+

@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab 4: Interactive Plotly Visualizations | DAV Laboratory Portfolio</title>
+  <meta name="description" content="Detailed analysis of DAV Lab Assignment 4: Interactive Plotly histograms with range sliders, multivariate scatter plots, age boxplots, violins, Pearson correlation heatmaps, yearly trends, and platform overlap.">
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
+  
+  <link rel="stylesheet" href="./css/global.css">
+  <link rel="stylesheet" href="./css/components.css">
+  <link rel="stylesheet" href="./css/pages.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="container nav-container">
+      <a href="./index.html" class="nav-brand" aria-label="DAV Laboratory Home">
+        <div class="brand-mark">D</div>
+        <div class="brand-info">
+          <span class="brand-title">DAV Laboratory</span>
+          <span class="brand-subtitle">OTT Content Analytics</span>
+        </div>
+      </a>
+      <nav class="nav-menu" aria-label="Main Navigation">
+        <a href="./index.html" class="nav-link">Home</a>
+        <a href="./labs.html" class="nav-link active">Labs</a>
+        <a href="./dashboard.html" class="nav-link">Dashboard</a>
+        <a href="./explorer.html" class="nav-link">Data Explorer</a>
+        <a href="./insights.html" class="nav-link">Insights</a>
+        <a href="./resources.html" class="nav-link">Resources</a>
+      </nav>
+      <div class="nav-actions">
+        <a href="./explorer.html" class="btn btn-primary btn-sm">Explore Data</a>
+        <button class="mobile-toggle" aria-label="Toggle navigation drawer" aria-expanded="false">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="mobile-drawer" id="mobile-drawer">
+      <ul class="mobile-nav-list">
+        <li><a href="./index.html" class="mobile-nav-link">Home</a></li>
+        <li><a href="./labs.html" class="mobile-nav-link">Labs Overview</a></li>
+        <li><a href="./lab1.html" class="mobile-nav-link" style="padding-left: 24px;">└ Lab 1: Python EDA</a></li>
+        <li><a href="./lab2.html" class="mobile-nav-link" style="padding-left: 24px;">└ Lab 2: Excel Dashboard</a></li>
+        <li><a href="./lab3.html" class="mobile-nav-link" style="padding-left: 24px;">└ Lab 3: Seaborn Analysis</a></li>
+        <li><a href="./lab4.html" class="mobile-nav-link active" style="padding-left: 24px;">└ Lab 4: Interactive Plotly Analysis</a></li>
+        <li><a href="./dashboard.html" class="mobile-nav-link">Dashboard</a></li>
+        <li><a href="./explorer.html" class="mobile-nav-link">Data Explorer</a></li>
+        <li><a href="./insights.html" class="mobile-nav-link">Key Insights</a></li>
+        <li><a href="./resources.html" class="mobile-nav-link">Resources &amp; Provenance</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main id="main-content" class="site-main">
+    
+    <!-- Lab Article Header -->
+    <div class="lab-article-header">
+      <div class="container">
+        <div class="hero-kicker">
+          <a href="./labs.html">Laboratories</a>
+          <span style="opacity: 0.4;">/</span>
+          <span>Assignment 04</span>
+        </div>
+        <h1 class="hero-title">Interactive Data Visualization with Plotly</h1>
+        <p class="hero-subtitle">
+          Explore Rotten Tomatoes ratings, release-year trends, age classifications, platform availability, and correlations through seven interactive visualizations.
+        </p>
+
+        <div class="hero-meta-bar">
+          <div class="hero-meta-item">
+            <span class="text-subtle">Notebook:</span>
+            <code>DAV_Lab_Assignment_4_Movie_Streaming_Plotly.ipynb</code>
+          </div>
+          <div class="hero-meta-item">
+            <span class="text-subtle">Primary Libraries:</span>
+            <strong>Plotly, Pandas, NumPy</strong>
+          </div>
+          <div class="hero-meta-item">
+            <span class="text-subtle">Active Score Scale:</span>
+            <span class="badge badge-scale">Scale: 0–10 (Normalized)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Article Content -->
+    <div class="container" style="margin-top: var(--space-2xl);">
+      <div class="content-narrow">
+        <p class="lead">
+          Laboratory 4 transforms static analytical charts into fully interactive visual explorations. Using client-side Plotly.js rendered directly from the verified 9,515-title catalog, visitors can pan, zoom, inspect rich tooltips, filter age cohorts, and dynamically adjust range sliders.
+        </p>
+      </div>
+
+      <!-- Dataset & Methodology Summary Banner -->
+      <div class="callout-box callout-info" style="margin-top: var(--space-lg); margin-bottom: var(--space-2xl);">
+        <div class="callout-title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+          Dataset &amp; Transformation Protocol
+        </div>
+        <p style="margin-bottom: var(--space-sm);">
+          All seven visualizations are dynamically generated from <code>MoviesOnStreamingPlatforms.csv</code> (9,515 deduplicated titles, 10 analytical columns). Rotten Tomatoes critic scores are normalized to a consistent <strong>0–10 scale</strong> (e.g. <code>98/100 → 9.8</code>), missing age certifications are labeled <code>Missing/Unrated</code> (4,177 titles), and platform co-licensing flags are calculated from the four provider columns (Netflix, Hulu, Prime Video, Disney+).
+        </p>
+        <div style="display: flex; gap: var(--space-md); flex-wrap: wrap; margin-top: var(--space-sm);">
+          <a href="./source-files/DAV_Lab_Assignment_4_Movie_Streaming_Plotly.ipynb" download class="btn btn-outline btn-sm">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+            Download Lab 4 Notebook
+          </a>
+          <a href="./explorer.html" class="btn btn-secondary btn-sm">
+            Open Interactive Data Explorer →
+          </a>
+        </div>
+      </div>
+
+      <!-- ROW 1: HISTOGRAM (WITH RANGE SLIDER) & SCATTER PLOT -->
+      <section class="lab4-grid-2col" aria-label="Visualizations Row 1">
+        
+        <!-- Chart 1: Rotten Tomatoes Histogram -->
+        <div class="chart-card">
+          <div class="chart-header">
+            <div>
+              <h2 class="chart-title">Distribution of Rotten Tomatoes Ratings</h2>
+              <p class="chart-subtitle">Frequency histogram across 9,508 scored titles with interactive range slider</p>
+            </div>
+            <span class="badge badge-scale">0–10 Scale</span>
+          </div>
+          <div class="chart-body" id="lab4-chart-histogram"></div>
+          <div class="chart-footer">
+            <span>Bins: 0.5 points • Mean: 5.35/10 • Median: 5.20/10</span>
+            <span class="font-mono">Use slider below chart to zoom</span>
+          </div>
+          <div class="lab4-observation-box">
+            <strong>Observation:</strong> Critic ratings conform to a unimodal, roughly bell-shaped distribution centered near 5.2–5.4, with the majority of movie scores clustered between 4.0 and 7.0.
+          </div>
+        </div>
+
+        <!-- Chart 2: Release Year vs Rotten Tomatoes Score -->
+        <div class="chart-card">
+          <div class="chart-header">
+            <div>
+              <h2 class="chart-title">Movie Release Year vs. Rotten Tomatoes Score</h2>
+              <p class="chart-subtitle">Multivariate scatter plot with age categorization and platform hover inspection</p>
+            </div>
+            <span class="badge badge-accent">Interactive</span>
+          </div>
+          <div class="chart-body" id="lab4-chart-scatter"></div>
+          <div class="chart-footer">
+            <span>Span: 1914–2021 • 9,508 scored movies</span>
+            <span class="font-mono">Click legend items to toggle age tiers</span>
+          </div>
+          <div class="lab4-observation-box">
+            <strong>Observation:</strong> Catalog releases span 1914 to 2021 with heavy volume concentration after 2000. High-rated films (≥8.0) appear across all eras, while mature (18+) and family (all) ratings show distinct emergence patterns.
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ROW 2: BOX PLOT & VIOLIN PLOT BY AGE CLASSIFICATION -->
+      <section class="lab4-grid-2col" aria-label="Visualizations Row 2">
+        
+        <!-- Chart 3: Box Plot by Age Classification -->
+        <div class="chart-card">
+          <div class="chart-header">
+            <div>
+              <h2 class="chart-title">Rotten Tomatoes Rating by Age Classification</h2>
+              <p class="chart-subtitle">Quartile spreads, medians, and outlier detection across maturity cohorts</p>
+            </div>
+            <span class="badge badge-scale">0–10 Scale</span>
+          </div>
+          <div class="chart-body" id="lab4-chart-boxplot"></div>
+          <div class="chart-footer">
+            <span>Order: all, 7+, 13+, 16+, 18+, Missing/Unrated</span>
+            <span class="font-mono">Points = Outliers</span>
+          </div>
+          <div class="lab4-observation-box">
+            <strong>Observation:</strong> Median ratings remain notably consistent across age categories (ranging between 5.0 and 5.8), with the 18+ cohort displaying the largest number of high-performing outliers.
+          </div>
+        </div>
+
+        <!-- Chart 4: Violin Plot by Age Classification -->
+        <div class="chart-card">
+          <div class="chart-header">
+            <div>
+              <h2 class="chart-title">Rating Density by Age Classification</h2>
+              <p class="chart-subtitle">Kernel density estimates with embedded mini-boxplots across content tiers</p>
+            </div>
+            <span class="badge badge-scale">0–10 Scale</span>
+          </div>
+          <div class="chart-body" id="lab4-chart-violin"></div>
+          <div class="chart-footer">
+            <span>Embedded inner boxplot &amp; mean line</span>
+            <span class="font-mono">0–10 Score Range</span>
+          </div>
+          <div class="lab4-observation-box">
+            <strong>Observation:</strong> Density profiles reveal symmetrical, unimodal bulges around 5.0–6.0 across all tiers, demonstrating that content maturity certification does not heavily bias critic reception.
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ROW 3: FULL-WIDTH CORRELATION HEATMAP -->
+      <section class="lab4-grid-full" aria-label="Visualizations Row 3">
+        <div class="chart-card">
+          <div class="chart-header">
+            <div>
+              <h2 class="chart-title">Correlation Heatmap of Movie Streaming Data</h2>
+              <p class="chart-subtitle">6×6 Pearson correlation matrix between Release Year, RT Score, and four platform flags</p>
+            </div>
+            <span class="badge badge-default">Pearson Matrix</span>
+          </div>
+          <div class="chart-body" id="lab4-chart-heatmap"></div>
+          <div class="chart-footer">
+            <span>Symmetric scale [-1.0, +1.0] • Calculated from dataset records</span>
+            <span class="font-mono">Hover to inspect pairwise r</span>
+          </div>
+          <div class="lab4-observation-box" style="border-left-color: #3b28cc;">
+            <strong>Important Statistical Note:</strong> Correlation measures linear association; it does not establish causation.
+            <br>
+            <strong>Observation:</strong> Correlation between Release Year and RT Score is near zero (+0.036), indicating modern releases do not systematically outscore classics. Netflix exhibits a strong negative correlation with Prime Video (-0.648), reflecting opposing catalog licensing strategies.
+          </div>
+        </div>
+      </section>
+
+      <!-- ROW 4: AVERAGE RATING BY YEAR & PLATFORM OVERLAP DONUT -->
+      <section class="lab4-grid-2col" aria-label="Visualizations Row 4">
+        
+        <!-- Chart 6: Average Rating by Release Year -->
+        <div class="chart-card">
+          <div class="chart-header">
+            <div>
+              <h2 class="chart-title">Average Rotten Tomatoes Rating by Release Year</h2>
+              <p class="chart-subtitle">Chronological annual mean ratings with rated movie volume tooltips (1914–2021)</p>
+            </div>
+            <span class="badge badge-scale">0–10 Scale</span>
+          </div>
+          <div class="chart-body" id="lab4-chart-yearly"></div>
+          <div class="chart-footer">
+            <span>103 Distinct Release Years • 9,508 Scored Titles</span>
+            <span class="font-mono">Unified hover inspection</span>
+          </div>
+          <div class="lab4-observation-box">
+            <strong>Observation:</strong> Early cinema decades exhibit higher variance due to smaller sample sizes (fewer surviving cataloged films from the 1920s–1940s), while post-1990 averages stabilize reliably around the 5.2–5.4 baseline.
+          </div>
+        </div>
+
+        <!-- Chart 7: Movies by Number of Platforms -->
+        <div class="chart-card">
+          <div class="chart-header">
+            <div>
+              <h2 class="chart-title">Movies by Number of Streaming Platforms</h2>
+              <p class="chart-subtitle">Multi-platform co-licensing breakdown across Netflix, Hulu, Prime Video, and Disney+</p>
+            </div>
+            <span class="badge badge-accent">Catalog Overlap</span>
+          </div>
+          <div class="chart-body" style="min-height: auto;">
+            <div class="lab4-donut-container">
+              <div id="lab4-chart-platform-overlap" style="width: 100%; min-height: 380px;"></div>
+              <div id="lab4-donut-table" style="overflow-x: auto;"></div>
+            </div>
+          </div>
+          <div class="chart-footer">
+            <span>Total Catalog: 9,515 Titles • 1 to 4 Platforms</span>
+            <span class="font-mono">Single Platform: 9,262 (97.34%)</span>
+          </div>
+          <div class="lab4-observation-box">
+            <strong>Clarification:</strong> These categories describe how many platforms list each movie; they do not establish licensing exclusivity.
+            <br>
+            <strong>Observation:</strong> Over 97.3% of cataloged titles are exclusive to a single platform in this sample, demonstrating intense content segmentation across streaming providers.
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Navigation & Provenance Bar -->
+      <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--color-border); padding-top: var(--space-xl); margin-top: var(--space-2xl); flex-wrap: wrap; gap: var(--space-md);">
+        <a href="./lab3.html" class="btn btn-secondary">← Back to Lab 3: Seaborn Stats</a>
+        <div style="display: flex; gap: var(--space-sm);">
+          <a href="./labs.html" class="btn btn-outline">Curriculum Matrix</a>
+          <a href="./explorer.html" class="btn btn-primary">Test the Data Explorer →</a>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4>DAV Laboratory Portfolio</h4>
+          <p style="color: #94a3b8; font-size: 0.85rem; max-width: 320px; line-height: 1.6;">
+            A rigorous academic investigation into streaming media catalogs, developed as part of the Data Analytics &amp; Visualization curriculum.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h5>Laboratory Work</h5>
+          <ul class="footer-list">
+            <li><a href="./labs.html">Curriculum Overview</a></li>
+            <li><a href="./lab1.html">Lab 1: Python EDA</a></li>
+            <li><a href="./lab2.html">Lab 2: Excel Analysis</a></li>
+            <li><a href="./lab3.html">Lab 3: Seaborn Stats</a></li>
+            <li><a href="./lab4.html">Lab 4: Plotly Visuals</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Interactive Tools</h5>
+          <ul class="footer-list">
+            <li><a href="./dashboard.html">Analytics Dashboard</a></li>
+            <li><a href="./explorer.html">Data Explorer</a></li>
+            <li><a href="./insights.html">Analytical Insights</a></li>
+            <li><a href="./resources.html">Provenance &amp; Files</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Academic Sources</h5>
+          <ul class="footer-list">
+            <li><span style="color: #cbd5e1;">Dataset: 9,515 Records</span></li>
+            <li><span style="color: #cbd5e1;">Format: Static HTML5 / Plotly</span></li>
+            <li><a href="./resources.html">Download Source CSV</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>Data Analytics &amp; Visualization Laboratory Project © 2026. Academic Portfolio.</div>
+        <div style="font-family: var(--font-mono); font-size: 0.75rem;">Source Verified • GitHub Pages Deployment</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./js/data.js"></script>
+  <script src="./js/app.js"></script>
+  <script src="./js/components.js"></script>
+  <script src="./js/lab4.js"></script>
+</body>
+</html>
+

@@ -41,6 +41,7 @@ jobs:
           cp "DAV_Lab_Assignment_1_Movie_Streaming_Analysis.ipynb" _site/source-files/
           cp "DAV_Lab_Assignment_2_Movie_Streaming_Platform.xlsx" _site/source-files/
           cp "DAV_Lab_Assignment_3_Movie_Streaming_Analysis.ipynb" _site/source-files/
+          cp "DAV_Lab_Assignment_4_Movie_Streaming_Plotly.ipynb" _site/source-files/
           cp "MoviesOnStreamingPlatforms.csv" _site/source-files/
 
           # 4. Ensure .nojekyll exists so files starting with _ or special extensions are not ignored
